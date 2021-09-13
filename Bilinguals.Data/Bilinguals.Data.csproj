@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BilingualDbContext.cs" />
+    <Compile Include="EFRepository.cs" />
     <Compile Include="Migrations\202109130410555_InitCreate.cs" />
     <Compile Include="Migrations\202109130410555_InitCreate.Designer.cs">
       <DependentUpon>202109130410555_InitCreate.cs</DependentUpon>

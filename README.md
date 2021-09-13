@@ -6,3 +6,6 @@
 ```
 Enable-Migrations
 ```
+* Bootstrap 5
+* Autofac
+* JQuery.BlockUI

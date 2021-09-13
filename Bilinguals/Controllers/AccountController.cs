@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Bilinguals.Models;
 using Bilinguals.Domain;
+using Bilinguals.Services;
 
 namespace Bilinguals.Controllers
 {
