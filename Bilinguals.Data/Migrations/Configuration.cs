@@ -5,14 +5,14 @@ namespace Bilinguals.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Bilinguals.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Bilinguals.Data.BilingualDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Bilinguals.Models.ApplicationDbContext context)
+        protected override void Seed(Bilinguals.Data.BilingualDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
