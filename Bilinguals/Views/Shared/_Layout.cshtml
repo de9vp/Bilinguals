@@ -48,7 +48,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 
-    <script src="~/Scripts/jquery.blockUI.js"></script>
+    @*<script src="~/Scripts/jquery.blockUI.js"></script>
 
     <script type="text/javascript">
 
@@ -76,7 +76,7 @@
 
             $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
         });
-    </script>
+    </script>*@
 
     @RenderSection("scripts", required: false)
 </body>

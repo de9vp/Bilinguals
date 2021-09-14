@@ -1,4 +1,4 @@
-namespace Bilinguals.Migrations
+namespace Bilinguals.Data.Migrations
 {
     using System;
     using System.Data.Entity;

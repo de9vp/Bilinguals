@@ -54,9 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseEntity.cs" />
     <Compile Include="Interfaces\IBilingualDbContext.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Dialog.cs" />
+    <Compile Include="Models\Sentence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
