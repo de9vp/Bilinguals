@@ -11,116 +11,112 @@ using Bilinguals.Domain.Models;
 
 namespace Bilinguals.Controllers
 {
-    public class SentencesController : Controller
+    public class DialogsController : Controller
     {
         private BilingualDbContext db = new BilingualDbContext();
 
-        // GET: Sentences
+        // GET: Dialogs
         public ActionResult Index()
         {
-            var sentences = db.Sentences.Include(s => s.Dialog);
-            return View(sentences.ToList());
+            return View(db.Dialogs.ToList());
         }
 
-        // GET: Sentences/Details/5
+        // GET: Dialogs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Sentence sentence = db.Sentences.Find(id);
-            if (sentence == null)
+            Dialog dialog = db.Dialogs.Find(id);
+            if (dialog == null)
             {
                 return HttpNotFound();
             }
-            return View(sentence);
+            return View(dialog);
         }
 
-        // GET: Sentences/Create
+        // GET: Dialogs/Create
         public ActionResult Create()
         {
-            ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name");
             return View();
         }
 
-        // POST: Sentences/Create
+        // POST: Dialogs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EnText,ViText,DialogId,SortOrder,DateCreated,DateModified")] Sentence sentence)
+        public ActionResult Create([Bind(Include = "Id,Name,DateCreated,DateModified")] Dialog dialog)
         {
             if (ModelState.IsValid)
             {
-                db.Sentences.Add(sentence);
+                db.Dialogs.Add(dialog);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
-            return View(sentence);
+            return View(dialog);
         }
 
-        // GET: Sentences/Edit/5
+        // GET: Dialogs/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Sentence sentence = db.Sentences.Find(id);
-            if (sentence == null)
+            Dialog dialog = db.Dialogs.Find(id);
+            if (dialog == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
-            return View(sentence);
+            return View(dialog);
         }
 
-        // POST: Sentences/Edit/5
+        // POST: Dialogs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Sentence sentence, string returnUrl = null)
+        public ActionResult Edit(Dialog dialog, string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(sentence).State = EntityState.Modified;
+                db.Entry(dialog).State = EntityState.Modified;
                 db.SaveChanges();
+                
 
                 if (!string.IsNullOrEmpty(returnUrl))
                     return Redirect(returnUrl);
 
                 return RedirectToAction("Index");
             }
-            ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
-            return View(sentence);
+            return View(dialog);
         }
 
-        // GET: Sentences/Delete/5
+        // GET: Dialogs/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Sentence sentence = db.Sentences.Find(id);
-            if (sentence == null)
+            Dialog dialog = db.Dialogs.Find(id);
+            if (dialog == null)
             {
                 return HttpNotFound();
             }
-            return View(sentence);
+            return View(dialog);
         }
 
-        // POST: Sentences/Delete/5
+        // POST: Dialogs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Sentence sentence = db.Sentences.Find(id);
-            db.Sentences.Remove(sentence);
+            Dialog dialog = db.Dialogs.Find(id);
+            db.Dialogs.Remove(dialog);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -10,7 +10,7 @@ namespace Bilinguals.Domain
     {
         public BaseEntity()
         {
-
+            DateCreated = DateTime.Now;
         }
         public int Id { get; set; }
         public DateTime? DateCreated { get; set; }

@@ -20,5 +20,10 @@ namespace Bilinguals.Data
         //warning: after add model
         public DbSet<Dialog> Dialogs { get; set; }
         public DbSet<Sentence> Sentences { get; set; }
+        public DbSet<UserDialog> UserDialogs { get; set; }
+        public DbSet<UserSentence> UserSentences { get; set; }
+        public DbSet<UserLearning> UserLearnings { get; set; }
+
+        
     }
 }

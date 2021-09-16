@@ -64,6 +64,10 @@
     <Compile Include="Migrations\202109141043026_addSentenceDialog.Designer.cs">
       <DependentUpon>202109141043026_addSentenceDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109161545429_addUserdialogUsersentenceUserlearning.cs" />
+    <Compile Include="Migrations\202109161545429_addUserdialogUsersentenceUserlearning.Designer.cs">
+      <DependentUpon>202109161545429_addUserdialogUsersentenceUserlearning.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -83,6 +87,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109141043026_addSentenceDialog.resx">
       <DependentUpon>202109141043026_addSentenceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109161545429_addUserdialogUsersentenceUserlearning.resx">
+      <DependentUpon>202109161545429_addUserdialogUsersentenceUserlearning.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
