@@ -49,7 +49,7 @@ namespace Bilinguals.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EnText,ViText,DialogId,SortOrder,DateCreated,DateModified")] Sentence sentence)
+        public ActionResult Create(Sentence sentence)
         {
             if (ModelState.IsValid)
             {

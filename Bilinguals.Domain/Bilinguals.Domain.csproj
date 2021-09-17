@@ -56,7 +56,10 @@
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Interfaces\IBilingualDbContext.cs" />
+    <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISentenceService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationUserRole.cs" />
