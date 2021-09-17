@@ -21,9 +21,15 @@ namespace Bilinguals.Services
             _sentenceRepo.Insert(sentence);
         }
 
-        public void Delete(Sentence sentence)
+        public void Delete(int id)
         {
+            var sentence = _sentenceRepo.Table.FirstOrDefault(x => x.Id == id);
             _sentenceRepo.Delete(sentence);
+        }
+
+        public void Edit(Sentence sentence)
+        {
+            _sentenceRepo.Update(sentence);
         }
     }
 }
