@@ -27,4 +27,25 @@ namespace Bilinguals.Controllers
             return View();
         }
     }
+
+    //foreach (var item in listUser)
+    //{
+    //    var roleIds = item.Roles.Select(s => s.RoleId).ToList();
+    //    var roleNames = _roleManager.Roles
+    //        .Where(role => roleIds.Contains(role.Id))
+    //        .Select(s => s.Name).ToList();
+
+    //    item.StrRoleNames = string.Join(",", roleNames);
+    //}
+
+    // with 1 role
+    //var roleIds = entityUser.Roles.Select(s => s.RoleId).ToList();
+    //var oldRoleName = _roleManager.Roles.Where(x => roleIds.Contains(x.Id)).Select(x => x.Name).ToList();
+    //foreach (var item in oldRoleName)
+    //{
+    //    _userManager.RemoveFromRole(entityUser.Id, item);
+    //}
+    //_userManager.AddToRole(entityUser.Id, userModel.RoleId);
+
+
 }

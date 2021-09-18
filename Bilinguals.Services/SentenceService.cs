@@ -43,13 +43,13 @@ namespace Bilinguals.Services
         public IPagedList<Sentence> GetAll(int pageIndex, int pageSize, string searchText, string sortOrder)
         {
             // Converts every character to lowercase, if null return empty string ( ?. return Null | ?? if Null else return "" )
-            var searchtext = searchText?.ToLower() ?? "";
+            var search = searchText?.ToLower() ?? "";
 
             //Strip non alpha numeric charactors out
-            searchText = Regex.Replace(searchText, "[^A-Za-z0-9 -]", "");    //https://stackoverflow.com/questions/3210393/how-do-i-remove-all-non-alphanumeric-characters-from-a-string-except-dash
+            search = Regex.Replace(search, "[^A-Za-z0-9 -]", "");    //https://stackoverflow.com/questions/3210393/how-do-i-remove-all-non-alphanumeric-characters-from-a-string-except-dash
 
             // Split word
-            var splitSearch = searchText.Split(' ').ToList();
+            var splitSearch = search.Split(' ').ToList();
 
             var query = _sentenceRepo.Table.Where(x => true);
 
@@ -61,10 +61,10 @@ namespace Bilinguals.Services
             switch (sortOrder)
             {
                 case "DateCreate":
-                    query = query.OrderBy(x => x.DateCreated);
+                    query = query.OrderByDescending(x => x.DateCreated);
                     break;
                 default:
-                    query = query.OrderByDescending(x => x.Id);
+                    query = query.OrderBy(x => x.Id);
                     break;
             }
 

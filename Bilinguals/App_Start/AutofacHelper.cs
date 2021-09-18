@@ -21,7 +21,7 @@ namespace Bilinguals.App_Start
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
             // Configuring Autofac to work with the ASP.NET Identity: https://m.51dev.com/show.php?id=12917
-            //builder.RegisterType<MyBilingualDbContext>().AsSelf().InstancePerRequest();
+            //builder.RegisterType<BilingualDbContext>().AsSelf().InstancePerRequest();
             builder.RegisterType<BilingualDbContext>().As<IBilingualDbContext>().InstancePerRequest();
 
             //builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerRequest();
@@ -39,7 +39,8 @@ namespace Bilinguals.App_Start
 
             builder.RegisterGeneric(typeof(EFRepository<>)).As(typeof(IRepository<>)).InstancePerRequest();
 
-            
+            builder.RegisterType<DialogService>().As<IDialogService>().InstancePerRequest();
+            builder.RegisterType<SentenceService>().As<ISentenceService>().InstancePerRequest();
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

@@ -12,6 +12,7 @@ using Bilinguals.Domain.Models;
 
 namespace Bilinguals.Controllers
 {
+    [Authorize]
     public class SentencesController : Controller
     {
         private readonly ISentenceService _sentenceService;
@@ -22,13 +23,13 @@ namespace Bilinguals.Controllers
         }
 
         // GET: Sentences
-        public ActionResult Index(int? pageIndex, string searchText, string sortOrder) //Allow pageIndex Null ( int? ) 
+        public ActionResult Index(int? pageIndex, string sortOrder, string searchText ) //Allow pageIndex Null ( int? ) 
         {
             int pageSize = 8;
 
             var sentences = _sentenceService.GetAll(pageIndex ?? 1, pageSize, searchText, sortOrder);  // if pageIndex null else = 1 ( ?? )
 
-            return View(sentences.ToList());
+            return View(sentences);
         }
 
         // GET: Sentences/Details/5
