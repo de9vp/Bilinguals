@@ -40,13 +40,13 @@ namespace Bilinguals.Services
             return sentence;
         }
 
-        public IPagedList<Sentence> GetAll(int pageIndex, int pageSize, string searchText, string sortOrder)
+        public IPagedList<Sentence> GetSentenceList(int pageIndex, int pageSize, string searchText, string sortOrder)
         {
             // Converts every character to lowercase, if null return empty string ( ?. return Null | ?? if Null else return "" )
             var search = searchText?.ToLower() ?? "";
 
             //Strip non alpha numeric charactors out
-            search = Regex.Replace(search, "[^A-Za-z0-9 -]", "");    //https://stackoverflow.com/questions/3210393/how-do-i-remove-all-non-alphanumeric-characters-from-a-string-except-dash
+            search = Regex.Replace(search, @"[^\w\.@\- ]", "");    // Apply to search by VN language
 
             // Split word
             var splitSearch = search.Split(' ').ToList();
@@ -60,9 +60,37 @@ namespace Bilinguals.Services
 
             switch (sortOrder)
             {
-                case "DateCreate":
+                case "DateCreate": //sorted by datecreate
                     query = query.OrderByDescending(x => x.DateCreated);
                     break;
+                default:
+                    query = query.OrderBy(x => x.Id);
+                    break;
+            }
+
+            return query.ToPagedList(pageIndex, pageSize);
+        }
+
+        public IPagedList<Sentence> GetSentenceHome(int pageIndex, int pageSize, string searchText, string sortOrder)
+        {
+            var search = searchText?.ToLower() ?? "";
+
+            search = Regex.Replace(search, @"[^\w\.@\- ]", "");  
+
+            var splitSearch = search.Split(' ').ToList();
+
+            var query = _sentenceRepo.Table.Where(x => !String.IsNullOrEmpty(searchText));  // value Null when search text empty
+
+            foreach (var term in splitSearch)
+            {
+                query = query.Where(x => x.ViText.ToLower().Contains(term) || x.EnText.ToLower().Contains(term) || x.Dialog.Name.ToLower().Contains(term));
+            }
+
+            switch (sortOrder)
+            {
+                //case "DateCreate": //sorted by datecreate or optionally
+                //    query = query.OrderByDescending(x => x.DateCreated);
+                //    break;
                 default:
                     query = query.OrderBy(x => x.Id);
                     break;

@@ -7,18 +7,28 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bilinguals.Data;
+using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
 
 namespace Bilinguals.Controllers
 {
     public class DialogsController : Controller
     {
-        private BilingualDbContext db = new BilingualDbContext();
+        private readonly IDialogService _dialogService;
+
+        public DialogsController(IDialogService dialogService)
+        {
+            _dialogService = dialogService;
+        }
 
         // GET: Dialogs
-        public ActionResult Index()
+        public ActionResult Index(int? pageIndex, string searchText, string sortOrder)
         {
-            return View(db.Dialogs.ToList());
+            int pageSize = 8;
+
+            var dialogs = _dialogService.GetDialogList(pageIndex ?? 1, pageSize, searchText, sortOrder);
+
+            return View(dialogs);
         }
 
         // GET: Dialogs/Details/5
@@ -28,7 +38,7 @@ namespace Bilinguals.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Dialog dialog = db.Dialogs.Find(id);
+            Dialog dialog = _dialogService.GetById(id.Value);
             if (dialog == null)
             {
                 return HttpNotFound();
@@ -47,12 +57,11 @@ namespace Bilinguals.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,DateCreated,DateModified")] Dialog dialog)
+        public ActionResult Create(Dialog dialog)
         {
             if (ModelState.IsValid)
             {
-                db.Dialogs.Add(dialog);
-                db.SaveChanges();
+                _dialogService.Add(dialog);
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +75,7 @@ namespace Bilinguals.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Dialog dialog = db.Dialogs.Find(id);
+            Dialog dialog = _dialogService.GetById(id.Value);
             if (dialog == null)
             {
                 return HttpNotFound();
@@ -83,8 +92,7 @@ namespace Bilinguals.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(dialog).State = EntityState.Modified;
-                db.SaveChanges();
+                _dialogService.Edit(dialog);
                 
 
                 if (!string.IsNullOrEmpty(returnUrl))
@@ -102,7 +110,7 @@ namespace Bilinguals.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Dialog dialog = db.Dialogs.Find(id);
+            Dialog dialog = _dialogService.GetById(id.Value);
             if (dialog == null)
             {
                 return HttpNotFound();
@@ -115,19 +123,8 @@ namespace Bilinguals.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Dialog dialog = db.Dialogs.Find(id);
-            db.Dialogs.Remove(dialog);
-            db.SaveChanges();
+            _dialogService.Delete(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

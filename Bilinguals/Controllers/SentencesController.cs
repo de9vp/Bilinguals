@@ -16,10 +16,12 @@ namespace Bilinguals.Controllers
     public class SentencesController : Controller
     {
         private readonly ISentenceService _sentenceService;
+        private readonly IDialogService _dialogService;
 
-        public SentencesController(ISentenceService sentenceService)
+        public SentencesController(ISentenceService sentenceService, IDialogService dialogService)
         {
             _sentenceService = sentenceService;
+            _dialogService = dialogService;
         }
 
         // GET: Sentences
@@ -27,7 +29,7 @@ namespace Bilinguals.Controllers
         {
             int pageSize = 8;
 
-            var sentences = _sentenceService.GetAll(pageIndex ?? 1, pageSize, searchText, sortOrder);  // if pageIndex null else = 1 ( ?? )
+            var sentences = _sentenceService.GetSentenceList(pageIndex ?? 1, pageSize, searchText, sortOrder);  // if pageIndex null else = 1 ( ?? )
 
             return View(sentences);
         }
@@ -50,7 +52,8 @@ namespace Bilinguals.Controllers
         // GET: Sentences/Create
         public ActionResult Create()
         {
-            //ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name");
+            var dialogs = _dialogService.GetAll();
+            ViewBag.DialogId = new SelectList(dialogs, "Id", "Name");
             return View();
         }
 
@@ -67,7 +70,8 @@ namespace Bilinguals.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
+            var dialogs = _dialogService.GetAll();
+            ViewBag.DialogId = new SelectList(dialogs, "Id", "Name", sentence.DialogId);
             return View(sentence);
         }
 
@@ -83,7 +87,9 @@ namespace Bilinguals.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
+
+            var dialogs = _dialogService.GetAll();
+            ViewBag.DialogId = new SelectList(dialogs, "Id", "Name", sentence.DialogId);
             return View(sentence);
         }
 
@@ -103,7 +109,9 @@ namespace Bilinguals.Controllers
 
                 return RedirectToAction("Index");
             }
-            //ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
+
+            var dialogs = _dialogService.GetAll();
+            ViewBag.DialogId = new SelectList(dialogs, "Id", "Name", sentence.DialogId);
             return View(sentence);
         }
 

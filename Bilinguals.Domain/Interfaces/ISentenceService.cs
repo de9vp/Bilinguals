@@ -18,6 +18,8 @@ namespace Bilinguals.Domain.Interfaces
 
         Sentence GetById(int id);
 
-        IPagedList<Sentence> GetAll(int pageIndex, int pageSize, string searchText, string sortOrder);
+        IPagedList<Sentence> GetSentenceList(int pageIndex, int pageSize, string searchText, string sortOrder);
+
+        IPagedList<Sentence> GetSentenceHome(int pageIndex, int pageSize, string searchText, string sortOrder);
     }
 }

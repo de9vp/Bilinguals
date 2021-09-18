@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bilinguals.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,20 @@ namespace Bilinguals.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly ISentenceService _sentenceService;
+
+        public HomeController(ISentenceService sentenceService)
         {
-            return View();
+            _sentenceService = sentenceService;
+        }
+
+        public ActionResult Index(int? pageIndex, string searchText, string sortOrder)
+        {
+            int pageSize = 5;
+
+            var sentences = _sentenceService.GetSentenceHome(pageIndex ?? 1, pageSize, searchText, sortOrder);
+
+            return View(sentences);
         }
 
         public ActionResult About()
