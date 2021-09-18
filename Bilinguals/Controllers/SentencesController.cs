@@ -7,18 +7,27 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bilinguals.Data;
+using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
 
 namespace Bilinguals.Controllers
 {
     public class SentencesController : Controller
     {
-        private BilingualDbContext db = new BilingualDbContext();
+        private readonly ISentenceService _sentenceService;
+
+        public SentencesController(ISentenceService sentenceService)
+        {
+            _sentenceService = sentenceService;
+        }
 
         // GET: Sentences
-        public ActionResult Index()
+        public ActionResult Index(int? pageIndex, string searchText, string sortOrder) //Allow pageIndex Null ( int? ) 
         {
-            var sentences = db.Sentences.Include(s => s.Dialog);
+            int pageSize = 8;
+
+            var sentences = _sentenceService.GetAll(pageIndex ?? 1, pageSize, searchText, sortOrder);  // if pageIndex null else = 1 ( ?? )
+
             return View(sentences.ToList());
         }
 
@@ -29,7 +38,7 @@ namespace Bilinguals.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Sentence sentence = db.Sentences.Find(id);
+            var sentence = _sentenceService.GetById(id.Value);
             if (sentence == null)
             {
                 return HttpNotFound();
@@ -40,7 +49,7 @@ namespace Bilinguals.Controllers
         // GET: Sentences/Create
         public ActionResult Create()
         {
-            ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name");
+            //ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name");
             return View();
         }
 
@@ -53,12 +62,11 @@ namespace Bilinguals.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Sentences.Add(sentence);
-                db.SaveChanges();
+                _sentenceService.Add(sentence);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
+            //ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
             return View(sentence);
         }
 
@@ -69,12 +77,12 @@ namespace Bilinguals.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Sentence sentence = db.Sentences.Find(id);
+            var sentence = _sentenceService.GetById(id.Value);
             if (sentence == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
+            //ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
             return View(sentence);
         }
 
@@ -87,15 +95,14 @@ namespace Bilinguals.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(sentence).State = EntityState.Modified;
-                db.SaveChanges();
+                _sentenceService.Edit(sentence);
 
                 if (!string.IsNullOrEmpty(returnUrl))
                     return Redirect(returnUrl);
 
                 return RedirectToAction("Index");
             }
-            ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
+            //ViewBag.DialogId = new SelectList(db.Dialogs, "Id", "Name", sentence.DialogId);
             return View(sentence);
         }
 
@@ -106,7 +113,7 @@ namespace Bilinguals.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Sentence sentence = db.Sentences.Find(id);
+            var sentence = _sentenceService.GetById(id.Value);
             if (sentence == null)
             {
                 return HttpNotFound();
@@ -119,19 +126,8 @@ namespace Bilinguals.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Sentence sentence = db.Sentences.Find(id);
-            db.Sentences.Remove(sentence);
-            db.SaveChanges();
+            _sentenceService.Delete(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

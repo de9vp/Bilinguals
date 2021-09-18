@@ -1,9 +1,11 @@
 ﻿using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Bilinguals.Services
@@ -30,6 +32,43 @@ namespace Bilinguals.Services
         public void Edit(Sentence sentence)
         {
             _sentenceRepo.Update(sentence);
+        }
+
+        public Sentence GetById(int id)
+        {
+            var sentence = _sentenceRepo.GetById(id);
+            return sentence;
+        }
+
+        public IPagedList<Sentence> GetAll(int pageIndex, int pageSize, string searchText, string sortOrder)
+        {
+            // Converts every character to lowercase, if null return empty string ( ?. return Null | ?? if Null else return "" )
+            var searchtext = searchText?.ToLower() ?? "";
+
+            //Strip non alpha numeric charactors out
+            searchText = Regex.Replace(searchText, "[^A-Za-z0-9 -]", "");    //https://stackoverflow.com/questions/3210393/how-do-i-remove-all-non-alphanumeric-characters-from-a-string-except-dash
+
+            // Split word
+            var splitSearch = searchText.Split(' ').ToList();
+
+            var query = _sentenceRepo.Table.Where(x => true);
+
+            foreach (var term in splitSearch)
+            {
+                query = query.Where(x => x.ViText.ToLower().Contains(term) || x.EnText.ToLower().Contains(term) || x.Dialog.Name.ToLower().Contains(term));
+            }
+
+            switch (sortOrder)
+            {
+                case "DateCreate":
+                    query = query.OrderBy(x => x.DateCreated);
+                    break;
+                default:
+                    query = query.OrderByDescending(x => x.Id);
+                    break;
+            }
+
+            return query.ToPagedList(pageIndex, pageSize);
         }
     }
 }

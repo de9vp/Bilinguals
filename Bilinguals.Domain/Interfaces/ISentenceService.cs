@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Bilinguals.Domain.Models;
+using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,14 @@ namespace Bilinguals.Domain.Interfaces
 {
     public interface ISentenceService
     {
+        void Add(Sentence sentence);
 
+        void Delete(int id);
+
+        void Edit(Sentence sentence);
+
+        Sentence GetById(int id);
+
+        IPagedList<Sentence> GetAll(int pageIndex, int pageSize, string searchText, string sortOrder);
     }
 }

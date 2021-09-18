@@ -11,7 +11,7 @@ namespace Bilinguals.Domain.Models
         public string EnText { get; set; }
         public string ViText { get; set; }
         public int DialogId { get; set; }
-        public Dialog Dialog { get; set; }
+        public virtual Dialog Dialog { get; set; }  //using virtual in here, not include
         public int SortOrder { get; set; }
     }
 }
