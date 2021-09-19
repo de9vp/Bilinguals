@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="form-horizontal">
+    @if (ViewBag.Result != null)
+    {
+        if (ViewBag.Result != "success")
+        {
+            <div class="alert alert-danger">@ViewBag.Result</div>
+        }
+        else
+        {
+            <div class="alert alert-info">Imported successfully</div>
+        }
+    }
+
+
+    @using (Html.BeginForm("Index", "ImportExport", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label>Select file (*.xlsx)</label>
+        <input class="form-control" type="file" name="file" value="" style="width: 300px" />
+        <br />
+        <input type="submit" value="Upload" class="btn btn-primary" />
+    }
+</div>
+

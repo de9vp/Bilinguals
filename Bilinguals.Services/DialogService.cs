@@ -72,5 +72,41 @@ namespace Bilinguals.Services
 
             return query.ToPagedList(pageIndex, pageSize);
         }
+
+        public void FromExcel(List<string> allLines)
+        {
+            Dialog dialog = null;
+            int index = 0;
+
+            foreach (var row in allLines)
+            {
+                var pairOfTexts = row.Split('\t');
+                if (pairOfTexts.Length == 1 || string.IsNullOrWhiteSpace(pairOfTexts[1]))
+                {
+                    // create new topic
+                    dialog = new Dialog
+                    {
+                        Name = pairOfTexts[0],
+                    };
+                    _dialogRepo.Insert(dialog);
+                    index = 1;
+                    continue;
+                }
+
+                if (dialog == null)
+                    continue;
+
+                dialog.Sentences.Add(new Sentence
+                {
+                    EnText = pairOfTexts[0],
+                    ViText = pairOfTexts[1],
+                    SortOrder = index,
+                });
+
+                _dialogRepo.Update(dialog);
+
+                index++;
+            }
+        }
     }
 }

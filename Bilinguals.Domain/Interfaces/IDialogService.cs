@@ -21,5 +21,7 @@ namespace Bilinguals.Domain.Interfaces
         List<Dialog> GetAll();
 
         IPagedList<Dialog> GetDialogList(int pageIndex, int pageSize, string searchText, string sortOrder);
+
+        void FromExcel(List<string> allLines);
     }
 }
