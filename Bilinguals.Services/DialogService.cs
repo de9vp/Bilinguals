@@ -73,20 +73,22 @@ namespace Bilinguals.Services
             return query.ToPagedList(pageIndex, pageSize);
         }
 
-        public void FromExcel(List<string> allLines)
+        public void FromTextFile(string allTexts)
         {
+            var groups = allTexts.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None);
             Dialog dialog = null;
-            int index = 0;
+            var index = 0;
 
-            foreach (var row in allLines)
+            foreach (var g in groups)
             {
-                var pairOfTexts = row.Split('\t');
-                if (pairOfTexts.Length == 1 || string.IsNullOrWhiteSpace(pairOfTexts[1]))
+                if (g.Contains(" | "))
                 {
-                    // create new topic
+                    var pair1 = g.Split(new string[] { " | " }, StringSplitOptions.None);
+                    // create new dialog
                     dialog = new Dialog
                     {
-                        Name = pairOfTexts[0],
+                        Name = pair1[0],
+                        Description = pair1.Length == 2 ? pair1[1] : null,
                     };
                     _dialogRepo.Insert(dialog);
                     index = 1;
@@ -94,12 +96,19 @@ namespace Bilinguals.Services
                 }
 
                 if (dialog == null)
-                    continue;
+                    return;
+
+                var pairOfTexts = g.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
+                if (pairOfTexts.Length < 2)
+                {
+
+                }
 
                 dialog.Sentences.Add(new Sentence
                 {
-                    EnText = pairOfTexts[0],
-                    ViText = pairOfTexts[1],
+                    EnText = pairOfTexts[0].Trim(),
+                    ViText = pairOfTexts[1].Trim(),
                     SortOrder = index,
                 });
 

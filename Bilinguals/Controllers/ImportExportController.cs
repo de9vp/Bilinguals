@@ -43,16 +43,16 @@ namespace Bilinguals.Controllers
                     if (file != null && file.ContentLength > 0)
                     {
                         // Unpack the data
-                        var allLines = new List<string>();
+                        var allTexts = string.Empty;
                         using (var streamReader = new StreamReader(file.InputStream, System.Text.Encoding.UTF8, true))
                         {
                             while (streamReader.Peek() >= 0)
                             {
-                                allLines.Add(streamReader.ReadLine());
+                                allTexts = streamReader.ReadToEnd();
                             }
                         }
 
-                        _dialogService.FromExcel(allLines);
+                        _dialogService.FromTextFile(allTexts);
 
                         // Read the CSV file and generate a language
                         //report = _localizationService.FromCsv(languageCulture, allLines);

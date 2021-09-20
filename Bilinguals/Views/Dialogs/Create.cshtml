@@ -2,16 +2,17 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<br />
+<h2>Thêm mới hội thoại</h2>
+<br />
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Dialog</h4>
         <hr />
@@ -40,6 +41,47 @@
             </div>
         </div>
     </div>
+}
+
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">Nhập trực tiếp</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog d-block modal-xl">
+        <div class="modal-content container-fluid">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nhập trực tiếp</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @Form()
+            </div>
+        </div>
+    </div>
+</div>
+
+@helper Form()
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.DateCreated)
+            <div class="row mb-3">
+                @Html.LabelFor(model => model.Name, "Tên đoạn hội thoại", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên đoạn hội thoại" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <hr />
+
+        </div>
+    }
 }
 
 <div>

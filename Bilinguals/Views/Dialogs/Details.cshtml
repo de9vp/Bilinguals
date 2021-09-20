@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Details</h2>
@@ -41,3 +40,16 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<h3> Sentences </h3>
+
+<table class="table table-bordered">
+    @foreach (var item in Model.Sentences)  //Object reference not set to an instance of an object => add virtual to navigation properties in Model
+    {
+        <tr>
+            <td> @item.EnText </td>
+            <td> @item.ViText </td>
+            <td> @item.SortOrder </td>
+        </tr>
+    }
+</table>
