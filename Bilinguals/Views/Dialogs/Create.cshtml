@@ -18,20 +18,13 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.DateCreated)
+        @Html.HiddenFor(model => model.DateModified)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateModified, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateModified, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateModified, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -44,7 +37,7 @@
 }
 
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">Nhập trực tiếp</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">Chọn File (.txt)</button>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog d-block modal-xl">
@@ -62,26 +55,28 @@
 
 @helper Form()
 {
-    using (Html.BeginForm())
+    <div class="form-horizontal">
+    @if (ViewBag.Result != null)
     {
-        @Html.AntiForgeryToken()
-
-        <div class="">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.DateCreated)
-            <div class="row mb-3">
-                @Html.LabelFor(model => model.Name, "Tên đoạn hội thoại", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-                <div class="col-sm-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên đoạn hội thoại" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <hr />
-
-        </div>
+        if (ViewBag.Result != "success")
+        {
+            <div class="alert alert-danger">@ViewBag.Result</div>
+        }
+        else
+        {
+            <div class="alert alert-info">Imported successfully</div>
+        }
     }
+
+
+    @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label>Select file (*.xlsx)</label>
+        <input class="form-control" type="file" name="file" value="" style="width: 300px" />
+        <br />
+        <input type="submit" value="Upload" class="btn btn-primary" />
+    }
+</div>
 }
 
 <div>

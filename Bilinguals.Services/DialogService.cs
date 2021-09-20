@@ -75,7 +75,7 @@ namespace Bilinguals.Services
 
         public void FromTextFile(string allTexts)
         {
-            var groups = allTexts.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None);
+            var groups = allTexts.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None);  //xuong dong 2 lan ( ki tu xuong dong tren window )
             Dialog dialog = null;
             var index = 0;
 
@@ -83,7 +83,7 @@ namespace Bilinguals.Services
             {
                 if (g.Contains(" | "))
                 {
-                    var pair1 = g.Split(new string[] { " | " }, StringSplitOptions.None);
+                    var pair1 = g.Split(new string[] { " | " }, StringSplitOptions.None); 
                     // create new dialog
                     dialog = new Dialog
                     {
@@ -95,26 +95,24 @@ namespace Bilinguals.Services
                     continue;
                 }
 
-                if (dialog == null)
-                    return;
+                if (dialog == null) // exit function
+                    return; 
 
                 var pairOfTexts = g.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
-                if (pairOfTexts.Length < 2)
+                if (pairOfTexts.Length == 2)
                 {
+                    dialog.Sentences.Add(new Sentence
+                    {
+                        EnText = pairOfTexts[0].Trim(),
+                        ViText = pairOfTexts[1].Trim(),
+                        SortOrder = index,
+                    });
 
+                    _dialogRepo.Update(dialog);
+
+                    index++;
                 }
-
-                dialog.Sentences.Add(new Sentence
-                {
-                    EnText = pairOfTexts[0].Trim(),
-                    ViText = pairOfTexts[1].Trim(),
-                    SortOrder = index,
-                });
-
-                _dialogRepo.Update(dialog);
-
-                index++;
             }
         }
     }
