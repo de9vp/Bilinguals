@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using Bilinguals.Data;
+using Bilinguals.Domain;
 using Bilinguals.Domain.Interfaces;
 using Bilinguals.Services;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security.DataProtection;
 using Owin;
 using System;
@@ -24,7 +26,7 @@ namespace Bilinguals.App_Start
             //builder.RegisterType<BilingualDbContext>().AsSelf().InstancePerRequest();
             builder.RegisterType<BilingualDbContext>().As<IBilingualDbContext>().InstancePerRequest();
 
-            //builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerRequest();
+            builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerRequest();
 
             //builder.RegisterType<ApplicationRoleStore>().As<IRoleStore<ApplicationRole>>().InstancePerRequest();
 
@@ -41,6 +43,7 @@ namespace Bilinguals.App_Start
 
             builder.RegisterType<DialogService>().As<IDialogService>().InstancePerRequest();
             builder.RegisterType<SentenceService>().As<ISentenceService>().InstancePerRequest();
+            builder.RegisterType<UserDialogService>().As<IUserDialogService>().InstancePerRequest();
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

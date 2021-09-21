@@ -9,16 +9,20 @@ using System.Web.Mvc;
 using Bilinguals.Data;
 using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Bilinguals.Controllers
 {
+    [Authorize]
     public class DialogsController : Controller
     {
         private readonly IDialogService _dialogService;
+        private readonly IUserDialogService _userDialogService;
 
-        public DialogsController(IDialogService dialogService)
+        public DialogsController(IDialogService dialogService, IUserDialogService userDialogService)
         {
             _dialogService = dialogService;
+            _userDialogService = userDialogService;
         }
 
         // GET: Dialogs
@@ -124,6 +128,26 @@ namespace Bilinguals.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _dialogService.Delete(id);
+            return RedirectToAction("Index");
+        }
+
+        // POST
+        public ActionResult SaveToMyDialogs(int dialogId, string returnUrl = null)
+        {
+            var userDialog = _userDialogService.AddUserDialog(dialogId, User.Identity.GetUserId());
+
+            if (Request.IsAjaxRequest())
+                return Json(userDialog.Id, JsonRequestBehavior.AllowGet);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult RemoveFromMyDialogs()
+        {
+
             return RedirectToAction("Index");
         }
     }

@@ -51,6 +51,9 @@
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    <button data-dialogId="@item.Id" data-userDialogId="@item.UserDialogId" class="btn-save-unsave btn btn-sm btn-@(!item.UserDialogId.HasValue ? "outline-primary":"primary") btn-action" title="@(item.UserDialogId.HasValue ? "Remove from My Dialogs" : "Save to My Dialogs")">
+                        <span class="bi bi-@(!item.UserDialogId.HasValue ? "bookmark-plus":"bookmark-check")"></span>
+                    </button>
                 </td>
             </tr>
         }
@@ -61,6 +64,34 @@
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
         @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new { pageIndex, searchText = searchText }))
     </div>
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+        $(function () {
+
+            var _savingUrl = '/Dialogs/SaveToMyDialogs?dialogId=';
+
+            $('.btn-save-unsave').on('click', function (e) {
+
+                var _this = $(this);
+                var dialogId = _this.data('dialogid');
+                var userDialogId = _this.data('userDialogid');
+
+                var url = _savingUrl + dialogId;
+
+                $.ajax({
+                    url: url,
+                    success: function (newUserDialogId) {
+                        _this.data('userDialogId', newUserDialogId);
+                    }
+                });
+
+            });
+        });
+
+    </script>    
 }
 
 

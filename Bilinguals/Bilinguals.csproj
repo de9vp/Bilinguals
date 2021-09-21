@@ -210,6 +210,7 @@
     <Compile Include="Controllers\DialogsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportExportController.cs" />
+    <Compile Include="Controllers\LearnController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SentencesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -327,6 +328,7 @@
     <Content Include="Views\Dialogs\Edit.cshtml" />
     <Content Include="Views\Dialogs\Index.cshtml" />
     <Content Include="Views\ImportExport\Index.cshtml" />
+    <Content Include="Views\Learn\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

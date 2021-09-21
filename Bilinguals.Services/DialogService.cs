@@ -115,5 +115,10 @@ namespace Bilinguals.Services
                 }
             }
         }
+
+        public IPagedList<Dialog> GetUserDialogs()
+        {
+            return null;
+        }
     }
 }
