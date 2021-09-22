@@ -1,0 +1,74 @@
+﻿@model PagedList.IPagedList<Bilinguals.Domain.Models.Dialog>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "MyDialog";
+}
+
+<h2>MyDialog</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            DateCreated
+        </th>
+        <th>
+            DateModified
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateModified)
+        </td>
+        <td>
+            <a href="/Dialogs/RemoveFromMyDialogs?userDialogId=@(item.UserDialogId)&returnUrl=@Request.Url.AbsolutePath" class="btn btn-sm btn-danger" title="Remove from my dialogs">
+                <i class="bi bi-trash"></i>
+            </a>
+            @*<button data-userdialogid="@item.UserDialogId" class="btn-remove btn btn-warning" title="Remove from My Dialogs">
+                <span class="bi bi-trash"></span>
+            </button>*@
+        </td>
+    </tr>
+}
+
+</table>
+
+<div id="paging" style="text-align: center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new { pageIndex }))
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+
+        //$('.btn-remove').on('click', function (e) {
+        //    var _this = $(this);
+        //    var url = ('/Dialogs/RemoveFromMyDialogs?userDialogId=' + _this.data('userdialogid'));
+        //    $.ajax({
+        //        url: url,
+        //        success: function () {
+        //            //remove item model
+        //        }
+        //    });
+        //});
+
+    </script>    
+}

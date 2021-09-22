@@ -1,5 +1,6 @@
 ﻿using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,13 @@ namespace Bilinguals.Services
     public class UserDialogService : IUserDialogService
     {
         private readonly IRepository<UserDialog> _userDialogRepo;
+        private readonly IRepository<Dialog> _dialogRepo;
         private readonly IDialogService _dialogService;
 
-        public UserDialogService(IRepository<UserDialog> userDialogRepo, IDialogService dialogService)
+        public UserDialogService(IRepository<UserDialog> userDialogRepo, IRepository<Dialog> dialogRepo, IDialogService dialogService)
         {
             _userDialogRepo = userDialogRepo;
+            _dialogRepo = dialogRepo;
             _dialogService = dialogService;
         }
 
@@ -50,7 +53,32 @@ namespace Bilinguals.Services
         public void Delete(int userDialogId)
         {
             var userDialog = _userDialogRepo.Table.FirstOrDefault(x => x.Id == userDialogId);
-            _userDialogRepo.Delete(userDialog);
+
+            if (userDialog != null)
+            {
+                _userDialogRepo.Delete(userDialog);
+            }
+        }
+
+        public IPagedList<Dialog> GetUserDialogs(string userId, int pageIndex, int pageSize, string sortOrder)
+        {
+            var dialogIds = _userDialogRepo.Table
+                                .Where(x => x.UserId == userId)
+                                .Select(x => x.DialogId)
+                                .ToList();
+            var userDialogs = _dialogRepo.Table.Where(x => dialogIds.Contains(x.Id));
+
+            switch (sortOrder)
+            {
+                //case "": 
+                //    userDialogs = userDialogs.OrderByDescending(x => x.DateCreated);
+                //    break;
+                default:
+                    userDialogs = userDialogs.OrderBy(x => x.Id);
+                    break;
+            }
+
+            return userDialogs.ToPagedList(pageIndex, pageSize);
         }
     }
 }

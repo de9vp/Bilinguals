@@ -51,7 +51,7 @@
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    <button data-dialogId="@item.Id" data-userDialogId="@item.UserDialogId" class="btn-save-unsave btn btn-sm btn-@(!item.UserDialogId.HasValue ? "outline-primary":"primary") btn-action" title="@(item.UserDialogId.HasValue ? "Remove from My Dialogs" : "Save to My Dialogs")">
+                    <button data-dialogid="@item.Id" data-userdialogid="@item.UserDialogId" class="btn-save-remove btn btn-sm btn-@(!item.UserDialogId.HasValue ? "outline-primary":"primary")" title="@(item.UserDialogId.HasValue ? "Remove from My Dialogs" : "Save to My Dialogs")">
                         <span class="bi bi-@(!item.UserDialogId.HasValue ? "bookmark-plus":"bookmark-check")"></span>
                     </button>
                 </td>
@@ -74,11 +74,17 @@
             var _savingUrl = '/Dialogs/SaveToMyDialogs?dialogId=';
             var _removingUrl = '/Dialogs/RemoveFromMyDialogs?userDialogId=';
 
-            $('.btn-save-unsave').on('click', function (e) {
+            $('.btn-save-remove').on('click', function (e) {
 
                 var _this = $(this);
                 var dialogId = _this.data('dialogid'); //note: lower case
                 var userDialogId = _this.data('userdialogid');
+
+                //if (!userDialogId) {
+                //    url = (_savingUrl + dialogId);
+                //} else {
+                //    url = (_removingUrl + userDialogId);
+                //}
 
                 var url = (userDialogId && _removingUrl + userDialogId) || (_savingUrl + dialogId);
 
@@ -86,13 +92,15 @@
                     url: url,
                     success: function (newUserDialogId) {
                         if (!newUserDialogId) {
-                            _this.data('userDialogId', newUserDialogId);
-                            _this.removeClass('.btn-primary').addClass('.btn-outline-primary');
-                            _this.find('.bi').removeClass('.bi-bookmark-plus').addClass('.bi-bookmark-check');
+                            _this.removeClass('btn-primary').addClass('btn-outline-primary')
+                                .data('userdialogid', null)
+                                .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus')
+                                .prop('title', 'Save to My Dialogs');
                         } else {
-                            _this.data('userDialogId', null);
-                            _this.removeClass('.btn-outline-primary').addClass('.btn-primary');
-                            _this.find('.bi').removeClass('.bi-bookmark-check').addClass('.bi-bookmark-plus');
+                            _this.removeClass('btn-outline-primary').addClass('btn-primary')
+                                .data('userdialogid', newUserDialogId)
+                                .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check')
+                                .prop('title', 'Remove from My Dialogs');
                         }
                     }
                 });

@@ -329,6 +329,7 @@
     <Content Include="Views\Dialogs\Index.cshtml" />
     <Content Include="Views\ImportExport\Index.cshtml" />
     <Content Include="Views\Learn\Index.cshtml" />
+    <Content Include="Views\Dialogs\MyDialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

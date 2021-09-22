@@ -14,4 +14,6 @@ AutofacHelper.RegisterDependencies(app); in /startup.cs
 * JQuery.BlockUI
 * Generic Repository
 * PagedList.Mvc , Regex , System.IO
-* 
+```
+returnUrl = @Request.Url.AbsolutePath
+```

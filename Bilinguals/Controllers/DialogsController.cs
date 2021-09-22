@@ -138,7 +138,20 @@ namespace Bilinguals.Controllers
             return RedirectToAction("Index");
         }
 
-        // POST
+        public ActionResult MyDialog(int? pageIndex, string sortOrder)
+        {
+            var dialogs = _userDialogService.GetUserDialogs(User.Identity.GetUserId(), pageIndex ?? 1, 4, sortOrder);
+
+            foreach (var item in dialogs)
+            {
+                var userDialog = item.UserDialogs.FirstOrDefault(x => x.UserId == User.Identity.GetUserId() && x.DialogId == item.Id);
+                item.UserDialogId = userDialog?.Id;
+            }
+
+            return View(dialogs);
+        }
+
+        #region JSON - AJAX REQUESTS
         public ActionResult SaveToMyDialogs(int dialogId, string returnUrl = null)
         {
             var userDialog = _userDialogService.AddUserDialog(dialogId, User.Identity.GetUserId());
@@ -164,5 +177,6 @@ namespace Bilinguals.Controllers
 
             return RedirectToAction("Index");
         }
+        #endregion
     }
 }

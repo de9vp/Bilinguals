@@ -1,4 +1,5 @@
 ﻿using Bilinguals.Domain.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace Bilinguals.Domain.Interfaces
         UserDialog AddUserDialog(int dialogId, string userId);
 
         void Delete(int userDialogId);
+        IPagedList<Dialog> GetUserDialogs(string userId, int pageIndex, int pageSize, string sortOrder);
     }
 }
