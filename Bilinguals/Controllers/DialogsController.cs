@@ -32,6 +32,13 @@ namespace Bilinguals.Controllers
 
             var dialogs = _dialogService.GetDialogList(pageIndex ?? 1, pageSize, searchText, sortOrder);
 
+            foreach (var item in dialogs)
+            {
+                var userDialog = item.UserDialogs.FirstOrDefault(x => x.UserId == User.Identity.GetUserId() && x.DialogId == item.Id);
+                item.UserDialogId = userDialog?.Id;
+            }
+
+
             return View(dialogs);
         }
 
@@ -145,8 +152,15 @@ namespace Bilinguals.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult RemoveFromMyDialogs()
+        public ActionResult RemoveFromMyDialogs(int userDialogId, string returnUrl = null)
         {
+            _userDialogService.Delete(userDialogId);
+
+            if (Request.IsAjaxRequest())
+                return Json("", JsonRequestBehavior.AllowGet);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
 
             return RedirectToAction("Index");
         }

@@ -72,22 +72,30 @@
         $(function () {
 
             var _savingUrl = '/Dialogs/SaveToMyDialogs?dialogId=';
+            var _removingUrl = '/Dialogs/RemoveFromMyDialogs?userDialogId=';
 
             $('.btn-save-unsave').on('click', function (e) {
 
                 var _this = $(this);
-                var dialogId = _this.data('dialogid');
-                var userDialogId = _this.data('userDialogid');
+                var dialogId = _this.data('dialogid'); //note: lower case
+                var userDialogId = _this.data('userdialogid');
 
-                var url = _savingUrl + dialogId;
+                var url = (userDialogId && _removingUrl + userDialogId) || (_savingUrl + dialogId);
 
                 $.ajax({
                     url: url,
                     success: function (newUserDialogId) {
-                        _this.data('userDialogId', newUserDialogId);
+                        if (!newUserDialogId) {
+                            _this.data('userDialogId', newUserDialogId);
+                            _this.removeClass('.btn-primary').addClass('.btn-outline-primary');
+                            _this.find('.bi').removeClass('.bi-bookmark-plus').addClass('.bi-bookmark-check');
+                        } else {
+                            _this.data('userDialogId', null);
+                            _this.removeClass('.btn-outline-primary').addClass('.btn-primary');
+                            _this.find('.bi').removeClass('.bi-bookmark-check').addClass('.bi-bookmark-plus');
+                        }
                     }
                 });
-
             });
         });
 

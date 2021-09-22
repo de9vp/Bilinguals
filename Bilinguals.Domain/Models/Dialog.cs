@@ -17,6 +17,7 @@ namespace Bilinguals.Domain.Models
         public string Description { get; set; }
 
         public virtual IList<Sentence> Sentences { get; set; }  //navigation properties
+        public virtual IList<UserDialog> UserDialogs { get; set; }
         
         [NotMapped]
         public int? UserDialogId { get; set; }

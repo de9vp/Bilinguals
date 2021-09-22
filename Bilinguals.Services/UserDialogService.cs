@@ -46,5 +46,11 @@ namespace Bilinguals.Services
 
             return userDialog;
         }
+
+        public void Delete(int userDialogId)
+        {
+            var userDialog = _userDialogRepo.Table.FirstOrDefault(x => x.Id == userDialogId);
+            _userDialogRepo.Delete(userDialog);
+        }
     }
 }
