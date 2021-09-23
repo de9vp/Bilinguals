@@ -48,15 +48,16 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 
-    @*<script src="~/Scripts/jquery.blockUI.js"></script>
+    <script src="~/Scripts/jquery.blockUI.js"></script>
 
     <script type="text/javascript">
 
+        //https://jquery.malsup.com/block/#demos
         $(function () {
             var defaults = $.blockUI.defaults;
             $.blockUI.defaults = {
                 ...defaults,
-                message: 'Please wait...',
+                message: 'Please wait ...',
                 baseZ: 1055,
                 overlayCss: {
                     ...defaults.overlayCSS,
@@ -76,7 +77,7 @@
 
             $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
         });
-    </script>*@
+    </script>
 
     @RenderSection("scripts", required: false)
 </body>
