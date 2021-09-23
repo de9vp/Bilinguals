@@ -32,12 +32,12 @@ namespace Bilinguals.Controllers
 
             var dialogs = _dialogService.GetDialogList(pageIndex ?? 1, pageSize, searchText, sortOrder);
 
+            UserDialog userDialog;
             foreach (var item in dialogs)
             {
-                var userDialog = item.UserDialogs.FirstOrDefault(x => x.UserId == User.Identity.GetUserId() && x.DialogId == item.Id);
+                userDialog = item.UserDialogs.Where(x => x.UserId == User.Identity.GetUserId()).FirstOrDefault(x => x.DialogId == item.Id);
                 item.UserDialogId = userDialog?.Id;
             }
-
 
             return View(dialogs);
         }
@@ -142,11 +142,11 @@ namespace Bilinguals.Controllers
         {
             var dialogs = _userDialogService.GetUserDialogs(User.Identity.GetUserId(), pageIndex ?? 1, 4, sortOrder);
 
-            foreach (var item in dialogs)
-            {
-                var userDialog = item.UserDialogs.FirstOrDefault(x => x.UserId == User.Identity.GetUserId() && x.DialogId == item.Id);
-                item.UserDialogId = userDialog?.Id;
-            }
+            //foreach (var item in dialogs)
+            //{
+            //    var userDialog = item.UserDialogs.FirstOrDefault(x => x.UserId == User.Identity.GetUserId() && x.DialogId == item.Id);
+            //    item.UserDialogId = userDialog?.Id;
+            //}
 
             return View(dialogs);
         }

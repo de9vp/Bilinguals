@@ -3,6 +3,7 @@ using Bilinguals.Domain.Models;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,23 +63,21 @@ namespace Bilinguals.Services
 
         public IPagedList<Dialog> GetUserDialogs(string userId, int pageIndex, int pageSize, string sortOrder)
         {
-            var dialogIds = _userDialogRepo.Table
-                                .Where(x => x.UserId == userId)
-                                .Select(x => x.DialogId)
-                                .ToList();
-            var userDialogs = _dialogRepo.Table.Where(x => dialogIds.Contains(x.Id));
+            var userDialogs = _userDialogRepo.Table
+                                            .Where(x => x.UserId == userId)
+                                            .Include(icl => icl.Dialog)
+                                            .AsEnumerable() //luu y
+                                            .Select(x => new Dialog
+                                            {
+                                                Id = x.DialogId.Value,
+                                                Name = x.Dialog.Name,
+                                                Description = x.Dialog.Description,
+                                                DateCreated = x.Dialog.DateCreated,
+                                                DateModified = x.Dialog.DateModified,
+                                                UserDialogId = x.Id
+                                            }).ToPagedList(pageIndex, pageSize);
 
-            switch (sortOrder)
-            {
-                //case "": 
-                //    userDialogs = userDialogs.OrderByDescending(x => x.DateCreated);
-                //    break;
-                default:
-                    userDialogs = userDialogs.OrderBy(x => x.Id);
-                    break;
-            }
-
-            return userDialogs.ToPagedList(pageIndex, pageSize);
+            return userDialogs;
         }
     }
 }

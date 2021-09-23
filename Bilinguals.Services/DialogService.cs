@@ -13,10 +13,15 @@ namespace Bilinguals.Services
     public class DialogService : IDialogService
     {
         private readonly IRepository<Dialog> _dialogRepo;
-        public DialogService(IRepository<Dialog> dialogRepo)
+        private readonly IRepository<UserDialog> _userDialogRepo;
+
+        public DialogService(IRepository<Dialog> dialogRepo, IRepository<UserDialog> userDialogRepo)
         {
             _dialogRepo = dialogRepo;
+            _userDialogRepo = userDialogRepo;
         }
+
+
         public void Add(Dialog dialog)
         {
             _dialogRepo.Insert(dialog);
@@ -24,6 +29,13 @@ namespace Bilinguals.Services
         public void Delete(int id)
         {
             var dialog = _dialogRepo.Table.FirstOrDefault(x => x.Id == id);
+            
+            var userDialogs = _userDialogRepo.Table.Where(x => x.DialogId == dialog.Id).ToList();
+            foreach (var item in userDialogs)
+            {
+                _userDialogRepo.Delete(item);
+            }
+
             _dialogRepo.Delete(dialog);
         }
         public void Edit(Dialog dialog)
