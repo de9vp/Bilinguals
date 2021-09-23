@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISentenceService.cs" />
     <Compile Include="Interfaces\IUserDialogService.cs" />
+    <Compile Include="Interfaces\IUserSentenceService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Models\ApplicationUser.cs" />

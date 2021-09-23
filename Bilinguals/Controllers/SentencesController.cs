@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Bilinguals.Data;
 using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Bilinguals.Controllers
 {
@@ -17,11 +18,13 @@ namespace Bilinguals.Controllers
     {
         private readonly ISentenceService _sentenceService;
         private readonly IDialogService _dialogService;
+        private readonly IUserSentenceService _userSentenceService;
 
-        public SentencesController(ISentenceService sentenceService, IDialogService dialogService)
+        public SentencesController(ISentenceService sentenceService, IDialogService dialogService, IUserSentenceService userSentenceService = null)
         {
             _sentenceService = sentenceService;
             _dialogService = dialogService;
+            _userSentenceService = userSentenceService;
         }
 
         // GET: Sentences
@@ -138,5 +141,40 @@ namespace Bilinguals.Controllers
             _sentenceService.Delete(id);
             return RedirectToAction("Index");
         }
+
+        // GET:
+        public ActionResult MyFeaturedSentence()
+        {
+            return View();
+        }
+
+        #region JSON - AJAX REQUESTS
+        public ActionResult SaveToMyFeaturedSentences(int sentenceId,  string returnUrl = null)
+        {
+            var userSentence = _userSentenceService.AddOrUpdateUserSentence(sentenceId, User.Identity.GetUserId(), true);
+
+            if (Request.IsAjaxRequest())
+                return Json(userSentence.Id, JsonRequestBehavior.AllowGet);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult RemoveFromMyFeaturedSentence(int userSentenceId, string returnUrl = null)
+        {
+            _userSentenceService.Remove(userSentenceId);
+
+            if (Request.IsAjaxRequest())
+                return Json("", JsonRequestBehavior.AllowGet);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
+
+            return RedirectToAction("Index");
+        }
+
+        #endregion
     }
 }

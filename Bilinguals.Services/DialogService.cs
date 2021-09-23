@@ -14,11 +14,13 @@ namespace Bilinguals.Services
     {
         private readonly IRepository<Dialog> _dialogRepo;
         private readonly IRepository<UserDialog> _userDialogRepo;
+        private readonly IRepository<UserSentence> _userSentenceRepo;
 
-        public DialogService(IRepository<Dialog> dialogRepo, IRepository<UserDialog> userDialogRepo)
+        public DialogService(IRepository<Dialog> dialogRepo, IRepository<UserDialog> userDialogRepo, IRepository<UserSentence> userSentenceRepo)
         {
             _dialogRepo = dialogRepo;
             _userDialogRepo = userDialogRepo;
+            _userSentenceRepo = userSentenceRepo;
         }
 
 
@@ -128,9 +130,31 @@ namespace Bilinguals.Services
             }
         }
 
-        public IPagedList<Dialog> GetUserDialogs()
+        public Dialog GetDialogDetailAndSentences(int dialogId, string userId)
         {
-            return null;
+            var dialog = _dialogRepo.GetById(dialogId);
+            if (dialog == null)
+                return null;
+
+            //https://stackoverflow.com/questions/3404975/left-outer-join-in-linq
+            var dialogSentenceDetail = from s in dialog.Sentences
+                                       from us in _userSentenceRepo.Table.Where(x => x.UserId == userId && x.SentenceId == s.Id).DefaultIfEmpty()
+                                       select new Sentence
+                                       {
+                                           Id = s.Id,
+                                           EnText = s.EnText,
+                                           ViText = s.ViText,
+                                           DateCreated = s.DateCreated,
+                                           DateModified = s.DateModified,
+                                           SortOrder = s.SortOrder,
+                                           DialogId = s.DialogId,
+                                           UserSentenceId = us == null ? (int?)null : us.Id,
+                                           Featured = us == null ? (bool?)null : us.Featured
+                                       };
+
+            dialog.Sentences = dialogSentenceDetail.ToList();
+
+            return dialog;
         }
     }
 }

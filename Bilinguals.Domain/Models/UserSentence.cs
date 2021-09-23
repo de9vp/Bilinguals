@@ -12,7 +12,7 @@ namespace Bilinguals.Domain.Models
         public int? UserDialogId { get; set; }
         public int Reviews { get; set; }
         public int DifficultyLevel { get; set; }
-        public bool Featured { get; set; }
+        public bool Featured { get; set; } //check save & remove sentence
         public bool Mastered { get; set; }
         public DateTime? DateFeatured { get; set; }
         public string Note { get; set; }

@@ -24,6 +24,6 @@ namespace Bilinguals.Domain.Interfaces
 
         void FromTextFile(string allTexts);
 
-        IPagedList<Dialog> GetUserDialogs();
+        Dialog GetDialogDetailAndSentences(int dialogId, string userId);
     }
 }

@@ -25,14 +25,11 @@ namespace Bilinguals.Controllers
             return View();
         }
 
-        public ActionResult AddDialogToCollection(int dialogId)
+        public ActionResult MyLearning()
         {
-            var userId = User.Identity.GetUserId();
-
-            _userDialogService.AddUserDialog(dialogId, userId);
-
             return RedirectToAction("Overview");
         }
+
 
 
     }

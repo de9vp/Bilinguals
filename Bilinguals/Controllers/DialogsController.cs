@@ -49,7 +49,7 @@ namespace Bilinguals.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Dialog dialog = _dialogService.GetById(id.Value);
+            Dialog dialog = _dialogService.GetDialogDetailAndSentences(id.Value, User.Identity.GetUserId());
             if (dialog == null)
             {
                 return HttpNotFound();
@@ -141,12 +141,6 @@ namespace Bilinguals.Controllers
         public ActionResult MyDialog(int? pageIndex, string sortOrder)
         {
             var dialogs = _userDialogService.GetUserDialogs(User.Identity.GetUserId(), pageIndex ?? 1, 4, sortOrder);
-
-            //foreach (var item in dialogs)
-            //{
-            //    var userDialog = item.UserDialogs.FirstOrDefault(x => x.UserId == User.Identity.GetUserId() && x.DialogId == item.Id);
-            //    item.UserDialogId = userDialog?.Id;
-            //}
 
             return View(dialogs);
         }

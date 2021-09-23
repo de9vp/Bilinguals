@@ -44,12 +44,53 @@
 <h3> Sentences </h3>
 
 <table class="table table-bordered">
-    @foreach (var item in Model.Sentences)  //Object reference not set to an instance of an object => add virtual to navigation properties in Model
+    @foreach (var item in Model.Sentences)  //Bug: Object reference not set to an instance of an object => add virtual to navigation properties in Model
     {
         <tr>
             <td> @item.EnText </td>
             <td> @item.ViText </td>
-            <td> @item.SortOrder </td>
+            <td>
+                <button data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn-save-remove btn btn-sm btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary")" title="@(item.UserSentenceId.HasValue ? "Remove" : "Save")">
+                    <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span>
+                </button>
+            </td>
         </tr>
     }
 </table>
+
+@section scripts {
+<script type="text/javascript">
+    $(function () {
+
+        var _savingUrl = '/Sentences/SaveToMyFeaturedSentences?sentenceId=';
+        var _removingUrl = '/Sentences/RemoveFromMyFeaturedSentence?userSentenceId=';
+
+        $('.btn-save-remove').on('click', function (e) {
+
+            var _this = $(this);
+            var sentenceId = _this.data('sentenceid'); //note: lower case
+            var userSentenceId = _this.data('usersentenceid');
+
+            var url = (userSentenceId && _removingUrl + userSentenceId) || (_savingUrl + sentenceId);
+
+            $.ajax({
+                url: url,
+                success: function (newUserSentenceId) {
+                    if (!newUserSentenceId) {
+                        _this.removeClass('btn-primary').addClass('btn-outline-primary')
+                            .data('usersentenceid', null)
+                            .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus')
+                            .prop('title', 'Save');
+                    } else {
+                        _this.removeClass('btn-outline-primary').addClass('btn-primary')
+                            .data('usersentenceid', newUserSentenceId)
+                            .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check')
+                            .prop('title', 'Remove');
+                    }
+                }
+            });
+        });
+
+    });
+</script>    
+}
