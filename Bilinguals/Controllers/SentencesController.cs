@@ -143,15 +143,16 @@ namespace Bilinguals.Controllers
         }
 
         // GET:
-        public ActionResult MyFeaturedSentence()
+        public ActionResult MyFeaturedSentence(int? pageIndex, string sortOrder)
         {
+            var sentences = _userSentenceService.GetUserSentences(User.Identity.GetUserId(), pageIndex ?? 1, 8, sortOrder);
             return View();
         }
 
         #region JSON - AJAX REQUESTS
         public ActionResult SaveToMyFeaturedSentences(int sentenceId,  string returnUrl = null)
         {
-            var userSentence = _userSentenceService.AddOrUpdateUserSentence(sentenceId, User.Identity.GetUserId(), true);
+            var userSentence = _userSentenceService.AddOrUpdateUserSentence(sentenceId, User.Identity.GetUserId());
 
             if (Request.IsAjaxRequest())
                 return Json(userSentence.Id, JsonRequestBehavior.AllowGet);

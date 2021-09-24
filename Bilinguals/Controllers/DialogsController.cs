@@ -159,6 +159,19 @@ namespace Bilinguals.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult MarkLearned(int userDialogId, string returnUrl = null)
+        {
+            _userDialogService.MarkLearned(userDialogId);
+
+            if (Request.IsAjaxRequest())
+                return Json("", JsonRequestBehavior.AllowGet);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult RemoveFromMyDialogs(int userDialogId, string returnUrl = null)
         {
             _userDialogService.Delete(userDialogId);

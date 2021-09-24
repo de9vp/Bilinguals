@@ -23,7 +23,10 @@ namespace Bilinguals.Data
         public DbSet<Sentence> Sentences { get; set; }
         public DbSet<UserDialog> UserDialogs { get; set; }
         public DbSet<UserSentence> UserSentences { get; set; }
-        public DbSet<UserLearning> UserLearnings { get; set; }
+        public DbSet<UserWord> UserWords { get; set; }
+        public DbSet<IrregularVerb> IrregularVerbs { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Group> Groups { get; set; }
 
         //https://stackoverflow.com/questions/7641552/overriding-savechanges-and-setting-modifieddate-but-how-do-i-set-modifiedby
         public override int SaveChanges()

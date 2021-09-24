@@ -11,7 +11,7 @@ namespace Bilinguals.Domain.Interfaces
     public interface IUserDialogService
     {
         UserDialog AddUserDialog(int dialogId, string userId);
-
+        void MarkLearned(int userDialogId);
         void Delete(int userDialogId);
         IPagedList<Dialog> GetUserDialogs(string userId, int pageIndex, int pageSize, string sortOrder);
     }

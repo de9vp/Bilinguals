@@ -32,11 +32,12 @@ namespace Bilinguals.Services
         {
             var dialog = _dialogRepo.Table.FirstOrDefault(x => x.Id == id);
             
-            var userDialogs = _userDialogRepo.Table.Where(x => x.DialogId == dialog.Id).ToList();
-            foreach (var item in userDialogs)
-            {
-                _userDialogRepo.Delete(item);
-            }
+            //var userDialogs = _userDialogRepo.Table.Where(x => x.DialogId == dialog.Id).ToList();
+            //foreach (var item in userDialogs)
+            //{
+            //    _userDialogRepo.Delete(item);
+            //} 
+            // => Foreign key not null
 
             _dialogRepo.Delete(dialog);
         }
@@ -148,8 +149,7 @@ namespace Bilinguals.Services
                                            DateModified = s.DateModified,
                                            SortOrder = s.SortOrder,
                                            DialogId = s.DialogId,
-                                           UserSentenceId = us == null ? (int?)null : us.Id,
-                                           Featured = us == null ? (bool?)null : us.Featured
+                                           UserSentenceId = us == null ? (int?)null : us.Id
                                        };
 
             dialog.Sentences = dialogSentenceDetail.ToList();

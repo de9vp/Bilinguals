@@ -10,12 +10,12 @@ namespace Bilinguals.Domain.Models
     {
         public int SentenceId { get; set; }
         public int? UserDialogId { get; set; }
-        public int Reviews { get; set; }
-        public int DifficultyLevel { get; set; }
-        public bool Featured { get; set; } //check save & remove sentence
-        public bool Mastered { get; set; }
-        public DateTime? DateFeatured { get; set; }
-        public string Note { get; set; }
+        //public int Reviews { get; set; }
+        //public int DifficultyLevel { get; set; }
+        //public bool Featured { get; set; } //check save & remove sentence
+        //public bool Mastered { get; set; }
+        //public DateTime? DateFeatured { get; set; }
+        //public string Note { get; set; }
         public string UserId { get; set; }
 
         public UserDialog UserDialog { get; set; }

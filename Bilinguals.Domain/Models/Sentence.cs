@@ -15,13 +15,11 @@ namespace Bilinguals.Domain.Models
         public virtual Dialog Dialog { get; set; }  //using virtual in here, not include
         public int SortOrder { get; set; }
 
-        public List<UserSentence> UserSentences { get; set; }
+        public IList<UserSentence> UserSentences { get; set; }
 
         [NotMapped]
         public int? UserSentenceId { get; set; }
 
-        [NotMapped]
-        public bool? Featured { get; set; }
-
+        
     }
 }

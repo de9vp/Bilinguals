@@ -68,11 +68,14 @@
     <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationUserRole.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Dialog.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\IrregularVerb.cs" />
     <Compile Include="Models\Sentence.cs" />
     <Compile Include="Models\UserDialog.cs" />
-    <Compile Include="Models\UserLearning.cs" />
     <Compile Include="Models\UserSentence.cs" />
+    <Compile Include="Models\UserWord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

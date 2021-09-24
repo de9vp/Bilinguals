@@ -25,30 +25,47 @@ namespace Bilinguals.Services
 
         public UserDialog AddUserDialog(int dialogId, string userId)
         {
-            var dialog = _dialogService.GetById(dialogId);
+            //var dialog = _dialogService.GetById(dialogId);
 
-            if (dialog == null)
-            {
-                throw new ArgumentNullException("Dialog not found");
-            }
+            //if (dialog == null)
+            //{
+            //    throw new ArgumentNullException("Dialog not found");
+            //}
 
             //check if this UserDialog already axists
             var userDialog = _userDialogRepo.Table.FirstOrDefault(x => x.DialogId == dialogId && x.UserId == userId);
             if (userDialog != null)
             {
-                return userDialog;
+                //update
+                userDialog.Learned = false;
+                _userDialogRepo.Update(userDialog);
+            }
+            else
+            {
+                //add
+                userDialog = new UserDialog
+                {
+                    DialogId = dialogId,
+                    UserId = userId,
+                    Learned = false
+                };
+                _userDialogRepo.Insert(userDialog);
+
             }
 
-            userDialog = new UserDialog
-            {
-                DialogId = dialog.Id,
-                UserId = userId,
-                IsLearning = true
-            };
-
-            _userDialogRepo.Insert(userDialog);
-
             return userDialog;
+        }
+
+        public void MarkLearned (int userDialogId)
+        {
+            var userDialog = _userDialogRepo.Table.FirstOrDefault(x => x.Id == userDialogId);
+
+            if (userDialog != null)
+            {
+                userDialog.Learned = true;
+                userDialog.DateLearned = DateTime.Now;
+                _userDialogRepo.Update(userDialog);
+            }
         }
 
         public void Delete(int userDialogId)
@@ -69,7 +86,7 @@ namespace Bilinguals.Services
                                             .AsEnumerable() //luu y
                                             .Select(x => new Dialog
                                             {
-                                                Id = x.DialogId.Value,
+                                                Id = x.DialogId,
                                                 Name = x.Dialog.Name,
                                                 Description = x.Dialog.Description,
                                                 DateCreated = x.Dialog.DateCreated,

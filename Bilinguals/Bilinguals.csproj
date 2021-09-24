@@ -331,6 +331,7 @@
     <Content Include="Views\Learn\Index.cshtml" />
     <Content Include="Views\Dialogs\MyDialog.cshtml" />
     <Content Include="Views\Learn\MyLearning.cshtml" />
+    <Content Include="Views\Sentences\MyFeaturedSentence.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
