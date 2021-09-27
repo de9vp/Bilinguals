@@ -7,34 +7,41 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bilinguals.Data;
+using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Bilinguals.Controllers
 {
     public class GroupsController : Controller
     {
-        private BilingualDbContext db = new BilingualDbContext();
+        private readonly IGroupService _groupService;
+
+        public GroupsController(IGroupService groupService)
+        {
+            _groupService = groupService;
+        }
 
         // GET: Groups
-        public ActionResult Index()
-        {
-            return View(db.Groups.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    return View(db.Groups.ToList());
+        //}
 
         // GET: Groups/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Group group = db.Groups.Find(id);
-            if (group == null)
-            {
-                return HttpNotFound();
-            }
-            return View(group);
-        }
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Group group = db.Groups.Find(id);
+        //    if (group == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(group);
+        //}
 
         // GET: Groups/Create
         public ActionResult Create()
@@ -47,14 +54,20 @@ namespace Bilinguals.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,UserId,StrSentenceId,Description,DateCreated,DateModified")] Group group)
+        public ActionResult Create(Group group)
         {
             if (ModelState.IsValid)
             {
-                db.Groups.Add(group);
-                db.SaveChanges();
+                group.UserId = User.Identity.GetUserId();
+                _groupService.Add(group);
+
+                if (Request.IsAjaxRequest())
+                    return Json("", JsonRequestBehavior.AllowGet);
+
                 return RedirectToAction("Index");
             }
+            if (Request.IsAjaxRequest())
+                return Json(new { success = false, message = "Invalid" }, JsonRequestBehavior.AllowGet);
 
             return View(group);
         }
@@ -66,7 +79,7 @@ namespace Bilinguals.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Group group = db.Groups.Find(id);
+            Group group = _groupService.GetById(id.Value);
             if (group == null)
             {
                 return HttpNotFound();
@@ -79,12 +92,11 @@ namespace Bilinguals.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,UserId,StrSentenceId,Description,DateCreated,DateModified")] Group group)
+        public ActionResult Edit(Group group)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(group).State = EntityState.Modified;
-                db.SaveChanges();
+                _groupService.Edit(group);
                 return RedirectToAction("Index");
             }
             return View(group);
@@ -97,7 +109,7 @@ namespace Bilinguals.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Group group = db.Groups.Find(id);
+            Group group = _groupService.GetById(id.Value);
             if (group == null)
             {
                 return HttpNotFound();
@@ -110,19 +122,9 @@ namespace Bilinguals.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Group group = db.Groups.Find(id);
-            db.Groups.Remove(group);
-            db.SaveChanges();
+            _groupService.Delete(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

@@ -15,13 +15,11 @@
         <h4>Group</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(Model => Model.UserId)
         @Html.HiddenFor(Model => Model.Description)
-        @Html.HiddenFor(Model => Model.StrSentenceId)
-        @Html.HiddenFor(Model => Model.DateCreated)
-         
-        <div class="form-group">
+        @Html.HiddenFor(Model => Model.DateModified)
 
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
@@ -34,14 +32,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StrSentenceId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StrSentenceId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StrSentenceId, "", new { @class = "text-danger" })
             </div>
         </div>
 

@@ -7,13 +7,13 @@ namespace Bilinguals.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class updateDBfinal3 : IMigrationMetadata
+    public sealed partial class FixDB : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updateDBfinal3));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FixDB));
         
         string IMigrationMetadata.Id
         {
-            get { return "202109270726474_updateDBfinal3"; }
+            get { return "202109270907017_FixDB"; }
         }
         
         string IMigrationMetadata.Source

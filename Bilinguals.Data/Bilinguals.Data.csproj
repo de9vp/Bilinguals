@@ -80,37 +80,9 @@
     <Compile Include="Migrations\202109241103047_UpdateDB2.Designer.cs">
       <DependentUpon>202109241103047_UpdateDB2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202109241113134_Fix.cs" />
-    <Compile Include="Migrations\202109241113134_Fix.Designer.cs">
-      <DependentUpon>202109241113134_Fix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109241549570_UpdateDB3.cs" />
-    <Compile Include="Migrations\202109241549570_UpdateDB3.Designer.cs">
-      <DependentUpon>202109241549570_UpdateDB3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109270217576_updateDB4.cs" />
-    <Compile Include="Migrations\202109270217576_updateDB4.Designer.cs">
-      <DependentUpon>202109270217576_updateDB4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109270236118_updateDBfinal.cs" />
-    <Compile Include="Migrations\202109270236118_updateDBfinal.Designer.cs">
-      <DependentUpon>202109270236118_updateDBfinal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109270700515_updateDBfinal1.cs" />
-    <Compile Include="Migrations\202109270700515_updateDBfinal1.Designer.cs">
-      <DependentUpon>202109270700515_updateDBfinal1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109270718258_updateDBfinal2.cs" />
-    <Compile Include="Migrations\202109270718258_updateDBfinal2.Designer.cs">
-      <DependentUpon>202109270718258_updateDBfinal2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109270726474_updateDBfinal3.cs" />
-    <Compile Include="Migrations\202109270726474_updateDBfinal3.Designer.cs">
-      <DependentUpon>202109270726474_updateDBfinal3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109270730574_test.cs" />
-    <Compile Include="Migrations\202109270730574_test.Designer.cs">
-      <DependentUpon>202109270730574_test.cs</DependentUpon>
+    <Compile Include="Migrations\202109270907017_FixDB.cs" />
+    <Compile Include="Migrations\202109270907017_FixDB.Designer.cs">
+      <DependentUpon>202109270907017_FixDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,29 +116,8 @@
     <EmbeddedResource Include="Migrations\202109241103047_UpdateDB2.resx">
       <DependentUpon>202109241103047_UpdateDB2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109241113134_Fix.resx">
-      <DependentUpon>202109241113134_Fix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109241549570_UpdateDB3.resx">
-      <DependentUpon>202109241549570_UpdateDB3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109270217576_updateDB4.resx">
-      <DependentUpon>202109270217576_updateDB4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109270236118_updateDBfinal.resx">
-      <DependentUpon>202109270236118_updateDBfinal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109270700515_updateDBfinal1.resx">
-      <DependentUpon>202109270700515_updateDBfinal1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109270718258_updateDBfinal2.resx">
-      <DependentUpon>202109270718258_updateDBfinal2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109270726474_updateDBfinal3.resx">
-      <DependentUpon>202109270726474_updateDBfinal3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109270730574_test.resx">
-      <DependentUpon>202109270730574_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109270907017_FixDB.resx">
+      <DependentUpon>202109270907017_FixDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
