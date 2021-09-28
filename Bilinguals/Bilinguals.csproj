@@ -202,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\AppliactionUserExtentions.cs" />
+    <Compile Include="App\JsonResultHelper.cs" />
     <Compile Include="App_Start\AutofacHelper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

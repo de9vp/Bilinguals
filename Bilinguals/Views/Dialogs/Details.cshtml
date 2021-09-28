@@ -6,6 +6,10 @@
 
 <h2>Details</h2>
 
+<button id="edit_link" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#bsModal">
+    <span class="bi bi-pencil-square"></span>
+</button>
+
 <div>
     <h4>Dialog</h4>
     <hr />
@@ -58,39 +62,132 @@
     }
 </table>
 
+<!-- Modal -->
+<div class="modal fade" id="bsModal" tabindex="-1">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
 @section scripts {
-<script type="text/javascript">
-    $(function () {
+    <script type="text/javascript">
+        $(function () {
+            var _savingUrl = '/Sentences/SaveToMyFeaturedSentences?sentenceId=';
+            var _removingUrl = '/Sentences/RemoveFromMyFeaturedSentence?userSentenceId=';
 
-        var _savingUrl = '/Sentences/SaveToMyFeaturedSentences?sentenceId=';
-        var _removingUrl = '/Sentences/RemoveFromMyFeaturedSentence?userSentenceId=';
+            $('.btn-save-remove').on('click', function (e) {
 
-        $('.btn-save-remove').on('click', function (e) {
+                var _this = $(this);
+                var sentenceId = _this.data('sentenceid'); //note: lower case
+                var userSentenceId = _this.data('usersentenceid');
 
-            var _this = $(this);
-            var sentenceId = _this.data('sentenceid'); //note: lower case
-            var userSentenceId = _this.data('usersentenceid');
+                var url = (userSentenceId && _removingUrl + userSentenceId) || (_savingUrl + sentenceId);
 
-            var url = (userSentenceId && _removingUrl + userSentenceId) || (_savingUrl + sentenceId);
-
-            $.ajax({
-                url: url,
-                success: function (newUserSentenceId) {
-                    if (!newUserSentenceId) {
-                        _this.removeClass('btn-primary').addClass('btn-outline-primary')
-                            .data('usersentenceid', null)
-                            .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus')
-                            .prop('title', 'Save');
-                    } else {
-                        _this.removeClass('btn-outline-primary').addClass('btn-primary')
-                            .data('usersentenceid', newUserSentenceId)
-                            .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check')
-                            .prop('title', 'Remove');
+                $.ajax({
+                    url: url,
+                    success: function (newUserSentenceId) {
+                        if (!newUserSentenceId) {
+                            _this.removeClass('btn-primary').addClass('btn-outline-primary')
+                                .data('usersentenceid', null)
+                                .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus')
+                                .prop('title', 'Save');
+                        } else {
+                            _this.removeClass('btn-outline-primary').addClass('btn-primary')
+                                .data('usersentenceid', newUserSentenceId)
+                                .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check')
+                                .prop('title', 'Remove');
+                        }
                     }
-                }
+                });
             });
         });
 
-    });
-</script>    
+        //handle create group (promise calback)
+
+        var simplePromiseRequest = (url) => {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: url,
+                    success: (data) => {
+                        resolve(data);
+                    },
+                    error: (res) => {
+                        reject(res);
+                    },
+                });
+            });
+        }
+
+        var bsModal = (function () {
+            var _completeCallback, _beforeShowCallback;
+
+            var getCreate = () => { return simplePromiseRequest(`/groups/create`) }
+
+            function handleBsModal() {
+                $('#bsModal').on('show.bs.modal', function () {
+                    _beforeShowCallback();
+                });
+
+                $('#bsModal').on('shown.bs.modal', function (event) {
+                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                    var modal = $(this);
+
+                    getCreate()
+                        .then((data) => {
+                            modal.find('.modal-content').empty().append(data);
+                        })
+                        .then(bindAjaxForm)
+                        .then((data) => {
+                            _completeCallback(data);
+                        });
+                });
+            }
+
+            function bindAjaxForm() {
+                var myForm = $('#bsModal').find('form');
+
+                return new Promise((resolve, reject) => {
+                    myForm.ajaxForm({
+                        beforeSubmit: function (data) {
+                        },
+                        success: function (data) {
+                            $('#bsModal').find('button.btn-close').trigger('click');
+                            resolve(data);
+                        },
+                        error: reject
+                    });
+                });
+            }
+
+            return {
+                init: function (beforeShowCallback, completeCallback) {
+                    handleBsModal();
+                    _completeCallback = completeCallback;
+                    _beforeShowCallback = beforeShowCallback;
+                },
+                setState: function () {
+
+                }
+            };
+        })();
+
+        var Main = (function () {
+            return {
+                init: function () {
+                    bsModal.init(() => { bsModal.setState() }, () => {
+                        //$.post('/groups/create', function () {
+
+                        //})
+                    });
+                },
+            }
+        })();
+
+        $(function () {
+            Main.init();
+        });
+
+
+    </script>
 }

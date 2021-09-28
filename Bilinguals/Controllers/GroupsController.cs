@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Bilinguals.App;
 using Bilinguals.Data;
 using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
@@ -46,6 +47,8 @@ namespace Bilinguals.Controllers
         // GET: Groups/Create
         public ActionResult Create()
         {
+            if (Request.IsAjaxRequest())
+                return PartialView();
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace Bilinguals.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Group group)
+        public ActionResult Create(Group group, string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +65,10 @@ namespace Bilinguals.Controllers
                 _groupService.Add(group);
 
                 if (Request.IsAjaxRequest())
-                    return Json("", JsonRequestBehavior.AllowGet);
+                    return Json(group, JsonRequestBehavior.AllowGet);
+
+                if (!string.IsNullOrEmpty(returnUrl))
+                    return Redirect(returnUrl);                
 
                 return RedirectToAction("Index");
             }
