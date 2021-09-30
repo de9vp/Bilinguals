@@ -20,6 +20,7 @@ namespace Bilinguals
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(  //bootstrap v5.1
+                        "~/Scripts/popper.min.js",
                         "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

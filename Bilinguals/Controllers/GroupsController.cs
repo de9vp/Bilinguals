@@ -65,7 +65,7 @@ namespace Bilinguals.Controllers
                 _groupService.Add(group);
 
                 if (Request.IsAjaxRequest())
-                    return Json(group, JsonRequestBehavior.AllowGet);
+                    return Json(JsonResultHelper.MapGroupJson(group), JsonRequestBehavior.AllowGet);
 
                 if (!string.IsNullOrEmpty(returnUrl))
                     return Redirect(returnUrl);                

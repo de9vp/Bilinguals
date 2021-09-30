@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    var returnUrl = Request.QueryString["returnUrl"];
 }
 
 <h2>Details</h2>
@@ -57,6 +58,18 @@
                 <button data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn-save-remove btn btn-sm btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary")" title="@(item.UserSentenceId.HasValue ? "Remove" : "Save")">
                     <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span>
                 </button>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+
             </td>
         </tr>
     }
@@ -70,6 +83,7 @@
 </div>
 
 @section scripts {
+    <script src="~/Scripts/jquery.form.js"></script>
     <script type="text/javascript">
         $(function () {
             var _savingUrl = '/Sentences/SaveToMyFeaturedSentences?sentenceId=';
@@ -121,7 +135,7 @@
         var bsModal = (function () {
             var _completeCallback, _beforeShowCallback;
 
-            var getCreate = () => { return simplePromiseRequest(`/groups/create`) }
+            var getGroup = () => { return simplePromiseRequest('/groups/create'); }
 
             function handleBsModal() {
                 $('#bsModal').on('show.bs.modal', function () {
@@ -133,11 +147,11 @@
                     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                     var modal = $(this);
 
-                    getCreate()
+                    getGroup()
                         .then((data) => {
-                            modal.find('.modal-content').empty().append(data);
+                            modal.find('.modal-content').empty().append(data); //data = partial view
                         })
-                        .then(bindAjaxForm)
+                        .then(bindAjaxForm) //ajaxForm request submit here
                         .then((data) => {
                             _completeCallback(data);
                         });
@@ -165,20 +179,17 @@
                     handleBsModal();
                     _completeCallback = completeCallback;
                     _beforeShowCallback = beforeShowCallback;
-                },
-                setState: function () {
-
                 }
+                ,
+                setState: function () { }
             };
         })();
 
         var Main = (function () {
             return {
                 init: function () {
-                    bsModal.init(() => { bsModal.setState() }, () => {
-                        //$.post('/groups/create', function () {
-
-                        //})
+                    bsModal.init(() => { bsModal.setState() }, (newGroup) => {
+                        //change ui dropdown
                     });
                 },
             }

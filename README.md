@@ -17,3 +17,4 @@ AutofacHelper.RegisterDependencies(app); in /startup.cs
 ```
 returnUrl = @Request.Url.AbsolutePath
 ```
+* Install JQuery.Form ( using ajaxForm - submit form event )

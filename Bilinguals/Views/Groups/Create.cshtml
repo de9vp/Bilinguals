@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Thêm mới";
-    var returnUrl = @Request.Url.AbsolutePath;
+    var returnUrl = Request.QueryString["returnUrl"];
 }
 
 <div class="modal-header">
