@@ -132,5 +132,16 @@ namespace Bilinguals.Controllers
             return RedirectToAction("Index");
         }
 
+        #region JSON - AJAX REQUEST
+            
+        // Get Group Json Data
+        public ActionResult GetUserGroups()
+        {
+            var userGroups = _groupService.GetByUserId(User.Identity.GetUserId()).Select(x => JsonResultHelper.MapGroupJson(x));
+            return Json(userGroups, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
     }
 }

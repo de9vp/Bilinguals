@@ -38,9 +38,10 @@ namespace Bilinguals.Services
             return _groupRepo.Table.FirstOrDefault(x => x.Id == id);
         }
 
-        public List<Group> GetByUserId(string UserId)
+        public IEnumerable<Group> GetByUserId(string UserId)
         {
-            return null;
+            var groups = _groupRepo.Table.Where(x => x.UserId == UserId);
+            return groups;
         }
     }
 }

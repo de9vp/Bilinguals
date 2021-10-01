@@ -17,6 +17,6 @@ namespace Bilinguals.Domain.Interfaces
 
         Group GetById(int id);
 
-        List<Group> GetByUserId(string userId);
+        IEnumerable<Group> GetByUserId(string userId);
     }
 }
