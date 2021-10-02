@@ -55,13 +55,13 @@
             <td> @item.EnText </td>
             <td> @item.ViText </td>
             <td>
-                <button data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn-save-remove btn btn-sm btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary")" title="@(item.UserSentenceId.HasValue ? "Remove" : "Save")">
+                @*<button data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn-save-remove btn btn-sm btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary")" title="@(item.UserSentenceId.HasValue ? "Remove" : "Save")">
                     <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span>
-                </button>
+                </button>*@
 
                 <div class="btn-group dropstart">
-                    <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-menu-button"></i>
+                    <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary") btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#bsModal">Add to new list</a></li>
@@ -84,33 +84,40 @@
 @section scripts {
     <script src="~/Scripts/jquery.form.js"></script>
     <script type="text/javascript">
+        //var sentenceId;
         $(function () {
             var _savingUrl = '/Sentences/SaveToMyFeaturedSentences?sentenceId=';
             var _removingUrl = '/Sentences/RemoveFromMyFeaturedSentence?userSentenceId=';
+            
 
-            $('.btn-save-remove').on('click', function (e) {
-
+            $('.btn-select').on('click', function (e) {
                 var _this = $(this);
                 var sentenceId = _this.data('sentenceid'); //note: lower case
-                var userSentenceId = _this.data('usersentenceid');
+                
 
-                var url = (userSentenceId && _removingUrl + userSentenceId) || (_savingUrl + sentenceId);
+                $('.gr.dropdown-item').on('click', function (e) {
+                    var groupId = $(this).data('groupid');
+                    var userSentenceId = $(this).data('usersentenceid');
 
-                $.ajax({
-                    url: url,
-                    success: function (newUserSentenceId) {
-                        if (!newUserSentenceId) {
-                            _this.removeClass('btn-primary').addClass('btn-outline-primary')
-                                .data('usersentenceid', null)
-                                .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus')
-                                .prop('title', 'Save');
-                        } else {
-                            _this.removeClass('btn-outline-primary').addClass('btn-primary')
-                                .data('usersentenceid', newUserSentenceId)
-                                .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check')
-                                .prop('title', 'Remove');
+                    var url = (userSentenceId && _removingUrl + userSentenceId) || (_savingUrl + sentenceId + '&groupId=' + groupId);
+
+                    $.ajax({
+                        url: url,
+                        success: function (newUserSentenceId) {
+                            if (!newUserSentenceId) { // remove
+                                _this.removeClass('btn-primary').addClass('btn-outline-primary') //bug
+                                    .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus')
+                                    .prop('title', 'Save');
+                                $(this).removeClass().addClass().data('usersentenceid', null);
+                            } else { // add
+                                _this.removeClass('btn-outline-primary').addClass('btn-primary')
+                                    .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check')
+                                    .prop('title', 'Remove');
+                                $(this).removeClass().addClass().data('usersentenceid', newUserSentenceId);
+                            }
                         }
-                    }
+                    });
+
                 });
             });
         });
@@ -145,9 +152,10 @@
         var getUserGroups = function() {
             var _group = [];
             groupService.getUserGroups().then((data) => {
+                console.log(data);
                 _group = data;
                 var rows = _group.reduce((all, group) => {
-                    var groupRow = `<li class="gr" data-groupid="${group.id}"><a class="dropdown-item" href="#">${group.name}</a></li>`;
+                    var groupRow = `<li class="gr"><a data-usersentenceid="${group.userSentenceId}" data-groupid="${group.id}" class="gr dropdown-item" href="#">${group.name}</a></li>`;
                     return all += groupRow;
                 }, '');
                 $('.gr').remove();
@@ -213,6 +221,8 @@
             return {
                 init: function () {
                     bsModal.init(() => { bsModal.setState() }, (newGroup) => {
+                        //Add userSentence to this group
+
                         //change ui dropdown
                         getUserGroups();
                     });

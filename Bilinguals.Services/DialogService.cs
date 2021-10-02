@@ -149,7 +149,7 @@ namespace Bilinguals.Services
                                            DateModified = s.DateModified,
                                            SortOrder = s.SortOrder,
                                            DialogId = s.DialogId,
-                                           UserSentenceId = us == null ? (int?)null : us.Id
+                                           UserSentenceId = us == null ? (int?)null : us.Id //purpose
                                        };
 
             dialog.Sentences = dialogSentenceDetail.ToList();

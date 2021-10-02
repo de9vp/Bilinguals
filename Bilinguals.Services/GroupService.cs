@@ -11,15 +11,21 @@ namespace Bilinguals.Services
     public class GroupService : IGroupService
     {
         private readonly IRepository<Group> _groupRepo;
+        private readonly IRepository<UserSentence> _userSentenceRepo;
 
-        public GroupService(IRepository<Group> groupRepo)
+        public GroupService(IRepository<Group> groupRepo, IRepository<UserSentence> userSentenceRepo)
         {
             _groupRepo = groupRepo;
+            _userSentenceRepo = userSentenceRepo;
         }
 
         public void Add(Group group)
         {
-            _groupRepo.Insert(group);
+            var g = _groupRepo.Table.FirstOrDefault(x => group.Name.Contains(x.Name)); //check name exist
+            if (g == null)
+            {
+                _groupRepo.Insert(group);
+            }
         }
 
         public void Delete(int id)
@@ -38,10 +44,24 @@ namespace Bilinguals.Services
             return _groupRepo.Table.FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<Group> GetByUserId(string UserId)
+        public IList<Group> GetByUserId(string UserId)
         {
-            var groups = _groupRepo.Table.Where(x => x.UserId == UserId);
-            return groups;
+            var groups = _groupRepo.Table.Where(x => x.UserId == UserId).ToList();
+
+            var group = from g in groups
+                        from us in _userSentenceRepo.Table.Where(x => x.UserId == UserId && x.GroupId == g.Id).DefaultIfEmpty()
+                        select new Group
+                        {
+                            Id = g.Id,
+                            Name = g.Name,
+                            UserId = g.UserId,
+                            Description = g.Description,
+                            DateCreated = g.DateCreated,
+                            DateModified = g.DateModified,
+                            UserSentenceId = us == null ? (int?)null : us.Id,
+                            SentenceId = us == null ? (int?)null : us.SentenceId,
+                        };
+            return group.ToList();
         }
     }
 }

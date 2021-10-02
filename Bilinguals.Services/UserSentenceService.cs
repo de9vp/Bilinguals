@@ -21,19 +21,31 @@ namespace Bilinguals.Services
             _sentenceService = sentenceService;
         }
 
-        public UserSentence AddOrUpdateUserSentence(int sentenceId, string userId)
+        public UserSentence AddOrUpdateUserSentence(int sentenceId, int groupId, string userId)
         {
+            // case 1: if sentence saved, remove add new userSentence
+            // bind for only 1 sentence in 1 group
             var userSentence = _userSentenceRepo.Table.FirstOrDefault(x => x.SentenceId == sentenceId && x.UserId == userId);
 
             if (userSentence != null)
             {
+                userSentence.Id = userSentence.Id;
+                userSentence.SentenceId = sentenceId;
+                userSentence.UserDialogId = userSentence.UserDialogId;
+                userSentence.UserId = userId;
+                userSentence.DateCreated = userSentence.DateCreated;
+                userSentence.GroupId = groupId;
+
+                _userSentenceRepo.Update(userSentence);
+
                 return userSentence;
             }
 
             userSentence = new UserSentence
             {
                 SentenceId = sentenceId,
-                UserId = userId
+                UserId = userId,
+                GroupId = groupId
             };
             _userSentenceRepo.Insert(userSentence);
 
