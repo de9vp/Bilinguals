@@ -2,6 +2,7 @@
 using Bilinguals.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,21 +48,7 @@ namespace Bilinguals.Services
         public IList<Group> GetByUserId(string UserId)
         {
             var groups = _groupRepo.Table.Where(x => x.UserId == UserId).ToList();
-
-            var group = from g in groups
-                        from us in _userSentenceRepo.Table.Where(x => x.UserId == UserId && x.GroupId == g.Id).DefaultIfEmpty()
-                        select new Group
-                        {
-                            Id = g.Id,
-                            Name = g.Name,
-                            UserId = g.UserId,
-                            Description = g.Description,
-                            DateCreated = g.DateCreated,
-                            DateModified = g.DateModified,
-                            UserSentenceId = us == null ? (int?)null : us.Id,
-                            SentenceId = us == null ? (int?)null : us.SentenceId,
-                        };
-            return group.ToList();
+            return groups;
         }
     }
 }

@@ -16,8 +16,6 @@ namespace Bilinguals.App
                 name = group.Name,
                 userId = group.UserId,
                 description = group.Description,
-                userSentenceId = group.UserSentenceId,
-                sentenceId = group.SentenceId,
             };
         }
     }

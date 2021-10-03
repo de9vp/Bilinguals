@@ -20,7 +20,7 @@ namespace Bilinguals.Domain.Models
         [NotMapped]
         public int? UserSentenceId { get; set; }
 
-        [NotMapped]
-        public int? SentenceId { get; set; }
+       
+
     }
 }

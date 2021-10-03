@@ -3,6 +3,7 @@ using Bilinguals.Domain.Models;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -139,7 +140,7 @@ namespace Bilinguals.Services
 
             //https://stackoverflow.com/questions/3404975/left-outer-join-in-linq
             var dialogSentenceDetail = from s in dialog.Sentences
-                                       from us in _userSentenceRepo.Table.Where(x => x.UserId == userId && x.SentenceId == s.Id).DefaultIfEmpty()
+                                       from us in _userSentenceRepo.Table.Where(x => x.UserId == userId && x.SentenceId == s.Id).DefaultIfEmpty().Include(icl => icl.Group)
                                        select new Sentence
                                        {
                                            Id = s.Id,
@@ -149,7 +150,8 @@ namespace Bilinguals.Services
                                            DateModified = s.DateModified,
                                            SortOrder = s.SortOrder,
                                            DialogId = s.DialogId,
-                                           UserSentenceId = us == null ? (int?)null : us.Id //purpose
+                                           UserSentenceId = us == null ? (int?)null : us.Id, //purpose
+                                           GroupName = us == null ? (string)null : us.Group.Name //purpose
                                        };
 
             dialog.Sentences = dialogSentenceDetail.ToList();

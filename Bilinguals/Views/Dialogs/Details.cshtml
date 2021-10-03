@@ -61,10 +61,11 @@
 
                 <div class="btn-group dropstart">
                     <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary") btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span>
+                        <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span> <span id="gn">@item.GroupName</span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#bsModal">Add to new list</a></li>
+                        <li><a class="dropdown-item remove" href="#">Remove</a></li>
                         <li><hr class="dropdown-divider"></li>
                     </ul>
                 </div>
@@ -84,43 +85,55 @@
 @section scripts {
     <script src="~/Scripts/jquery.form.js"></script>
     <script type="text/javascript">
-        //var sentenceId;
-        $(function () {
+
+        // save and remove sentence
+        var handleSaveRemove = function () {
             var _savingUrl = '/Sentences/SaveToMyFeaturedSentences?sentenceId=';
             var _removingUrl = '/Sentences/RemoveFromMyFeaturedSentence?userSentenceId=';
-            
+
+            var sentenceId;
+            var groupId;
+            var userSentenceId;
 
             $('.btn-select').on('click', function (e) {
+
                 var _this = $(this);
-                var sentenceId = _this.data('sentenceid'); //note: lower case
-                
+                sentenceId = _this.data('sentenceid'); //note: lower case
+                userSentenceId = _this.data('usersentenceid');
 
-                $('.gr.dropdown-item').on('click', function (e) {
-                    var groupId = $(this).data('groupid');
-                    var userSentenceId = $(this).data('usersentenceid');
+                //save
+                $('.save').on('click', function (e) {
 
-                    var url = (userSentenceId && _removingUrl + userSentenceId) || (_savingUrl + sentenceId + '&groupId=' + groupId);
+                    groupId = $(this).data('groupid');
+                    var url = _savingUrl + sentenceId + '&groupId=' + groupId;
 
                     $.ajax({
                         url: url,
-                        success: function (newUserSentenceId) {
-                            if (!newUserSentenceId) { // remove
-                                _this.removeClass('btn-primary').addClass('btn-outline-primary') //bug
-                                    .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus')
-                                    .prop('title', 'Save');
-                                $(this).removeClass().addClass().data('usersentenceid', null);
-                            } else { // add
-                                _this.removeClass('btn-outline-primary').addClass('btn-primary')
-                                    .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check')
-                                    .prop('title', 'Remove');
-                                $(this).removeClass().addClass().data('usersentenceid', newUserSentenceId);
-                            }
+                        success: function (data) {
+                            _this.find('#gn').remove();
+                            _this.append(`<span id="gn">${data.name}</span>`)
+                                .data('usersentenceid', data.id) //bug
+                                .removeClass('btn-outline-primary').addClass('btn-primary')
+                                .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check');
                         }
                     });
+                });
 
+                //remove
+                $('.remove').on('click', function (e) {
+                    var URl = _removingUrl + userSentenceId;
+                    $.ajax({
+                        url: URl,
+                        success: function () {
+                            _this.find('#gn').remove();
+                            _this.removeClass('btn-primary').addClass('btn-outline-primary')
+                                .data('usersentenceid', null) //bug
+                                .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus');
+                        }
+                    });
                 });
             });
-        });
+        };
 
         // 
         var simplePromiseRequest = (url) => {
@@ -155,7 +168,7 @@
                 console.log(data);
                 _group = data;
                 var rows = _group.reduce((all, group) => {
-                    var groupRow = `<li class="gr"><a data-usersentenceid="${group.userSentenceId}" data-groupid="${group.id}" class="gr dropdown-item" href="#">${group.name}</a></li>`;
+                    var groupRow = `<li><a data-groupid="${group.id}" class="dropdown-item save" href="#">${group.name}</a></li>`;
                     return all += groupRow;
                 }, '');
                 $('.gr').remove();
@@ -227,6 +240,7 @@
                         getUserGroups();
                     });
                     getUserGroups();
+                    handleSaveRemove();
                 },
             }
         })();

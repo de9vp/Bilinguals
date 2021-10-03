@@ -19,7 +19,7 @@ namespace Bilinguals.Domain.Models
 
         public UserDialog UserDialog { get; set; }
         public Sentence Sentence { get; set; }
-        public Group Group { get; set; }
+        public virtual Group Group { get; set; }
         public ApplicationUser User { get; set; }
     }
 }

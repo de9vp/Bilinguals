@@ -20,5 +20,8 @@ namespace Bilinguals.Domain.Models
 
         [NotMapped]
         public int? UserSentenceId { get; set; }
+
+        [NotMapped]
+        public string GroupName { get; set; }
     }
 }

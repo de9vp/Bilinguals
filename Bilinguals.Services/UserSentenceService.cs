@@ -23,7 +23,8 @@ namespace Bilinguals.Services
 
         public UserSentence AddOrUpdateUserSentence(int sentenceId, int groupId, string userId)
         {
-            // case 1: if sentence saved, remove add new userSentence
+            // case 1: if sentence saved, update name group userSentence
+            // case 2: if sentence not save, add new
             // bind for only 1 sentence in 1 group
             var userSentence = _userSentenceRepo.Table.FirstOrDefault(x => x.SentenceId == sentenceId && x.UserId == userId);
 
@@ -34,11 +35,12 @@ namespace Bilinguals.Services
                 userSentence.UserDialogId = userSentence.UserDialogId;
                 userSentence.UserId = userId;
                 userSentence.DateCreated = userSentence.DateCreated;
-                userSentence.GroupId = groupId;
+                userSentence.GroupId = groupId; //update
 
                 _userSentenceRepo.Update(userSentence);
 
-                return userSentence;
+                var uso = _userSentenceRepo.Table.Include(icl => icl.Group).FirstOrDefault(x => x.Id == userSentence.Id);
+                return uso;
             }
 
             userSentence = new UserSentence
@@ -49,7 +51,8 @@ namespace Bilinguals.Services
             };
             _userSentenceRepo.Insert(userSentence);
 
-            return userSentence;
+            var us = _userSentenceRepo.Table.Include(icl => icl.Group).FirstOrDefault(x => x.Id == userSentence.Id);
+            return us;
         }
 
         public void Remove(int userSentenceId)
