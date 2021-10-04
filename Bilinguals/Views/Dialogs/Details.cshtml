@@ -95,15 +95,16 @@
             var groupId;
             var userSentenceId;
 
-            $('.btn-select').on('click', function (e) {
+            // https://stackoverflow.com/questions/29388002/jquery-ajax-sending-multiple-request-on-1-click
 
+            $('.btn-select').off('click').on('click', function (e) {
+                e.preventDefault();
                 var _this = $(this);
                 sentenceId = _this.data('sentenceid'); //note: lower case
                 userSentenceId = _this.data('usersentenceid');
 
                 //save
-                $('.save').on('click', function (e) {
-
+                $('.save').off('click').on('click', function (e) {
                     groupId = $(this).data('groupid');
                     var url = _savingUrl + sentenceId + '&groupId=' + groupId;
 
@@ -111,25 +112,33 @@
                         url: url,
                         success: function (data) {
                             _this.find('#gn').remove();
-                            _this.append(`<span id="gn">${data.name}</span>`)
-                                .data('usersentenceid', data.id) //bug
-                                .removeClass('btn-outline-primary').addClass('btn-primary')
+                            _this.removeClass('btn-outline-primary').addClass('btn-primary')
+                                .data('usersentenceid', data.userSentenceId) //bug
+                                .append(`<span id="gn">${data.groupName}</span>`)
                                 .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check');
                         }
                     });
+
                 });
 
                 //remove
-                $('.remove').on('click', function (e) {
+                $('.remove').off('click').on('click', function (e) {
+                    e.preventDefault();
                     var URl = _removingUrl + userSentenceId;
+
                     $.ajax({
                         url: URl,
                         success: function () {
                             _this.find('#gn').remove();
-                            _this.removeClass('btn-primary').addClass('btn-outline-primary')
-                                .data('usersentenceid', null) //bug
-                                .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus');
-                        }
+                                _this.removeClass('btn-primary').addClass('btn-outline-primary')
+                                    .data('usersentenceid', null) //bug
+                                    .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus');
+                        },
+                        error: function () {
+                            //thong bao chua luu 
+                            alert("chua luu remove cai quan a");
+                        },
+
                     });
                 });
             });

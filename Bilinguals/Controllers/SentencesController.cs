@@ -156,7 +156,7 @@ namespace Bilinguals.Controllers
             var groupName = userSentence.Group.Name;
 
             if (Request.IsAjaxRequest())
-                return Json( new { id = userSentence.Id, name = groupName } , JsonRequestBehavior.AllowGet);
+                return Json( new { userSentenceId = userSentence.Id, groupName = groupName } , JsonRequestBehavior.AllowGet);
 
             if (!string.IsNullOrEmpty(returnUrl))
                 return Redirect(returnUrl);
@@ -166,8 +166,9 @@ namespace Bilinguals.Controllers
 
         public ActionResult RemoveFromMyFeaturedSentence(int userSentenceId, string returnUrl = null)
         {
-            _userSentenceService.Remove(userSentenceId);
+            
 
+            _userSentenceService.Remove(userSentenceId);
             if (Request.IsAjaxRequest())
                 return Json("", JsonRequestBehavior.AllowGet);
 
