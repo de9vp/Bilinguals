@@ -166,8 +166,6 @@ namespace Bilinguals.Controllers
 
         public ActionResult RemoveFromMyFeaturedSentence(int userSentenceId, string returnUrl = null)
         {
-            
-
             _userSentenceService.Remove(userSentenceId);
             if (Request.IsAjaxRequest())
                 return Json("", JsonRequestBehavior.AllowGet);

@@ -98,10 +98,9 @@
             // https://stackoverflow.com/questions/29388002/jquery-ajax-sending-multiple-request-on-1-click
 
             $('.btn-select').off('click').on('click', function (e) {
-                e.preventDefault();
                 var _this = $(this);
                 sentenceId = _this.data('sentenceid'); //note: lower case
-                userSentenceId = _this.data('usersentenceid');
+                userSentenceId = _this.attr('data-usersentenceid');
 
                 //save
                 $('.save').off('click').on('click', function (e) {
@@ -113,7 +112,7 @@
                         success: function (data) {
                             _this.find('#gn').remove();
                             _this.removeClass('btn-outline-primary').addClass('btn-primary')
-                                .data('usersentenceid', data.userSentenceId) //bug
+                                .attr('data-usersentenceid', data.userSentenceId) 
                                 .append(`<span id="gn">${data.groupName}</span>`)
                                 .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check');
                         }
@@ -123,7 +122,6 @@
 
                 //remove
                 $('.remove').off('click').on('click', function (e) {
-                    e.preventDefault();
                     var URl = _removingUrl + userSentenceId;
 
                     $.ajax({
@@ -131,12 +129,12 @@
                         success: function () {
                             _this.find('#gn').remove();
                                 _this.removeClass('btn-primary').addClass('btn-outline-primary')
-                                    .data('usersentenceid', null) //bug
+                                    .attr('data-usersentenceid', "") 
                                     .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus');
                         },
                         error: function () {
                             //thong bao chua luu 
-                            alert("chua luu remove cai quan a");
+                            console.log("chua luu remove cai quan a");
                         },
 
                     });
