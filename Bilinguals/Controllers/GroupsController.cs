@@ -23,32 +23,17 @@ namespace Bilinguals.Controllers
             _groupService = groupService;
         }
 
-        // GET: Groups
-        //public ActionResult Index()
-        //{
-        //    return View(db.Groups.ToList());
-        //}
-
-        // GET: Groups/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Group group = db.Groups.Find(id);
-        //    if (group == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(group);
-        //}
+        public ActionResult MySentence()
+        {
+            var groups = _groupService.GetByUserId(User.Identity.GetUserId());
+            return View(groups);
+        }
 
         // GET: Groups/Create
         public ActionResult Create()
         {
             if (Request.IsAjaxRequest())
-                return PartialView();
+                return PartialView(); //ajax request
             return View();
         }
 
@@ -61,11 +46,11 @@ namespace Bilinguals.Controllers
         {
             if (ModelState.IsValid)
             {
-                group.UserId = User.Identity.GetUserId();
-                _groupService.Add(group);
+                var userId = User.Identity.GetUserId();
+                var newGroup = _groupService.Add(group, userId);
 
                 if (Request.IsAjaxRequest())
-                    return Json(JsonResultHelper.MapGroupJson(group), JsonRequestBehavior.AllowGet);
+                    return Json(JsonResultHelper.MapGroupJson(newGroup), JsonRequestBehavior.AllowGet);
 
                 if (!string.IsNullOrEmpty(returnUrl))
                     return Redirect(returnUrl);                

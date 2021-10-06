@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace Bilinguals.Services
 {
@@ -20,13 +21,22 @@ namespace Bilinguals.Services
             _userSentenceRepo = userSentenceRepo;
         }
 
-        public void Add(Group group)
+        public Group Add(Group group, string userId)
         {
-            var g = _groupRepo.Table.FirstOrDefault(x => group.Name.Contains(x.Name)); //check name exist
+            var g = _groupRepo.Table.FirstOrDefault(x => group.Name.Contains(x.Name) && x.UserId == userId); //check name exist
             if (g == null)
             {
-                _groupRepo.Insert(group);
+                g = new Group
+                {
+                    Name = group.Name,
+                    UserId = userId,
+                    Description = group.Description,
+                };
+                _groupRepo.Insert(g);
+                var ng = _groupRepo.Table.FirstOrDefault(x => g.Name.Contains(x.Name) && x.UserId == g.UserId);
+                return ng;
             }
+            return g;
         }
 
         public void Delete(int id)
@@ -47,7 +57,7 @@ namespace Bilinguals.Services
 
         public IList<Group> GetByUserId(string UserId)
         {
-            var groups = _groupRepo.Table.Where(x => x.UserId == UserId).ToList();
+            var groups = _groupRepo.Table.Where(x => x.UserId == UserId).Include(icl => icl.UserSentences).ToList();
             return groups;
         }
     }

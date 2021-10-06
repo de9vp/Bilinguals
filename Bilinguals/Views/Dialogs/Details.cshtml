@@ -55,10 +55,6 @@
             <td> @item.EnText </td>
             <td> @item.ViText </td>
             <td>
-                @*<button data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn-save-remove btn btn-sm btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary")" title="@(item.UserSentenceId.HasValue ? "Remove" : "Save")">
-                    <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span>
-                </button>*@
-
                 <div class="btn-group dropstart">
                     <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary") btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span> <span id="gn">@item.GroupName</span>
@@ -84,7 +80,7 @@
 
 @section scripts {
     <script src="~/Scripts/jquery.form.js"></script>
-    <script src="~/Scripts/dropdown-sentence.js"></script>
+    <script src="~/Scripts/Components/dropdown-sentence.js"></script>
     <script type="text/javascript">
         var Main = (function () {
             return {

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Bilinguals.Domain.Models.Group>
+
+@{
+    ViewBag.Title = "MySentence";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Sentence</h2>
+
+<div class="d-flex align-items-start">
+    <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        @foreach (var item in Model)
+        {
+            <div class="card nav-link" id="v-pills-@item.Name-tab" data-bs-toggle="pill" data-bs-target="#v-pills-@item.Name" role="tab" aria-controls="v-pills-@item.Name" aria-selected="true" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text"><small class="text-muted">Last updated on @item.DateModified</small></p>
+                    <p class="card-text">@item.Description</p>
+                    <a href="#" class="btn btn-primary">Edit</a>
+                    <a href="#" class="btn btn-primary">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="tab-content" id="v-pills-tabContent">
+        @foreach (var item in Model)
+        {
+            <div class="tab-pane fade" id="v-pills-@item.Name" role="tabpanel" aria-labelledby="v-pills-@item.Name-tab">
+                @foreach (var i in item.UserSentences)
+                {
+                    @i.Sentence.EnText
+                    <div><br /></div>
+                }
+
+            </div>
+        }
+        <div class="tab-pane fade show active">
+            Hello
+        </div>
+    </div>
+</div>

@@ -9,7 +9,7 @@ namespace Bilinguals.Domain.Interfaces
 {
     public interface IGroupService
     {
-        void Add(Group group);
+        Group Add(Group group, string userId);
 
         void Delete(int id);
 

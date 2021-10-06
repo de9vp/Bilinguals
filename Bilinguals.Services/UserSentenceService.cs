@@ -61,11 +61,5 @@ namespace Bilinguals.Services
             _userSentenceRepo.Delete(userSentence);
         }
 
-        public IPagedList<Sentence> GetUserSentences(string userId, int pageIndex, int pageSize, string sortOrder)
-        {
-            var userSentences = _userSentenceRepo.Table.Where(x => x.UserId == userId).Include(x => x.Sentence).Select(x => x);
-
-            return null;
-        }
     }
 }

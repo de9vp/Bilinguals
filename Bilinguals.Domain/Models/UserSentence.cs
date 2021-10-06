@@ -13,13 +13,14 @@ namespace Bilinguals.Domain.Models
         [Required]
         public int GroupId { get; set; }
         public int? UserDialogId { get; set; }
-        
+
+        public virtual Group Group { get; set; }
+        public virtual Sentence Sentence { get; set; }
+
         [Required]
         public string UserId { get; set; }
 
         public UserDialog UserDialog { get; set; }
-        public Sentence Sentence { get; set; }
-        public virtual Group Group { get; set; }
         public ApplicationUser User { get; set; }
     }
 }

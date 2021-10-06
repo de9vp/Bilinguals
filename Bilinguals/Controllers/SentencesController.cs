@@ -143,11 +143,7 @@ namespace Bilinguals.Controllers
         }
 
         // GET:
-        public ActionResult MyFeaturedSentence(int? pageIndex, string sortOrder)
-        {
-            var sentences = _userSentenceService.GetUserSentences(User.Identity.GetUserId(), pageIndex ?? 1, 8, sortOrder);
-            return View();
-        }
+
 
         #region JSON - AJAX REQUESTS
         public ActionResult SaveToMyFeaturedSentences(int sentenceId, int groupId, string returnUrl = null)
