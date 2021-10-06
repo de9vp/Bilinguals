@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Bilinguals.Controllers
 {
+    [Authorize]
     public class GroupsController : Controller
     {
         private readonly IGroupService _groupService;
