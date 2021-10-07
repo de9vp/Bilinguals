@@ -28,3 +28,74 @@ textarea {
 .dropstart .dropdown-toggle::before {
     display: none;
 }
+
+/* Custom color */
+.bg-custom1 {
+    background-color: #092139;
+}
+
+.btn-custom1 {
+    color: #fff;
+    background-color: #00356a;
+    border-color: #ffffff;
+}
+
+    .btn-custom1:hover {
+        color: #fff;
+        background-color: #092139;
+        border-color: #ffffff;
+    }
+
+    .btn-check:focus + .btn-custom1, .btn-custom1:focus {
+        color: #fff;
+        background-color: #092139;
+        border-color: #ffffff;
+        box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+    }
+
+    .btn-check:checked + .btn-custom1, .btn-check:active + .btn-custom1, .btn-custom1:active, .btn-custom1.active, .show > .btn-custom1.dropdown-toggle {
+        color: #fff;
+        background-color: #092139;
+        border-color: #0a53be;
+    }
+
+        .btn-check:checked + .btn-custom1:focus, .btn-check:active + .btn-custom1:focus, .btn-custom1:active:focus, .btn-custom1.active:focus, .show > .btn-custom1.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+        }
+
+    .btn-custom1:disabled, .btn-custom1.disabled {
+        color: #fff;
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+/* out line */
+.btn-outline-custom1 {
+    color: #092139;
+    border-color: #092139;
+}
+
+    .btn-outline-custom1:hover {
+        color: #fff;
+        background-color: #092139;
+        border-color: #092139;
+    }
+
+    .btn-check:focus + .btn-outline-custom1, .btn-outline-custom1:focus {
+        box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.5);
+    }
+
+    .btn-check:checked + .btn-outline-custom1, .btn-check:active + .btn-outline-custom1, .btn-outline-custom1:active, .btn-outline-custom1.active, .btn-outline-custom1.dropdown-toggle.show {
+        color: #fff;
+        background-color: #092139;
+        border-color: #092139;
+    }
+
+        .btn-check:checked + .btn-outline-custom1:focus, .btn-check:active + .btn-outline-custom1:focus, .btn-outline-custom1:active:focus, .btn-outline-custom1.active:focus, .btn-outline-custom1.dropdown-toggle.show:focus {
+            box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.5);
+        }
+
+    .btn-outline-custom1:disabled, .btn-outline-custom1.disabled {
+        color: #092139;
+        background-color: transparent;
+    }

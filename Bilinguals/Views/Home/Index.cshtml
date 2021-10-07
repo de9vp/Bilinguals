@@ -17,8 +17,8 @@
         <div class="row mb-3 justify-content-center">
             <input type="text" class="form-control text-center rounded-pill w-50" id="searchText" name="searchText" value="@searchText" placeholder="Enter the sentence or vocabulary">
         </div>
-        <div class="row mb-5 justify-content-center">
-            <button type="submit" style="width: 150px;" class="btn btn-secondary rounded-pill"> <span class="bi-search me-2"></span>Search</button>
+        <div class="row mb-3 justify-content-center">
+            <button type="submit" style="width: 150px;" class="btn btn-custom1 rounded-pill"> <span class="bi-search me-2"></span>Search</button>
         </div>
     </form>
 </div>
@@ -92,17 +92,13 @@
                 some placeholder content the Home tab's associated content. Clicking another tab will toggle the visibility of this one for
             </div>
         </div>
-
     </div>
-
-
-
-
-
     @section scripts {
         <script type="text/javascript">
             $(function () {
-                $('.aftersearch').remove();
+                setTimeout(function myfunction() {
+                    $('.aftersearch').css('display', 'none').css('transition','all 0.3s cubic-bezier(0.37, 0.01, 0.06, 0.14) 0s')
+                }, 2000);
             })
         </script>
 
