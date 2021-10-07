@@ -3,6 +3,7 @@ using Bilinguals.Domain.Models;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,9 +14,12 @@ namespace Bilinguals.Services
     public class SentenceService : ISentenceService
     {
         private readonly IRepository<Sentence> _sentenceRepo;
-        public SentenceService(IRepository<Sentence> sentenceRepo)
+        private readonly IRepository<UserSentence> _userSentenceRepo;
+
+        public SentenceService(IRepository<Sentence> sentenceRepo, IRepository<UserSentence> userSentenceRepo)
         {
             _sentenceRepo = sentenceRepo;
+            _userSentenceRepo = userSentenceRepo;
         }
 
         public void Add(Sentence sentence)
@@ -71,7 +75,7 @@ namespace Bilinguals.Services
             return query.ToPagedList(pageIndex, pageSize);
         }
 
-        public IPagedList<Sentence> GetSentenceHome(int pageIndex, int pageSize, string searchText, string sortOrder)
+        public IPagedList<Sentence> GetSentenceHome(int pageIndex, int pageSize, string searchText, string sortOrder, string userId)
         {
             var search = searchText?.ToLower() ?? "";
 
@@ -86,17 +90,37 @@ namespace Bilinguals.Services
                 query = query.Where(x => x.ViText.ToLower().Contains(term) || x.EnText.ToLower().Contains(term) || x.Dialog.Name.ToLower().Contains(term));
             }
 
+            var query2 = query.ToList();
+
+            
+
+            var q = from s in query2
+                    from us in _userSentenceRepo.Table.Where(x => x.UserId == userId && x.SentenceId == s.Id).DefaultIfEmpty().Include(icl => icl.Group)
+                    select new Sentence
+                    {
+                        Id = s.Id,
+                        EnText = s.EnText,
+                        ViText = s.ViText,
+                        DateCreated = s.DateCreated,
+                        DateModified = s.DateModified,
+                        SortOrder = s.SortOrder,
+                        DialogId = s.DialogId,
+                        UserSentenceId = us == null ? (int?)null : us.Id, //purpose
+                        GroupName = us == null ? (string)null : us.Group.Name,
+                        DialogName = s.Dialog.Name,
+                    };
+
             switch (sortOrder)
             {
                 //case "DateCreate": //sorted by datecreate or optionally
                 //    query = query.OrderByDescending(x => x.DateCreated);
                 //    break;
                 default:
-                    query = query.OrderBy(x => x.Id);
+                    q = q.OrderBy(x => x.Id);
                     break;
             }
 
-            return query.ToPagedList(pageIndex, pageSize);
+            return q.ToPagedList(pageIndex, pageSize);
         }
     }
 }

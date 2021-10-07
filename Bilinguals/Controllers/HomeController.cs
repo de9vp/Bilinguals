@@ -1,4 +1,5 @@
 ﻿using Bilinguals.Domain.Interfaces;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,9 @@ namespace Bilinguals.Controllers
         {
             int pageSize = 5;
 
-            var sentences = _sentenceService.GetSentenceHome(pageIndex ?? 1, pageSize, searchText, sortOrder);
+            var userId = User.Identity.GetUserId();
+
+            var sentences = _sentenceService.GetSentenceHome(pageIndex ?? 1, pageSize, searchText, sortOrder, userId);
 
             return View(sentences);
         }

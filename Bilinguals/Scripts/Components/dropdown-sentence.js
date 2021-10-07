@@ -93,7 +93,7 @@ var getUserGroups = function () {
             return all += groupRow;
         }, '');
         $('.save').remove();
-        $('.dropdown-menu').append(rows);
+        $('.savedropdown').append(rows);
     });
 }
 

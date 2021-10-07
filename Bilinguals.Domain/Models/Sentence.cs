@@ -23,5 +23,8 @@ namespace Bilinguals.Domain.Models
 
         [NotMapped]
         public string GroupName { get; set; }
+
+        [NotMapped]
+        public string DialogName { get; set; }
     }
 }

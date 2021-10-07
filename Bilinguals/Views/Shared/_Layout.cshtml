@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html class="h-100">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,31 +7,33 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link href="~/Content/css/custom-navbar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
-<body>
+
+
+
+<body class="d-flex flex-column h-100">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <a class="navbar-brand fw-bold" href="~/">THƯ VIỆN TIẾNG ANH</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="bi-list"></i>
-            </button>
+            <a class="navbar-brand fw-bold" href="~/">ENGLISH LIBRARY</a>
+            <a style="border-color: white" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <i style="font-size: 26px;" class="bi bi-filter-square-fill"></i>
+            </a>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-                    <li class="nav-item">@Html.ActionLink("Đoạn hội thoại", "Index", "Dialogs", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Động từ bất quy tắc", "", "", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item"><span>@Html.ActionLink("All Dialogs", "Index", "Dialogs", null, new { @class = "nav-link" })</span></li>
+                    <li class="nav-item"><span>@Html.ActionLink("Irregular Verbs", "", "", null, new { @class = "nav-link" })</span></li>
                     <li class="nav-item">
                         <div class="dropdown">
-                            <a style="cursor: pointer;" class="nav-link dropdown-toggle" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                Kho lưu trữ
+                            <a style="cursor: pointer;" class="nav-link dropdown-toggle" id="dropdownMenuRepo" data-bs-toggle="dropdown" aria-expanded="false">
+                                My Workspace
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <li><a class="dropdown-item" href="~/groups/mysentence">Câu đã lưu</a></li>
-                                <li><button class="dropdown-item" type="button">Từ vựng</button></li>
-                                <li><a class="dropdown-item" href="~/dialogs/mydialog">Hội thoại đã lưu</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuRepo">
+                                <li><a class="dropdown-item" href="~/groups/mysentence"><i class="bi bi-chat-square-quote-fill me-2"></i>My Sentence</a></li>
+                                <li><button class="dropdown-item" type="button"><i class="bi bi-file-earmark-word-fill me-2"></i>Vocabulary</button></li>
+                                <li><a class="dropdown-item" href="~/dialogs/mydialog"><i class="bi bi-chat-square-text-fill me-2"></i>My Dialog</a></li>
                             </ul>
                         </div>
                     </li>
@@ -42,17 +44,15 @@
     </nav>
 
     <!-- Body-->
-    <header class="masthead">
+    <main class="masthead">
         <div class="container px-5">
-            <div class="row gx-5 align-items-center">
-                @RenderBody()
-            </div>
+            @RenderBody()
         </div>
-    </header>
+    </main>
 
     <!-- Footer-->
-    <footer class="bg-black text-center py-5">
-        <div class="container px-5">
+    <footer class="footer mt-auto bg-black text-center py-2">
+        <div class="container">
             <div class="text-white-50 small">
                 <p>&copy; @DateTime.Now.Year - Duy Phuc To</p>
                 <a href="#!">Skyper</a>

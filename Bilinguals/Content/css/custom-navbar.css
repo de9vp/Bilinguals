@@ -1,4 +1,6 @@
 ﻿
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Nunito:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ephesis&display=swap');
 
 #mainNav {
     padding-top: 1rem;
@@ -7,30 +9,52 @@
 }
 
     #mainNav .navbar-brand {
-        font-family: "Kanit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }
 
-        #mainNav .navbar-brand:hover, #mainNav .navbar-brand:active {
-            color: #2937f0;
-        }
-
-    #mainNav .navbar-toggler {
-        font-size: 0.875rem;
-        padding: 0.75rem 1rem;
-        color: #212529;
+    #mainNav .dropdown-item {
     }
 
-    #mainNav .navbar-nav .nav-item .nav-link {
-        color: #212529;
+    #mainNav .small {
     }
 
-        #mainNav .navbar-nav .nav-item .nav-link:hover {
-            color: #6c757d;
-        }
 
-        #mainNav .navbar-nav .nav-item .nav-link.active {
-            color: #2937f0;
-        }
+    #mainNav .dropdown-item:hover {
+        background: #4d4d4d;
+        color: white;
+        transition: 0.3s ease-in-out;
+    }
+
+
+
+.dropdown-menu[data-bs-popper] {
+    top: 136%;
+    left: -10px;
+    margin-top: 0.125rem;
+}
+
+.dropdown-menu {
+    border-radius: 0rem 0rem 0.7rem 0.7rem;
+    border-top-style: unset;
+}
+
+
+
+#mainNav .navbar-toggler {
+    font-size: 0.875rem;
+    color: #000000;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link {
+    color: #212529;
+}
+
+    #mainNav .navbar-nav .nav-item .nav-link:hover {
+        color: #6c757d;
+    }
+
+    #mainNav .navbar-nav .nav-item .nav-link.active {
+        color: #2937f0;
+    }
 
 footer a {
     color: rgba(255, 255, 255, 0.5);
@@ -44,8 +68,8 @@ footer a {
 
 .masthead {
     background-color: #f8f9fa;
-    padding-top: 9.5rem;
-    padding-bottom: 5rem;
+    padding-top: 6.5rem;
+    padding-bottom: 2rem;
 }
 
 .dropdown-toggle::after {

@@ -20,6 +20,6 @@ namespace Bilinguals.Domain.Interfaces
 
         IPagedList<Sentence> GetSentenceList(int pageIndex, int pageSize, string searchText, string sortOrder);
 
-        IPagedList<Sentence> GetSentenceHome(int pageIndex, int pageSize, string searchText, string sortOrder);
+        IPagedList<Sentence> GetSentenceHome(int pageIndex, int pageSize, string searchText, string sortOrder, string userId);
     }
 }

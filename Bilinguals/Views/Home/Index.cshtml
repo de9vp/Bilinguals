@@ -4,79 +4,129 @@
 @{
     ViewBag.Title = "Trang chủ";
     var searchText = Request.QueryString["SearchText"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<form>
-    <br />
-    <div class="row mb-3">
-        <input type="text" class="form-control text-center rounded-pill" id="searchText" name="searchText" value="@searchText" placeholder="Nhập từ hoặc câu cần tìm kiếm">
+<div class="row gx-5 align-items-center">
+    <div class="aftersearch text-center">
+        <img src="https://github.com/de9vp/Contact/blob/master/images/why-us.png?raw=true" style="width: 274px" alt="">
     </div>
-    <div class="row g-2 justify-content-center">
-        <div class="col col-md-3 col-xl-2">
-            <button type="submit" class="btn btn-primary rounded-pill w-100"> <span class="bi-search"></span> TÌM KIẾM</button>
+    <div class="aftersearch text-center">
+        <span style="font-family: 'Ephesis', cursive; font-size: 3em; ">" Adventure is the best way to learn. "</span>
+    </div>
+    <form>
+        <div class="row mb-3 justify-content-center">
+            <input type="text" class="form-control text-center rounded-pill w-50" id="searchText" name="searchText" value="@searchText" placeholder="Enter the sentence or vocabulary">
         </div>
-    </div>
-</form>
+        <div class="row mb-5 justify-content-center">
+            <button type="submit" style="width: 150px;" class="btn btn-secondary rounded-pill"> <span class="bi-search me-2"></span>Search</button>
+        </div>
+    </form>
+</div>
+
+
+
+
 
 @if (Model.Count > 0)
 {
-    <table class="table">
-        <tr>
-            <th>
-                Name Dialog
-            </th>
-            <th>
-                EnText
-            </th>
-            <th>
-                ViText
-            </th>
-            <th>
-                SortOrder
-            </th>
-            <th>
-                DateCreated
-            </th>
-            <th>
-                DateModified
-            </th>
-            <th></th>
-        </tr>
+    <div class="row gx-5">
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dialog.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EnText)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ViText)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SortOrder)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateCreated)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateModified)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
-        }
-    </table>
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Search by Sentence</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Search by Dialog</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Search by Irregular Verbs</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Search by My Vocabulary</button>
+            </li>
+        </ul>
+        <div style="background-color: white;" class="tab-content" id="pills-tabContent">
 
-    <div id="paging" style="text-align: center">
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-        @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new { pageIndex, searchText = searchText }))
+            @* Tra câu *@
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <table class="table">
+                    <tbody>
+                       @foreach (var item in Model)
+                       {
+                            <tr>
+                                <td class="row">
+                                    <span><i class="bi bi-chat-square-quote-fill me-2"></i>@item.EnText</span>
+                                    <span style="font-family: 'Nunito Sans', sans-serif; opacity: 0.8;">&emsp;@item.ViText</span>
+                                    <span style="font-family: 'Nunito Sans', sans-serif; opacity: 0.4;">&emsp;&emsp;&emsp;<i class="bi bi-file-image-fill me-2"></i>@item.DialogName</span>
+                                    <span style="font-size: 13px;opacity: 0.4;">&emsp;&emsp;&emsp;&emsp;&emsp;<i class="bi bi-stopwatch-fill me-2"></i>Last updated on @item.DateModified</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group dropstart">
+                                        <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary") btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span> <span id="gn">@item.GroupName</span>
+                                        </button>
+                                        <ul class="dropdown-menu savedropdown" aria-labelledby="dropdownMenuSave">
+                                            <li><a href="#" class="dropdown-item create" data-bs-toggle="modal" data-bs-target="#bsModal">Add to new list</a></li>
+                                            <li><a class="dropdown-item remove" href="#">Remove</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                       }
+                    </tbody>
+                </table>
+                <div id="paging" style="text-align: center">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new { pageIndex, searchText = searchText }))
+                </div>
+            </div>
+
+            @* Tra động từ bất quy tắc *@
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                This is some placeholder content the Home tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.This is some placeholder content the Home tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.
+            </div>
+
+            @* Tra từ vựng cá nhân *@
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                some placeholder content the Home tab's associated content. Clicking another tab will toggle the visibility of this one for
+            </div>
+        </div>
+
     </div>
+
+
+
+
+
+    @section scripts {
+        <script type="text/javascript">
+            $(function () {
+                $('.aftersearch').remove();
+            })
+        </script>
+
+        <script src="~/Scripts/jquery.form.js"></script>
+        <script src="~/Scripts/Components/dropdown-sentence.js"></script>
+        <script type="text/javascript">
+            var Main = (function () {
+                return {
+                    init: function () {
+                        bsModal.init(() => { bsModal.setState() }, (newGroup) => {
+                            //change ui dropdown
+                            getUserGroups();
+                        });
+                        getUserGroups();
+                        handleSaveRemove();
+                    },
+                }
+            })();
+
+            $(function () {
+                Main.init();
+            });
+        </script>
+    }
 }
 
 
