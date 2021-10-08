@@ -31,29 +31,33 @@ textarea {
 
 /* Custom color */
 .bg-custom1 {
-    background-color: #092139;
+    background-color: #092139; /*xanh dam*/
 }
 
 .bg-custom2 {
-    background-color: #003568;
+    background-color: #003568; /*xanh nhat*/
+}
+
+.bg-custom3 {
+    background-color: #cfe7ff; /*xanh nen nhat*/
 }
 
 .btn-custom1 {
     color: #fff;
     background-color: #00356a;
-    border-color: #ffffff;
+    border-color: #003568;
 }
 
     .btn-custom1:hover {
         color: #fff;
         background-color: #092139;
-        border-color: #ffffff;
+        border-color: #003568;
     }
 
     .btn-check:focus + .btn-custom1, .btn-custom1:focus {
         color: #fff;
         background-color: #092139;
-        border-color: #ffffff;
+        border-color: #003568;
         box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
     }
 

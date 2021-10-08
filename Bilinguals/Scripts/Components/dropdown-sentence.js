@@ -24,11 +24,11 @@ var handleSaveRemove = function () {
             $.ajax({
                 url: url,
                 success: function (data) {
-                    _this.find('#gn').remove();
-                    _this.removeClass('btn-outline-primary').addClass('btn-primary')
+                    _this.parent('dr').find('.gn').remove(".gn"); // bug
+                    _this.removeClass('btn-outline-custom1').addClass('btn-custom1')
                         .attr('data-usersentenceid', data.userSentenceId)
-                        .append(`<span id="gn">${data.groupName}</span>`)
-                        .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check');
+                        .find('.bi').removeClass('bi-plus-lg').addClass('bi-check-lg');
+                    _this.parent('.dr').prepend(`<span class="my-auto rounded-start bg-custom3 gn">&nbsp; ${data.groupName} &nbsp;</span>`);
                 }
             });
 
@@ -41,10 +41,10 @@ var handleSaveRemove = function () {
             $.ajax({
                 url: URl,
                 success: function () {
-                    _this.find('#gn').remove();
-                    _this.removeClass('btn-primary').addClass('btn-outline-primary')
+                    _this.parent('dr').remove('.gn');
+                    _this.removeClass('btn-custom1').addClass('btn-outline-custom1')
                         .attr('data-usersentenceid', "")
-                        .find('.bi').removeClass('bi-bookmark-check').addClass('bi-bookmark-plus');
+                        .find('.bi').removeClass('bi-check-lg').addClass('bi-plus-lg');
                 },
                 error: function () {
                     //thong bao chua luu 
@@ -151,11 +151,11 @@ var bsModal = (function () {
         $.ajax({
             url: url,
             success: function (data) {
-                _this.find('#gn').remove();
-                _this.removeClass('btn-outline-primary').addClass('btn-primary')
+                _this.parent('dr').remove('.gn');
+                _this.removeClass('btn-outline-custom1').addClass('btn-custom1')
                     .attr('data-usersentenceid', data.userSentenceId)
-                    .append(`<span id="gn">${data.groupName}</span>`)
-                    .find('.bi').removeClass('bi-bookmark-plus').addClass('bi-bookmark-check');
+                    .find('.bi').removeClass('bi-plus-lg').addClass('bi-check-lg');
+                _this.parent('.dr').prepend(`<span class="my-auto rounded-start bg-custom3 gn">&nbsp; ${data.groupName} &nbsp;</span>`);
             },
         });
     } 

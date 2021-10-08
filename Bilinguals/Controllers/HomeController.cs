@@ -24,10 +24,13 @@ namespace Bilinguals.Controllers
             var userId = User.Identity.GetUserId();
 
             // get by sentence
-            var sentences = _sentenceService.GetSentenceHome(sentenceIndex ?? 1, 8, searchText, sortOrder, userId);
+            var sentences = _sentenceService.GetSentenceHome(sentenceIndex ?? 1, 5, searchText, sortOrder, userId);
 
             // get by dialog
-            ViewBag.dialogs = _dialogService.GetDialogList(dialogIndex ?? 1, 10, searchText, sortOrder, userId);
+            if (searchText != null)
+            {
+                ViewBag.dialogs = _dialogService.GetDialogList(dialogIndex ?? 1, 5, searchText, sortOrder, userId);
+            }
 
             return View(sentences);
         }
