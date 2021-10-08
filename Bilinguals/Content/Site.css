@@ -1,7 +1,7 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&display=swap');
 
 body {
-    background-color: #f8f9fa;
+    background-color: #cfe7ff;
     font-family: 'Balsamiq Sans', cursive;
 }
 
@@ -32,6 +32,10 @@ textarea {
 /* Custom color */
 .bg-custom1 {
     background-color: #092139;
+}
+
+.bg-custom2 {
+    background-color: #003568;
 }
 
 .btn-custom1 {

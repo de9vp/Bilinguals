@@ -2,3 +2,29 @@
 
 body {
 }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #ffffff;
+    color: #00356a;
+}
+
+.vitext {
+    font-family: 'Nunito Sans', sans-serif;
+    color: #00356a;
+    font-size: 17px;
+}
+
+.entext {
+    font-size: 19px;
+}
+
+.timeupdated {
+    font-size: 12px;
+    opacity: 0.3;
+}
+
+.dialogname {
+    font-family: 'Nunito Sans', sans-serif;
+    opacity: 0.5;
+}

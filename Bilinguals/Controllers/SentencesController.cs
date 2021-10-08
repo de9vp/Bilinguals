@@ -146,9 +146,14 @@ namespace Bilinguals.Controllers
 
 
         #region JSON - AJAX REQUESTS
-        public ActionResult SaveToMyFeaturedSentences(int sentenceId, int groupId, string returnUrl = null)
+        public ActionResult SaveToMyFeaturedSentences(int sentenceId, int? groupId, string returnUrl = null)
         {
-            var userSentence = _userSentenceService.AddOrUpdateUserSentence(sentenceId, groupId, User.Identity.GetUserId());
+            if (groupId == null)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+
+            var userSentence = _userSentenceService.AddOrUpdateUserSentence(sentenceId, groupId.Value, User.Identity.GetUserId());
             var groupName = userSentence.Group.Name;
 
             if (Request.IsAjaxRequest())

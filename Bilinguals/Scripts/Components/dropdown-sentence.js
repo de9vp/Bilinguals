@@ -137,7 +137,7 @@ var bsModal = (function () {
                 beforeSubmit: function (data) {
                 },
                 success: function (data) {
-                    $('#bsModal').find('button.btn-close').trigger('click');
+                    $('#bsModal').find('button.btn-cl').trigger('click');
                     resolve(data);
                 },
                 error: reject

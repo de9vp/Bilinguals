@@ -47,6 +47,11 @@ namespace Bilinguals.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (group.Name == null)
+                {
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
+
                 var userId = User.Identity.GetUserId();
                 var newGroup = _groupService.Add(group, userId);
 

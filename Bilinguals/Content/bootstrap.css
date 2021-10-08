@@ -3926,15 +3926,16 @@ textarea.form-control-lg {
 }
 
 .nav-pills .nav-link {
-  background: none;
-  border: 0;
-  border-radius: 0.25rem;
+    background: none;
+    border: 0;
+    border-radius: 2rem;
+    color: #092139;
 }
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #0d6efd;
-}
+    .nav-pills .nav-link.active,
+    .nav-pills .show > .nav-link {
+        color: #fff;
+        background-color: #092139;
+    }
 
 .nav-fill > .nav-link,
 .nav-fill .nav-item {
@@ -3954,11 +3955,17 @@ textarea.form-control-lg {
   width: 100%;
 }
 
+.tab-content {
+    border-radius: 20px;
+    background-color: white;
+    border: 1px solid #00356a;
+}
+
 .tab-content > .tab-pane {
-  display: none;
+    display: none;
 }
 .tab-content > .active {
-  display: block;
+    display: block;
 }
 
 .navbar {
@@ -5468,7 +5475,7 @@ textarea.form-control-lg {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0.3rem;
+  border-radius: 20px;
   outline: 0;
 }
 
@@ -5530,10 +5537,10 @@ textarea.form-control-lg {
 }
 
 @media (min-width: 576px) {
-  .modal-dialog {
-    max-width: 500px;
-    margin: 1.75rem auto;
-  }
+    .modal-dialog {
+        max-width: 500px;
+        margin: 6.75rem auto;
+    }
 
   .modal-dialog-scrollable {
     height: calc(100% - 3.5rem);
@@ -5544,7 +5551,7 @@ textarea.form-control-lg {
   }
 
   .modal-sm {
-    max-width: 300px;
+    max-width: 260px;
   }
 }
 @media (min-width: 992px) {
