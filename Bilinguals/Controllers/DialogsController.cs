@@ -30,14 +30,9 @@ namespace Bilinguals.Controllers
         {
             int pageSize = 8;
 
-            var dialogs = _dialogService.GetDialogList(pageIndex ?? 1, pageSize, searchText, sortOrder);
+            var userId = User.Identity.GetUserId();
 
-            UserDialog userDialog;
-            foreach (var item in dialogs)
-            {
-                userDialog = item.UserDialogs.Where(x => x.UserId == User.Identity.GetUserId()).FirstOrDefault(x => x.DialogId == item.Id);
-                item.UserDialogId = userDialog?.Id;
-            }
+            var dialogs = _dialogService.GetDialogList(pageIndex ?? 1, pageSize, searchText, sortOrder, userId);
 
             return View(dialogs);
         }

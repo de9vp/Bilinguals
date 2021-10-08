@@ -23,7 +23,7 @@ namespace Bilinguals.Services
 
         public Group Add(Group group, string userId)
         {
-            var g = _groupRepo.Table.FirstOrDefault(x => group.Name.Contains(x.Name) && x.UserId == userId); //check name exist
+            var g = _groupRepo.Table.FirstOrDefault(x => x.Name == group.Name && x.UserId == userId); //check name exist
             if (g == null)
             {
                 g = new Group

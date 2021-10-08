@@ -33,13 +33,6 @@ namespace Bilinguals.Services
         {
             var dialog = _dialogRepo.Table.FirstOrDefault(x => x.Id == id);
             
-            //var userDialogs = _userDialogRepo.Table.Where(x => x.DialogId == dialog.Id).ToList();
-            //foreach (var item in userDialogs)
-            //{
-            //    _userDialogRepo.Delete(item);
-            //} 
-            // => Foreign key not null
-
             _dialogRepo.Delete(dialog);
         }
         public void Edit(Dialog dialog)
@@ -58,7 +51,7 @@ namespace Bilinguals.Services
             return _dialogRepo.Table.ToList();
         }
 
-        public IPagedList<Dialog> GetDialogList(int pageIndex, int pageSize, string searchText, string sortOrder)
+        public IPagedList<Dialog> GetDialogList(int pageIndex, int pageSize, string searchText, string sortOrder, string userId)
         {
             // Converts every character to lowercase, if null return empty string ( ?. return Null | ?? if Null else return "" )
             var search = searchText?.ToLower() ?? "";
@@ -76,17 +69,29 @@ namespace Bilinguals.Services
                 query = query.Where(x => x.Name.ToLower().Contains(term));
             }
 
+            var q = from d in query.ToList()
+                    from ud in _userDialogRepo.Table.Where(x => x.UserId == userId && x.DialogId == d.Id).DefaultIfEmpty()
+                    select new Dialog
+                    {
+                        Id = d.Id,
+                        Name = d.Name,
+                        Description = d.Description,
+                        Reviews = d.Reviews,
+                        DateModified = d.DateModified,
+                        UserDialogId = ud == null ? (int?)null : ud.Id, //purpose
+                    };
+
             switch (sortOrder)
             {
                 //case "DateCreate": //sorted by datecreate
                 //    query = query.OrderByDescending(x => x.DateCreated);
                 //    break;
                 default:
-                    query = query.OrderBy(x => x.Id);
+                    q = q.OrderBy(x => x.Id);
                     break;
             }
 
-            return query.ToPagedList(pageIndex, pageSize);
+            return q.ToPagedList(pageIndex, pageSize);
         }
 
         public void FromTextFile(string allTexts)

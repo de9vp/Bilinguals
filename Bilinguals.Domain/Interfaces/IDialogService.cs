@@ -20,7 +20,7 @@ namespace Bilinguals.Domain.Interfaces
 
         List<Dialog> GetAll();
 
-        IPagedList<Dialog> GetDialogList(int pageIndex, int pageSize, string searchText, string sortOrder);
+        IPagedList<Dialog> GetDialogList(int pageIndex, int pageSize, string searchText, string sortOrder, string userId);
 
         void FromTextFile(string allTexts);
 

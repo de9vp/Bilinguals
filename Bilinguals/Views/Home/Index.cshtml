@@ -35,10 +35,10 @@
 
         <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Search by Sentence</button>
+                <button class="nav-link active" id="pills-sentence-tab" data-bs-toggle="pill" data-bs-target="#pills-sentence" type="button" role="tab" aria-controls="pills-sentence" aria-selected="true">Search by Sentence</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Search by Dialog</button>
+                <button class="nav-link" id="pills-dialog-tab" data-bs-toggle="pill" data-bs-target="#pills-dialog" type="button" role="tab" aria-controls="pills-dialog" aria-selected="false">Search by Dialog</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Search by Irregular Verbs</button>
@@ -50,12 +50,12 @@
         <div class="tab-content" id="pills-tabContent">
 
             @* Tra câu *@
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div class="tab-pane fade show active" id="pills-sentence" role="tabpanel" aria-labelledby="pills-sentence-tab">
                 <table class="table mt-4">
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr class="row">
+                            <tr class="row mx-1">
                                 <td class="row col-8">
                                     <span class="entext"><i class="bi bi-chat-square-quote-fill me-2"></i>@item.EnText</span>
                                     <span class="vitext mb-2">&emsp;<i class="bi bi-arrow-return-right me-2"></i>@item.ViText</span>
@@ -66,7 +66,7 @@
                                 <td class="col-4">
                                     <div class="btn-group dropstart">
                                         <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary") btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span> <span id="gn">@item.GroupName</span>
+                                            <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus" : "bookmark-check")"></span> <span id="gn">@item.GroupName</span>
                                         </button>
                                         <ul class="dropdown-menu savedropdown" aria-labelledby="dropdownMenuSave">
                                             <li><a href="#" class="dropdown-item create" data-bs-toggle="modal" data-bs-target="#bsModal">Add to new list</a></li>
@@ -83,13 +83,36 @@
                     <span class="badge rounded-pill bg-custom2">
                         &nbsp; Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount &nbsp;
                     </span>
-                    @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new { pageIndex, searchText = searchText }))
+                    @Html.PagedListPager(Model, sentenceIndex => Url.Action("Index", new { sentenceIndex, searchText = searchText }))
                 </div>
             </div>
 
-            @* Tra động từ bất quy tắc *@
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                This is some placeholder content the Home tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.This is some placeholder content the Home tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.
+            @* Tra doan hoi thoai *@
+            <div class="tab-pane fade" id="pills-dialog" role="tabpanel" aria-labelledby="pills-dialog-tab">
+                <table class="table mt-4">
+                    <tbody>
+                    @{
+                        PagedList.IPagedList<Bilinguals.Domain.Models.Dialog> dialogs = ViewBag.dialogs;
+                        foreach (var item in dialogs)
+                        {
+                            <tr class="row mx-1">
+                                <td class="row col-8">
+                                    @item.Name
+                                </td>
+                                <td class="col-4">
+                                    @item.DateModified
+                                </td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+                <div id="paging" style="text-align: center">
+                    <span class="badge rounded-pill bg-custom2">
+                        &nbsp; Page @(dialogs.PageCount < dialogs.PageNumber ? 0 : dialogs.PageNumber) of @dialogs.PageCount &nbsp;
+                    </span>
+                    @Html.PagedListPager(dialogs, dialogIndex  => Url.Action("Index", new { dialogIndex, searchText = searchText }))
+                </div>
             </div>
 
             @* Tra từ vựng cá nhân *@
@@ -107,13 +130,13 @@
     </div>
 
     @section scripts {
-        <script type="text/javascript">
+        @*<script type="text/javascript">
             $(function () {
                 setTimeout(function myfunction() {
                     $('.aftersearch').css('display', 'none').css('transition', 'all 0.3s cubic-bezier(0.37, 0.01, 0.06, 0.14) 0s')
                 }, 2000);
             })
-        </script>
+        </script>*@
 
         <script src="~/Scripts/jquery.form.js"></script>
         <script src="~/Scripts/Components/dropdown-sentence.js"></script>

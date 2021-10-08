@@ -11,19 +11,23 @@ namespace Bilinguals.Controllers
     public class HomeController : Controller
     {
         private readonly ISentenceService _sentenceService;
+        private readonly IDialogService _dialogService;
 
-        public HomeController(ISentenceService sentenceService)
+        public HomeController(ISentenceService sentenceService, IDialogService dialogService)
         {
             _sentenceService = sentenceService;
+            _dialogService = dialogService;
         }
 
-        public ActionResult Index(int? pageIndex, string searchText, string sortOrder)
+        public ActionResult Index(int? sentenceIndex, int? dialogIndex,  string searchText, string sortOrder)
         {
-            int pageSize = 5;
-
             var userId = User.Identity.GetUserId();
 
-            var sentences = _sentenceService.GetSentenceHome(pageIndex ?? 1, pageSize, searchText, sortOrder, userId);
+            // get by sentence
+            var sentences = _sentenceService.GetSentenceHome(sentenceIndex ?? 1, 8, searchText, sortOrder, userId);
+
+            // get by dialog
+            ViewBag.dialogs = _dialogService.GetDialogList(dialogIndex ?? 1, 10, searchText, sortOrder, userId);
 
             return View(sentences);
         }

@@ -87,14 +87,10 @@ namespace Bilinguals.Services
 
             foreach (var term in splitSearch)
             {
-                query = query.Where(x => x.ViText.ToLower().Contains(term) || x.EnText.ToLower().Contains(term) || x.Dialog.Name.ToLower().Contains(term));
+                query = query.Where(x => x.ViText.ToLower().Contains(term) || x.EnText.ToLower().Contains(term));
             }
 
-            var query2 = query.ToList();
-
-            
-
-            var q = from s in query2
+            var q = from s in query.ToList()
                     from us in _userSentenceRepo.Table.Where(x => x.UserId == userId && x.SentenceId == s.Id).DefaultIfEmpty().Include(icl => icl.Group)
                     select new Sentence
                     {
