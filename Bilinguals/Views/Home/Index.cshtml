@@ -61,16 +61,17 @@
                                     <span></span>
                                 </td>
                                 <td class="col-4 d-flex flex-row-reverse">
-                                    <div class="btn-group dropstart dr">
+                                    <div class="btn-group dropstart btnsave">
                                         <div class="gn @(item.GroupName.IsEmpty() ? null : "my-auto rounded-start bg-custom3 py-1" )"> <span class=" px-@(item.GroupName.IsEmpty() ? "0" : "2" ) ">@item.GroupName</span>  </div>
                                         <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-custom2" : "custom2") btn-sm my-4 rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span class="bi bi-@(!item.UserSentenceId.HasValue ? "info-lg" : "check-lg")"></span>
                                         </button>
                                         <ul class="dropdown-menu savedropdown" aria-labelledby="dropdownMenuSave">
-                                            <li><a href="#" class="dropdown-item create" data-bs-toggle="modal" data-bs-target="#bsModal">Add to new list</a></li>
-                                            <li><a class="dropdown-item remove" href="#">Remove</a></li>
+                                            <shadow class="d-flex">
+                                                <a href="#" class="dropdown-item mx-2 rounded-pill1 w-75 d-flex justify-content-center create" data-bs-toggle="modal" data-bs-target="#bsModal">New List</a>
+                                                <a class="dropdown-item mx-2 rounded-pill1 w-25 d-flex justify-content-center remove" href="#"><i class="bi bi-x-lg"></i></a>
+                                            </shadow>
                                             <li><hr class="dropdown-divider"></li>
-                                            
                                         </ul>
                                     </div>
                                 </td>

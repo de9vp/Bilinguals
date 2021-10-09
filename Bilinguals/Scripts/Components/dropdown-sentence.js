@@ -1,5 +1,4 @@
 ﻿
-
 // save and remove sentence
 var sentenceId;
 var handleSaveRemove = function () {
@@ -24,11 +23,11 @@ var handleSaveRemove = function () {
             $.ajax({
                 url: url,
                 success: function (data) {
-                    _this.parent('.dr').find('.gn').remove(); // bug
+                    _this.parent('.btnsave').find('.gn').remove(); 
                     _this.removeClass('btn-outline-custom2').addClass('btn-custom2')
                         .attr('data-usersentenceid', data.userSentenceId)
                         .find('.bi').removeClass('bi-info-lg').addClass('bi-check-lg');
-                    _this.parent('.dr').prepend(`<div class="gn my-auto rounded-start bg-custom3 py-1"> <span class="px-2"> ${data.groupName} </span> </div>`);
+                    _this.parent('.btnsave').prepend(`<div class="gn my-auto rounded-start bg-custom3 py-1"> <span class="px-2"> ${data.groupName} </span> </div>`);
                 }
             });
 
@@ -41,7 +40,7 @@ var handleSaveRemove = function () {
             $.ajax({
                 url: URl,
                 success: function () {
-                    _this.parent('.dr').find('.gn').remove();
+                    _this.parent('.btnsave').find('.gn').remove();
                     _this.removeClass('btn-custom2').addClass('btn-outline-custom2')
                         .attr('data-usersentenceid', "")
                         .find('.bi').removeClass('bi-check-lg').addClass('bi-info-lg');
@@ -89,7 +88,7 @@ var getUserGroups = function () {
         console.log(data);
         _group = data;
         var rows = _group.reduce((all, group) => {
-            var groupRow = `<li><a data-groupid="${group.id}" class="dropdown-item save" href="#">${group.name}</a></li>`;
+            var groupRow = `<li class="d-flex"><a data-groupid="${group.id}" class="dropdown-item mx-2 rounded-pill1 btn-outline-custom2 d-flex justify-content-center save" href="#">${group.name}</a></li>`;
             return all += groupRow;
         }, '');
         $('.save').remove();
@@ -151,11 +150,11 @@ var bsModal = (function () {
         $.ajax({
             url: url,
             success: function (data) {
-                _this.parent('.dr').find('.gn').remove();
+                _this.parent('.btnsave').find('.gn').remove();
                 _this.removeClass('btn-outline-custom2').addClass('btn-custom2')
                     .attr('data-usersentenceid', data.userSentenceId)
                     .find('.bi').removeClass('bi-info-lg').addClass('bi-check-lg');
-                _this.parent('.dr').prepend(`<div class="gn my-auto rounded-start bg-custom3 py-1"> <span class="px-2"> ${data.groupName} </span> </div>`);
+                _this.parent('.btnsave').prepend(`<div class="gn my-auto rounded-start bg-custom3 py-1"> <span class="px-2"> ${data.groupName} </span> </div>`);
             },
         });
     } 

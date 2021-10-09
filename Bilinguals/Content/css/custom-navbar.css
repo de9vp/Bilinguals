@@ -25,20 +25,6 @@
     }
 
 
-
-.dropdown-menu[data-bs-popper] {
-    top: 136%;
-    left: -10px;
-    margin-top: 0.125rem;
-}
-
-.dropdown-menu {
-    border-radius: 0rem 0rem 0.7rem 0.7rem;
-    border-top-style: unset;
-}
-
-
-
 #mainNav .navbar-toggler {
     font-size: 0.875rem;
     color: #000000;
@@ -73,6 +59,3 @@ footer a {
     padding-bottom: 2rem;
 }
 
-.dropdown-toggle::after {
-    display: none;
-}

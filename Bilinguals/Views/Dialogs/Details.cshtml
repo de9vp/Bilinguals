@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Details";
     var returnUrl = Request.QueryString["returnUrl"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Details</h2>
@@ -55,14 +56,16 @@
             <td> @item.EnText </td>
             <td> @item.ViText </td>
             <td>
-                <div class="btn-group dropstart">
-                    <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-primary" : "primary") btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="bi bi-@(!item.UserSentenceId.HasValue ? "bookmark-plus":"bookmark-check")"></span> <span id="gn">@item.GroupName</span>
+                <div class="btn-group dropstart btnsave">
+                    <div class="gn @(item.GroupName.IsEmpty() ? null : "my-auto rounded-start bg-custom3 py-1" )"> <span class=" px-@(item.GroupName.IsEmpty() ? "0" : "2" ) ">@item.GroupName</span>  </div>
+                    <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-custom2" : "custom2") btn-sm my-4 rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="bi bi-@(!item.UserSentenceId.HasValue ? "info-lg" : "check-lg")"></span>
                     </button>
                     <ul class="dropdown-menu savedropdown" aria-labelledby="dropdownMenuSave">
                         <li><a href="#" class="dropdown-item create" data-bs-toggle="modal" data-bs-target="#bsModal">Add to new list</a></li>
                         <li><a class="dropdown-item remove" href="#">Remove</a></li>
                         <li><hr class="dropdown-divider"></li>
+
                     </ul>
                 </div>
             </td>
