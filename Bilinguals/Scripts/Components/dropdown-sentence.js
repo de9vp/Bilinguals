@@ -24,11 +24,11 @@ var handleSaveRemove = function () {
             $.ajax({
                 url: url,
                 success: function (data) {
-                    _this.parent('dr').find('.gn').remove(".gn"); // bug
-                    _this.removeClass('btn-outline-custom1').addClass('btn-custom1')
+                    _this.parent('.dr').find('.gn').remove(); // bug
+                    _this.removeClass('btn-outline-custom2').addClass('btn-custom2')
                         .attr('data-usersentenceid', data.userSentenceId)
-                        .find('.bi').removeClass('bi-plus-lg').addClass('bi-check-lg');
-                    _this.parent('.dr').prepend(`<span class="my-auto rounded-start bg-custom3 gn">&nbsp; ${data.groupName} &nbsp;</span>`);
+                        .find('.bi').removeClass('bi-info-lg').addClass('bi-check-lg');
+                    _this.parent('.dr').prepend(`<div class="gn my-auto rounded-start bg-custom3 py-1"> <span class="px-2"> ${data.groupName} </span> </div>`);
                 }
             });
 
@@ -41,10 +41,10 @@ var handleSaveRemove = function () {
             $.ajax({
                 url: URl,
                 success: function () {
-                    _this.parent('dr').remove('.gn');
-                    _this.removeClass('btn-custom1').addClass('btn-outline-custom1')
+                    _this.parent('.dr').find('.gn').remove();
+                    _this.removeClass('btn-custom2').addClass('btn-outline-custom2')
                         .attr('data-usersentenceid', "")
-                        .find('.bi').removeClass('bi-check-lg').addClass('bi-plus-lg');
+                        .find('.bi').removeClass('bi-check-lg').addClass('bi-info-lg');
                 },
                 error: function () {
                     //thong bao chua luu 
@@ -151,11 +151,11 @@ var bsModal = (function () {
         $.ajax({
             url: url,
             success: function (data) {
-                _this.parent('dr').remove('.gn');
-                _this.removeClass('btn-outline-custom1').addClass('btn-custom1')
+                _this.parent('.dr').find('.gn').remove();
+                _this.removeClass('btn-outline-custom2').addClass('btn-custom2')
                     .attr('data-usersentenceid', data.userSentenceId)
-                    .find('.bi').removeClass('bi-plus-lg').addClass('bi-check-lg');
-                _this.parent('.dr').prepend(`<span class="my-auto rounded-start bg-custom3 gn">&nbsp; ${data.groupName} &nbsp;</span>`);
+                    .find('.bi').removeClass('bi-info-lg').addClass('bi-check-lg');
+                _this.parent('.dr').prepend(`<div class="gn my-auto rounded-start bg-custom3 py-1"> <span class="px-2"> ${data.groupName} </span> </div>`);
             },
         });
     } 

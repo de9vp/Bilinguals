@@ -52,7 +52,7 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr class="row mx-1">
+                            <tr class="row ms-2">
                                 <td class="row col-8">
                                     <span class="entext"><i class="bi bi-chat-square-quote-fill me-2"></i>@item.EnText</span>
                                     <span class="vitext mb-2">&emsp;<i class="bi bi-arrow-return-right me-2"></i>@item.ViText</span>
@@ -62,14 +62,15 @@
                                 </td>
                                 <td class="col-4 d-flex flex-row-reverse">
                                     <div class="btn-group dropstart dr">
-                                        <span class="my-auto rounded-start bg-custom3 gn">&nbsp; @item.GroupName &nbsp;</span>
-                                        <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-custom1" : "custom1") btn-sm my-4 rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="bi bi-@(!item.UserSentenceId.HasValue ? "plus-lg" : "check-lg")"></span>
+                                        <div class="gn @(item.GroupName.IsEmpty() ? null : "my-auto rounded-start bg-custom3 py-1" )"> <span class=" px-@(item.GroupName.IsEmpty() ? "0" : "2" ) ">@item.GroupName</span>  </div>
+                                        <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-custom2" : "custom2") btn-sm my-4 rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="bi bi-@(!item.UserSentenceId.HasValue ? "info-lg" : "check-lg")"></span>
                                         </button>
                                         <ul class="dropdown-menu savedropdown" aria-labelledby="dropdownMenuSave">
                                             <li><a href="#" class="dropdown-item create" data-bs-toggle="modal" data-bs-target="#bsModal">Add to new list</a></li>
                                             <li><a class="dropdown-item remove" href="#">Remove</a></li>
                                             <li><hr class="dropdown-divider"></li>
+                                            
                                         </ul>
                                     </div>
                                 </td>
