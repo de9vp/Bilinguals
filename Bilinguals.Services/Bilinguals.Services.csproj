@@ -81,6 +81,7 @@
     <Compile Include="DialogService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="IdentityConfig.cs" />
+    <Compile Include="ImageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SentenceService.cs" />
     <Compile Include="UserDialogService.cs" />

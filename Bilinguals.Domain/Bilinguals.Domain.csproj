@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\IBilingualDbContext.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IGroupService.cs" />
+    <Compile Include="Interfaces\IImageService.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISentenceService.cs" />
     <Compile Include="Interfaces\IUserDialogService.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Dialog.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\IrregularVerb.cs" />
     <Compile Include="Models\Sentence.cs" />
     <Compile Include="Models\UserDialog.cs" />

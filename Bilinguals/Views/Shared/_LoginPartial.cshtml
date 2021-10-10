@@ -11,12 +11,12 @@
                 <span class="d-flex align-items-center">
                     <i style=" font-size: 18px;" class="bi bi-person-fill me-2"></i>
                     <span class="small me-2">
-                        @Html.ActionLink(User.Identity.GetFullName(), "Index", "Manage", routeValues: null, htmlAttributes: new { style = "color: inherit;text-decoration:none;", title = "Manage", @class = "" })
+                        @Html.ActionLink(User.Identity.GetFullName(), "", "", routeValues: null, htmlAttributes: new { style = "color: inherit;text-decoration:none;", title = "Manage", @class = "" })
                     </span>
                 </span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li><button class="dropdown-item" type="button"><i class="bi bi-person-lines-fill me-2"></i>Profile</button></li>
+                <li><a href="~/manage" class="dropdown-item" type="button"><i class="bi bi-person-lines-fill me-2"></i>Profile</a></li>
                 @if (User.IsInRole("Administrator"))
                 {
                     <li><button class="dropdown-item" type="button"><i class="bi bi-emoji-sunglasses me-2"></i> Administrator</button></li>

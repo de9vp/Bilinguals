@@ -27,6 +27,7 @@ namespace Bilinguals.Data
         public DbSet<IrregularVerb> IrregularVerbs { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         //https://stackoverflow.com/questions/7641552/overriding-savechanges-and-setting-modifieddate-but-how-do-i-set-modifiedby
         public override int SaveChanges()
@@ -44,7 +45,7 @@ namespace Bilinguals.Data
                     else
                         Entry(entity).Property(x => x.DateCreated).IsModified = false;
 
-                    entity.DateModified = now;
+                    entity.DateModified = now; //purpose
                 }
             }
 

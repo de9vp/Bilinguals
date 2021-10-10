@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Bilinguals.Models;
 using Bilinguals.Services;
+using Bilinguals.App;
 
 namespace Bilinguals.Controllers
 {
@@ -69,13 +70,20 @@ namespace Bilinguals.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var user = UserManager.FindById(userId);
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                FullName = user.FullName,
+                LastName = user.LastName,
+                Email = user.Email,
             };
             return View(model);
         }
@@ -338,7 +346,7 @@ namespace Bilinguals.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 

@@ -214,6 +214,7 @@
     <Compile Include="Controllers\DialogsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ImportExportController.cs" />
     <Compile Include="Controllers\IrregularVerbsController.cs" />
     <Compile Include="Controllers\LearnController.cs" />
@@ -354,9 +355,13 @@
     <Content Include="Views\Groups\Delete.cshtml" />
     <Content Include="Views\Groups\Edit.cshtml" />
     <Content Include="Views\Groups\MySentence.cshtml" />
+    <Content Include="Views\Images\Create.cshtml" />
+    <Content Include="Views\Images\Delete.cshtml" />
+    <Content Include="Views\Images\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Avatars\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

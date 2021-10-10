@@ -24,6 +24,8 @@ namespace Bilinguals.Domain
 
         public DateTime? DateOfBirth { get; set; }
 
+        public int? ImageId { get; set; } 
+
         public string FullName
         {
             get

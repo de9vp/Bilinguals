@@ -84,6 +84,14 @@
     <Compile Include="Migrations\202109270907017_FixDB.Designer.cs">
       <DependentUpon>202109270907017_FixDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110100829472_addImageTable.cs" />
+    <Compile Include="Migrations\202110100829472_addImageTable.Designer.cs">
+      <DependentUpon>202110100829472_addImageTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110100840313_addFKimage.cs" />
+    <Compile Include="Migrations\202110100840313_addFKimage.Designer.cs">
+      <DependentUpon>202110100840313_addFKimage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -118,6 +126,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109270907017_FixDB.resx">
       <DependentUpon>202109270907017_FixDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110100829472_addImageTable.resx">
+      <DependentUpon>202110100829472_addImageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110100840313_addFKimage.resx">
+      <DependentUpon>202110100840313_addFKimage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
