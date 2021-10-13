@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Bilinguals.Domain.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
@@ -20,7 +21,8 @@ namespace Bilinguals.Models
         public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string Email { get; set; }
-
+        public int? ImageId { get; set; }
+        public virtual Image image { get; set; }
     }
 
     public class ManageLoginsViewModel

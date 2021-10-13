@@ -84,6 +84,8 @@ namespace Bilinguals.Controllers
                 FullName = user.FullName,
                 LastName = user.LastName,
                 Email = user.Email,
+                ImageId = user.ImageId,
+                image = user.image,
             };
             return View(model);
         }

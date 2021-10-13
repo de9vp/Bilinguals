@@ -5539,7 +5539,7 @@ textarea.form-control-lg {
 @media (min-width: 576px) {
     .modal-dialog {
         max-width: 500px;
-        margin: 6.75rem auto;
+        margin: 1.75rem auto;
     }
 
   .modal-dialog-scrollable {

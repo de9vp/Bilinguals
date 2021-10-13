@@ -32,5 +32,17 @@ namespace Bilinguals.Services
         {
             _imageRepo.Update(image);
         }
+
+        public Image FindByPath(string imagePath)
+        {
+            var image = _imageRepo.Table.FirstOrDefault(x => x.ImagePath == imagePath);
+            return image;
+        }
+
+        public Image FindById(int id)
+        {
+            var image = _imageRepo.GetById(id);
+            return image;
+        }
     }
 }

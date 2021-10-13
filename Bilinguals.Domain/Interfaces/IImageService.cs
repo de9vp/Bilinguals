@@ -14,5 +14,9 @@ namespace Bilinguals.Domain.Interfaces
         void Delete(int id);
 
         void Edit(Image image);
+
+        Image FindByPath(string imagePath);
+
+        Image FindById(int id);
     }
 }

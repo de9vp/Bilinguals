@@ -5,7 +5,7 @@
 
 <div class="row gx-5">
     <section class="rounded-pill" style="background-color: #e9e9ff;">
-        <div class="container py-5">
+        <div class="py-5">
             <div class="row">
                 <div class="col">
                     <nav aria-label="breadcrumb" class="bg-light rounded-pill1 p-3 mb-4">
@@ -22,7 +22,10 @@
                 <div class="col-lg-4">
                     <div class="card mb-4 rounded-pill">
                         <div class="card-body text-center">
-                            <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                            <div>
+                                <img src=" ~/Avatars/@(!Model.ImageId.HasValue ? "defaultAvatar.jpg" : Model.image.ImagePath )" alt="avatar" class="rounded-circle img-fluid avatar" style="width: 150px;height: 150px;">
+                                <a data-imageid="@Model.ImageId" class="btn position-absolute avatarbtn" data-bs-toggle="modal" data-bs-target="#bsModal"><i class="bi bi-person-bounding-box"></i></a>
+                            </div>
                             <h5 class="my-3">@Model.FullName</h5>
                             <p class="text-muted mb-1">Full Stack Developer</p>
                             <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
@@ -188,6 +191,13 @@
     </section>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="bsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
@@ -201,13 +211,13 @@
         </dd>
         @*
             Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-             
+
              See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-             
+
              Uncomment the following block after you have set up two-factor authentication
         *@
-        @*  
+        @*
             <dt>Phone Number:</dt>
             <dd>
                 @(Model.PhoneNumber ?? "None")
@@ -256,3 +266,26 @@
         </dd>
     </dl>
 </div>
+
+@section scripts{
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Scripts/Components/update-image.js"></script>
+    <script type="text/javascript">
+        var Main = (function () {
+            return {
+                init: function () {
+                    bsModal.init(() => { bsModal.setState() }, (newImage) => {
+                        //change image
+                        console.log("da them");
+                        $('.avatar').removeAttr('src').attr('src', `\Avatars/${newImage.path}`);
+                        $('.avatarbtn').attr('data-imageid', newImage.id);
+                    });
+                },
+            }
+        })();
+
+        $(function () {
+            Main.init();
+        });
+    </script>
+}

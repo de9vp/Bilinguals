@@ -18,5 +18,14 @@ namespace Bilinguals.App
                 description = group.Description,
             };
         }
+
+        public static object MapImageJson(Image image)
+        {
+            return new
+            {
+                id = image.Id,
+                path = image.ImagePath,
+            };
+        }
     }
 }

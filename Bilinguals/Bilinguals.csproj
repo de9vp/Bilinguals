@@ -282,6 +282,7 @@
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Components\bootstrap5-validation.js" />
     <Content Include="Scripts\Components\dropdown-sentence.js" />
+    <Content Include="Scripts\Components\update-image.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />

@@ -92,6 +92,10 @@
     <Compile Include="Migrations\202110100840313_addFKimage.Designer.cs">
       <DependentUpon>202110100840313_addFKimage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110130850276_fix.cs" />
+    <Compile Include="Migrations\202110130850276_fix.Designer.cs">
+      <DependentUpon>202110130850276_fix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -132,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110100840313_addFKimage.resx">
       <DependentUpon>202110100840313_addFKimage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110130850276_fix.resx">
+      <DependentUpon>202110130850276_fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

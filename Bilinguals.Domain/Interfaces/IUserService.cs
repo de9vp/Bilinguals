@@ -8,5 +8,6 @@ namespace Bilinguals.Domain.Interfaces
 {
     public interface IUserService
     {
+        void UpdateImage(string userId, int imageId);
     }
 }
