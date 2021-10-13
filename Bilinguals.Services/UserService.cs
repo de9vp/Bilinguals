@@ -44,5 +44,24 @@ namespace Bilinguals.Services
 
             UserManager.Update(user);
         }
+
+        public void DeleteImage(string userId)
+        {
+            var user = UserManager.FindById(userId);
+
+
+            user.Id = user.Id;
+            user.Email = user.Email;
+            user.PasswordHash = user.PasswordHash;
+            user.PhoneNumber = user.PhoneNumber;
+            user.UserName = user.UserName;
+            user.FirstName = user.FirstName;
+            user.LastName = user.LastName;
+            user.DateOfBirth = user.DateOfBirth;
+            user.ImageId = null;
+
+
+            UserManager.Update(user);
+        }
     }
 }

@@ -4,11 +4,14 @@
 }
 
 <div class="modal-body">
-   @using (Html.BeginForm("Create", "Images", FormMethod.Post, new { enctype = "multipart/form-data", id = "img-form" }))
+   @using (Html.BeginForm("Create", "Images", FormMethod.Post, new { enctype = "multipart/form-data", id = "img-form", @class = "needs-validation", novalidate = "novalidate" }))
     {
         @Html.AntiForgeryToken()
         <label>Select file (*.png)</label>
-        <input class="form-control" type="file" name="ImageFile" value="" style="width: 300px" />
+        <input required="required" class="form-control" type="file" name="ImageFile" value="" style="width: 300px" />
+        <div class="valid-feedback py-2">
+            Looks good!
+        </div>
     }
 </div>
 
@@ -16,6 +19,8 @@
     <button type="button" class="btn btn-cl btn-secondary" data-bs-dismiss="modal">Close</button>
     <input type="submit" form="img-form" value="Upload" class="btn btn-primary" />
 </div>
+
+<script src="~/Scripts/Components/bootstrap5-validation.js"></script>
 
 
 

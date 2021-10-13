@@ -9,5 +9,6 @@ namespace Bilinguals.Domain.Interfaces
     public interface IUserService
     {
         void UpdateImage(string userId, int imageId);
+        void DeleteImage(string userId);
     }
 }

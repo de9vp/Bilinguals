@@ -25,6 +25,7 @@
                             <div>
                                 <img src=" ~/Avatars/@(!Model.ImageId.HasValue ? "defaultAvatar.jpg" : Model.image.ImagePath )" alt="avatar" class="rounded-circle img-fluid avatar" style="width: 150px;height: 150px;">
                                 <a data-imageid="@Model.ImageId" class="btn position-absolute avatarbtn" data-bs-toggle="modal" data-bs-target="#bsModal"><i class="bi bi-person-bounding-box"></i></a>
+                                <a @(!Model.ImageId.HasValue ? "hidden" : "") data-imageid="@Model.ImageId" class="btn position-absolute avatarremove mt-5" data-bs-toggle="modal" data-bs-target="#bsModalRemove"><i class="bi bi-trash-fill"></i></a>
                             </div>
                             <h5 class="my-3">@Model.FullName</h5>
                             <p class="text-muted mb-1">Full Stack Developer</p>
@@ -198,6 +199,12 @@
     </div>
 </div>
 
+<div class="modal fade" id="bsModalRemove" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
@@ -279,6 +286,13 @@
                         console.log("da them");
                         $('.avatar').removeAttr('src').attr('src', `\Avatars/${newImage.path}`);
                         $('.avatarbtn').attr('data-imageid', newImage.id);
+                        setUrl();
+                        $('.avatarremove').removeAttr('hidden');
+                    });
+                    bsModalRemove.init(() => { bsModalRemove.setState() }, () => {
+                        console.log("da xoa");
+                        $('.avatar').removeAttr('src').attr('src', '\Avatars/defaultAvatar.jpg');
+                        $('.avatarbtn').attr('data-imageid', '');
                     });
                 },
             }

@@ -90,6 +90,8 @@ namespace Bilinguals.Controllers
             {
                 return HttpNotFound();
             }
+            if (Request.IsAjaxRequest())
+                return PartialView(id); //ajax request
             return View(image);
         }
 
@@ -98,14 +100,36 @@ namespace Bilinguals.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Image image)
+        public ActionResult Edit(HttpPostedFileBase ImageFile, int? id)
         {
             if (ModelState.IsValid)
             {
-                _imageService.Edit(image);
+                if (ImageFile == null)
+                {
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
+
+                // Delete file from folder
+                var oldImage = _imageService.FindById(id.Value);
+                FileInfo oldFile = new FileInfo( Server.MapPath("~/Avatars/" + oldImage.ImagePath) );
+                oldFile.Delete();
+
+                var fileType = Path.GetExtension(ImageFile.FileName); // return .jpg  .png
+
+                var fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName) + User.Identity.GetUserId();
+
+                var filePath = fileName + fileType;
+
+                var image =_imageService.Edit(id.Value, filePath);
+
+                ImageFile.SaveAs(Path.Combine(Server.MapPath("~/Avatars/"), filePath)); // save new file to avatars folder
+
+                if (Request.IsAjaxRequest())
+                    return Json(JsonResultHelper.MapImageJson(image), JsonRequestBehavior.AllowGet);
+
                 return RedirectToAction("Index");
             }
-            return View(image);
+            return View(ImageFile);
         }
 
         // GET: Images/Delete/5
@@ -120,16 +144,31 @@ namespace Bilinguals.Controllers
             {
                 return HttpNotFound();
             }
+            if (Request.IsAjaxRequest())
+                return PartialView(id); //ajax request
             return View(image);
         }
 
         // POST: Images/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int? id, string returnUrl = null)
         {
-            _imageService.Delete(id);
-            return RedirectToAction("Index");
+            _userService.DeleteImage(User.Identity.GetUserId());
+
+            // Delete file from folder
+            var image = _imageService.FindById(id.Value);
+            FileInfo oldFile = new FileInfo(Server.MapPath("~/Avatars/" + image.ImagePath));
+            oldFile.Delete();
+
+            _imageService.Delete(id.Value);
+
+            if (Request.IsAjaxRequest())
+                return Json("", JsonRequestBehavior.AllowGet);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
+            return RedirectToAction("Index", "Manage");
         }
     }
 }

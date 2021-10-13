@@ -28,9 +28,17 @@ namespace Bilinguals.Services
             _imageRepo.Delete(image);
         }
 
-        public void Edit(Image image)
+        public Image Edit(int imageId, string path)
         {
+            var image = _imageRepo.Table.FirstOrDefault(x => x.Id == imageId);
+
+            image.Id = image.Id;
+            image.ImagePath = path;
+            image.DateCreated = image.DateCreated;
+            image.DateModified = DateTime.Now;
+
             _imageRepo.Update(image);
+            return image;
         }
 
         public Image FindByPath(string imagePath)

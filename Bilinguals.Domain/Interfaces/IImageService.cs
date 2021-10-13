@@ -13,7 +13,7 @@ namespace Bilinguals.Domain.Interfaces
 
         void Delete(int id);
 
-        void Edit(Image image);
+        Image Edit(int imageId, string path);
 
         Image FindByPath(string imagePath);
 
