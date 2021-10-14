@@ -7,7 +7,7 @@
 }
 
 <div class="row gx-5">
-    @using (Html.BeginForm("Edit","Manage",FormMethod.Post, new { @class = " row " }))
+    @using (Html.BeginForm("Edit", "Manage", FormMethod.Post, new { @class = "row needs-validation" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -17,66 +17,57 @@
         <h4 class="text-center"><i class="bi bi-filter-right"></i><i class="bi bi-gear-fill"></i><i class="bi bi-filter-left"></i></h4>
         <br />
 
-        <div class="row g-2 justify-content-md-center">
+        <div class="row g-2 mb-4 justify-content-md-center">
             <div class="col-md-auto">
                 <div class="form-floating">
-                    <input width="17em;" type="text" value="@Model.FirstName" name="FirstName" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input autocomplete="off" required="required" style="width:17em;" type="text" value="@Model.FirstName" name="FirstName" class="form-control" id="floatingInput" placeholder="name@example.com">
                     <label for="floatingInput">First Name</label>
                 </div>
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="row g-2 justify-content-md-center">
             <div class="col-md-auto">
                 <div class="form-floating">
-                    <input width="17em;" type="text" value="@Model.LastName" name="LastName" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input autocomplete="off" required="required" style="width:17em;" type="text" value="@Model.LastName" name="LastName" class="form-control" id="floatingInput" placeholder="name@example.com">
                     <label for="floatingInput">Last Name</label>
                 </div>
                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="row g-2 justify-content-md-center">
+        <div class="row g-2 mb-4 justify-content-md-center">
             <div class="col-md-auto">
                 <div class="form-floating">
-                    <input width="17em;" type="text" value="@Model.UserName" name="UserName" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input autocomplete="off" style="width:17em;" type="text" value="@Model.UserName" name="UserName" class="form-control" id="floatingInput" placeholder="name@example.com">
                     <label for="floatingInput">User Name</label>
                 </div>
                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="row g-2 justify-content-md-center">
             <div class="col-md-auto">
                 <div class="form-floating">
-                    <input width="17em;" type="email" value="@Model.Email" name="Email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input autocomplete="off" required="required" style="width:17em;" type="email" value="@Model.Email" name="Email" class="form-control" id="floatingInput" placeholder="name@example.com">
                     <label for="floatingInput">Email</label>
                 </div>
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="row g-2 justify-content-md-center">
+        <div class="row g-2 mb-4 justify-content-md-center">
             <div class="col-md-auto">
                 <div class="form-floating">
-                    @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { stylr = "width:17em;", @class = "form-control" } })
+                    @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { style = "width:17em;", @class = "form-control" } })
                     <label for="floatingInput">Date of Birth</label>
                 </div>
                 @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="row g-2 justify-content-md-center">
             <div class="col-md-auto">
                 <div class="form-floating">
-                    <input width="17em;" type="text" value="@Model.PhoneNumber" name="PhoneNumber" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input autocomplete="off" style="width:17em;" type="text" value="@Model.PhoneNumber" name="PhoneNumber" class="form-control" id="floatingInput" placeholder="name@example.com">
                     <label for="floatingInput">Phone Number</label>
                 </div>
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
             </div>
         </div>
-
 
         <div class="row g-2 justify-content-md-center">
             <div class="col-md-offset-2 col-md-auto">
@@ -91,10 +82,11 @@
 
 
 @*<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>*@
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
 
 @section Scripts {
+    <script src="~/Scripts/Components/bootstrap5-validation.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }
 

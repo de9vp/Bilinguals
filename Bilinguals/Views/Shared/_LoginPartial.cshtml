@@ -3,6 +3,7 @@
 
 @{
     var ImagePath = ViewBag.ImagePath;
+    string FullName = ViewBag.FullName;
 }
 
 
@@ -25,7 +26,7 @@
                         }
                     </span>
                     <span class="small me-2">
-                        @Html.ActionLink(User.Identity.GetFullName(), "", "", routeValues: null, htmlAttributes: new { style = "color: inherit;text-decoration:none;", title = "Manage", @class = "" })
+                        @Html.ActionLink(@FullName, "", "", routeValues: null, htmlAttributes: new { style = "color: inherit;text-decoration:none;", title = "Manage", @class = "" })
                     </span>
                 </span>
             </button>

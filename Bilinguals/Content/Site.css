@@ -178,6 +178,10 @@ textarea {
     border-radius: 0.5rem !important;
 }
 
+.rounded-pill2 {
+    border-radius: 1.3rem !important;
+}
+
 .dropdown-toggle::after {
     display: none;
 }

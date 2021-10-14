@@ -1,4 +1,5 @@
-﻿using Bilinguals.Domain.Interfaces;
+﻿using Bilinguals.App;
+using Bilinguals.Domain.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,7 @@ namespace Bilinguals.Controllers
         {
             var user = _userService.GetById(User.Identity.GetUserId());
             ViewBag.ImagePath = user?.image?.ImagePath ?? null;
+            ViewBag.FullName = user?.FullName;
             return PartialView("_LoginPartial");
         }
     }
