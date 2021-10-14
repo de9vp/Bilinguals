@@ -25,6 +25,33 @@ namespace Bilinguals.Models
         public virtual Image image { get; set; }
     }
 
+    public class EditViewModel
+    {
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Date of Birth")]
+        [DataType(DataType.Date)]
+        public DateTime? DateOfBirth { get; set; }
+
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string Id { get; set; } //id user
+    }
+
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }

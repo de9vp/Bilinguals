@@ -51,11 +51,12 @@ namespace Bilinguals.Controllers
             return View();
         }
 
+        // custom view update avatar
         [ChildActionOnly]
         public ActionResult LoginPartial()
         {
             var user = _userService.GetById(User.Identity.GetUserId());
-            ViewBag.ImagePath = user.image?.ImagePath ?? null;
+            ViewBag.ImagePath = user?.image?.ImagePath ?? null;
             return PartialView("_LoginPartial");
         }
     }

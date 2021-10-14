@@ -14,14 +14,16 @@
         <div class="dropdown">
             <button class="btn btn-outline-custom1 rounded-pill px-2 mb-2 mb-lg-0 dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="d-flex align-items-center">
-                    @if (ImagePath == null)
-                    {
-                        <i style=" font-size: 18px;" class="bi bi-person-fill mx-1"></i>
-                    }
-                    else
-                    {
-                        <img src="~/Avatars/@ImagePath" alt="" width="32" height="32" class="rounded-circle me-2 border border-2">
-                    }
+                    <span id="avatarnavbar">
+                        @if (ImagePath == null)
+                        {
+                            <span id="avatardefault"><i style=" font-size: 18px;" class="bi bi-person-fill mx-1"></i></span>
+                        }
+                        else
+                        {
+                            <span id="avatarmini"><img src="~/Avatars/@ImagePath" alt="" width="32" height="32" class="rounded-circle me-2 border border-2"></span>
+                        }
+                    </span>
                     <span class="small me-2">
                         @Html.ActionLink(User.Identity.GetFullName(), "", "", routeValues: null, htmlAttributes: new { style = "color: inherit;text-decoration:none;", title = "Manage", @class = "" })
                     </span>

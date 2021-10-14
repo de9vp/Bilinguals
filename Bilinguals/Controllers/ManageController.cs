@@ -9,6 +9,8 @@ using Microsoft.Owin.Security;
 using Bilinguals.Models;
 using Bilinguals.Services;
 using Bilinguals.App;
+using System.Net;
+using Bilinguals.Domain;
 
 namespace Bilinguals.Controllers
 {
@@ -84,10 +86,67 @@ namespace Bilinguals.Controllers
                 FullName = user.FullName,
                 LastName = user.LastName,
                 Email = user.Email,
+                DateOfBirth = user.DateOfBirth,
                 ImageId = user.ImageId,
                 image = user.image,
             };
             return View(model);
+        }
+
+        //
+        // GET: /Manage/Edit
+        public ActionResult Edit(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var user = UserManager.FindById(id);
+            var userModel = new EditViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                DateOfBirth = user.DateOfBirth,
+                UserName = user.UserName,
+                PhoneNumber = user.PhoneNumber,
+                Id = user.Id,
+            };
+
+            if (userModel == null)
+                return HttpNotFound("User not found");
+
+            return View(userModel);
+        }
+        //
+        // POST: /Manage/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EditViewModel userModel, string returnUrl = null)
+        {
+            if (ModelState.IsValid)
+            {
+                var entityUser = UserManager.FindById(userModel.Id);
+
+                // don't change
+                entityUser.Id = entityUser.Id;
+                entityUser.ImageId = entityUser.ImageId;
+                entityUser.PasswordHash = entityUser.PasswordHash;
+
+                entityUser.FirstName = userModel.FirstName;
+                entityUser.LastName = userModel.LastName;
+                entityUser.UserName = userModel.UserName ?? userModel.Email;
+                entityUser.PhoneNumber = userModel.PhoneNumber;
+                entityUser.Email = userModel.Email;
+                entityUser.DateOfBirth = userModel.DateOfBirth;
+
+                UserManager.Update(entityUser);
+
+                if (!string.IsNullOrEmpty(returnUrl))
+                    return Redirect(returnUrl);
+
+                return RedirectToAction("Index", "Manage");
+            }
+            return View(userModel);
         }
 
         //
