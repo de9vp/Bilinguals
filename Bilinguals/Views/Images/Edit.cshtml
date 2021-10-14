@@ -4,7 +4,7 @@
 }
 
 <div class="modal-body">
-    @using (Html.BeginForm("Edit", "Images", FormMethod.Post, new { enctype = "multipart/form-data", id = "img-form", @class = "needs-validation", novalidate = "novalidate" }))
+   @using (Html.BeginForm("Edit", "Images", FormMethod.Post, new { enctype = "multipart/form-data", id = "img-form", @class = "needs-validation", novalidate = "novalidate" }))
     {
         @Html.AntiForgeryToken()
         <label>Select file (*.png) @ViewBag.Title </label>

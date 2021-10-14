@@ -1,15 +1,27 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Bilinguals.App;
 
+@{
+    var ImagePath = ViewBag.ImagePath;
+}
+
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
         <div class="dropdown">
-            <button class="btn btn-outline-custom1 rounded-pill px-3 mb-2 mb-lg-0 dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-outline-custom1 rounded-pill px-2 mb-2 mb-lg-0 dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="d-flex align-items-center">
-                    <i style=" font-size: 18px;" class="bi bi-person-fill me-2"></i>
+                    @if (ImagePath == null)
+                    {
+                        <i style=" font-size: 18px;" class="bi bi-person-fill mx-1"></i>
+                    }
+                    else
+                    {
+                        <img src="~/Avatars/@ImagePath" alt="" width="32" height="32" class="rounded-circle me-2 border border-2">
+                    }
                     <span class="small me-2">
                         @Html.ActionLink(User.Identity.GetFullName(), "", "", routeValues: null, htmlAttributes: new { style = "color: inherit;text-decoration:none;", title = "Manage", @class = "" })
                     </span>
@@ -36,8 +48,8 @@ else
             </span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuAcc">
-            <li><button class="dropdown-item" type="button"><i class="bi bi-person-check-fill me-1"></i> @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { style = "color: inherit;text-decoration:none;", id = "loginLink"})</button></li>
-            <li><button class="dropdown-item" type="button"><i class="bi bi-person-plus-fill me-1"></i> @Html.ActionLink("Sign up", "Register", "Account", routeValues: null, htmlAttributes: new { style = "color: inherit;text-decoration:none;", id = "registerLink"})</button></li>
+            <li><button class="dropdown-item" type="button"><i class="bi bi-person-check-fill me-1"></i> @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { style = "color: inherit;text-decoration:none;", id = "loginLink" })</button></li>
+            <li><button class="dropdown-item" type="button"><i class="bi bi-person-plus-fill me-1"></i> @Html.ActionLink("Sign up", "Register", "Account", routeValues: null, htmlAttributes: new { style = "color: inherit;text-decoration:none;", id = "registerLink" })</button></li>
         </ul>
     </div>
 }

@@ -97,14 +97,14 @@ var bsModalRemove = (function () {
     }
 
     function bindAjaxForm() {
-        var myForm = $('#bsModal').find('form');
+        var myForm = $('#bsModalRemove').find('form');
 
         return new Promise((resolve, reject) => {
             myForm.ajaxForm({
                 beforeSubmit: function (data) {
                 },
                 success: function (data) {
-                    $('#bsModal').find('button.btn-cl').trigger('click');
+                    $('#bsModalRemove').find('button.btn-cl').trigger('click');
                     resolve(data);
                 },
                 error: reject

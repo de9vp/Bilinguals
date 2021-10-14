@@ -63,5 +63,10 @@ namespace Bilinguals.Services
 
             UserManager.Update(user);
         }
+
+        public ApplicationUser GetById(string userId)
+        {
+            return _userManager.FindById(userId);
+        }
     }
 }

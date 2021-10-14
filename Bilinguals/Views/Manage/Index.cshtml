@@ -289,10 +289,11 @@
                         setUrl();
                         $('.avatarremove').removeAttr('hidden');
                     });
-                    bsModalRemove.init(() => { bsModalRemove.setState() }, () => {
+                    bsModalRemove.init(() => { bsModalRemove.setState() }, (data) => {
                         console.log("da xoa");
                         $('.avatar').removeAttr('src').attr('src', '\Avatars/defaultAvatar.jpg');
                         $('.avatarbtn').attr('data-imageid', '');
+                        $('.avatarremove').attr('hidden','');
                     });
                 },
             }

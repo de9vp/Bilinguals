@@ -12,11 +12,13 @@ namespace Bilinguals.Controllers
     {
         private readonly ISentenceService _sentenceService;
         private readonly IDialogService _dialogService;
+        private readonly IUserService _userService;
 
-        public HomeController(ISentenceService sentenceService, IDialogService dialogService)
+        public HomeController(ISentenceService sentenceService, IDialogService dialogService, IUserService userService)
         {
             _sentenceService = sentenceService;
             _dialogService = dialogService;
+            _userService = userService;
         }
 
         public ActionResult Index(int? sentenceIndex, int? dialogIndex,  string searchText, string sortOrder)
@@ -47,6 +49,14 @@ namespace Bilinguals.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        [ChildActionOnly]
+        public ActionResult LoginPartial()
+        {
+            var user = _userService.GetById(User.Identity.GetUserId());
+            ViewBag.ImagePath = user.image?.ImagePath ?? null;
+            return PartialView("_LoginPartial");
         }
     }
 

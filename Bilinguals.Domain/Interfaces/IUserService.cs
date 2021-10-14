@@ -10,5 +10,6 @@ namespace Bilinguals.Domain.Interfaces
     {
         void UpdateImage(string userId, int imageId);
         void DeleteImage(string userId);
+        ApplicationUser GetById(string userId);
     }
 }
