@@ -7,18 +7,23 @@
 
 <div class="row gx-5 justify-content-center py-5">
     <div class="rounded-pill py-3" style="width: 25em; background-color: white;">
+        <span class="row text-center my-3" style="font-size: 28px;">
+            <span>
+                <i class="bi bi-filter-right "></i><i class="bi bi-person-badge "></i><i class="bi bi-filter-left "></i>
+            </span>
+        </span>
         <section class="row" id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                <div class="row g-2 my-3 justify-content-md-center">
+                <div class="row g-2 mb-3 justify-content-md-center">
                     <div class="col-md-auto">
                         <div class="form-floating">
                             <input autocomplete="off" required="required" type="email" value="" name="Email" class="form-control rounded-pill2 align-content-center px-5" id="floatingInput" placeholder="name@example.com">
-                            <label class="" for="floatingInput">Email</label>
-                            @Html.ValidationMessageFor(model => model.Email, "", new { style = "font-size: 12px;position: absolute;", @class = "text-danger text-center" })
+                            <label class="" for="floatingInput">Username</label>
+                            @Html.ValidationMessageFor(model => model.Email, "", new { style = "font-size: 12px;position: absolute;", @class = "text-danger ms-3" })
                         </div>
                     </div>
                 </div>
@@ -29,14 +34,14 @@
                             @Html.PasswordFor(model => model.Password, new { name = "Password", placeholder = "Password", type = "password", id = "floatingPassword", @class = "form-control rounded-pill2 px-5" })
                             <label for="floatingPassword">Password</label>
                         </div>
-                        @Html.ValidationMessageFor(model => model.Password, "", new { style = "font-size: 12px;position: absolute;", @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { style = "font-size: 12px;position: absolute;", @class = "text-danger ms-3" })
                     </div>
                 </div>
 
                 <div class="row g-2 mt-2 justify-content-md-center">
                     <div class="col-md-auto">
                         <div class="form-check form-switch">
-                            @Html.CheckBoxFor(m => m.RememberMe, htmlAttributes: new {id = "flexSwitchCheckDefault", @class = "form-check-input" })
+                            @Html.CheckBoxFor(m => m.RememberMe, htmlAttributes: new { id = "flexSwitchCheckDefault", @class = "form-check-input" })
                             @Html.LabelFor(m => m.RememberMe, htmlAttributes: new { style = "font-size:14px;", id = "flexSwitchCheckDefault", @class = "form-check-label" })
                         </div>
                     </div>
@@ -51,16 +56,16 @@
                     </div>
                 </div>
                 <div class="row g-2 mb-2 mx-5">
-                        <button class="btn btn-outline-secondary rounded-pill2 col mx-2"><i class="bi bi-facebook"></i></button>
-                        <button class="btn btn-outline-secondary rounded-pill2 col mx-2"><i class="bi bi-google"></i></button>
+                    <button class="btn btn-outline-secondary rounded-pill2 col mx-2"><i class="bi bi-facebook"></i></button>
+                    <button class="btn btn-outline-secondary rounded-pill2 col mx-2"><i class="bi bi-google"></i></button>
                 </div>
 
 
 
                 @* Enable this once you have account confirmation enabled for password reset functionality
-            <p>
-                @Html.ActionLink("Forgot your password?", "ForgotPassword")
-            </p>*@
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>*@
             }
         </section>
     </div>
