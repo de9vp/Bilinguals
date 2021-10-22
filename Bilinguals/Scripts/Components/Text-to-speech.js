@@ -19,7 +19,7 @@ var textToSpeech = (function () {
             utterThis.onerror = function (event) {
                 console.error('SpeechSynthesisUtterance.onerror');
             }
-            var selectedOption = 'Microsoft Mark - English (United States) (en-US)'; // voiceSelect.selectedOptions[0].getAttribute('data-name');
+            var selectedOption = 'Microsoft Zira - English (United States)'; // voiceSelect.selectedOptions[0].getAttribute('data-name');
             for (i = 0; i < voices.length; i++) {
                 if (voices[i].name === selectedOption) {
                     utterThis.voice = voices[i];

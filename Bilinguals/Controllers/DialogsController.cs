@@ -28,7 +28,7 @@ namespace Bilinguals.Controllers
         // GET: Dialogs
         public ActionResult Index(int? pageIndex, string searchText, string sortOrder)
         {
-            int pageSize = 8;
+            int pageSize = 9;
 
             var userId = User.Identity.GetUserId();
 
