@@ -45,13 +45,13 @@ textarea {
 .btn-custom1 {
     color: #fff;
     background-color: #00356a;
-    border-color: #003568;
+    border-color: #00356a;
 }
 
     .btn-custom1:hover {
         color: #fff;
         background-color: #092139;
-        border-color: #003568;
+        border-color: #092139;
     }
 
     .btn-check:focus + .btn-custom1, .btn-custom1:focus {
@@ -80,13 +80,13 @@ textarea {
 .btn-custom2 { /*dropdown save*/
     color: #fff;
     background-color: #3b4c5d;
-    border-color: #fff;
+    border-color: #3b4c5d;
 }
 
     .btn-custom2:hover {
         color: #fff;
         background-color: #092139;
-        border-color: #fff;
+        border-color: #092139;
     }
 
     .btn-check:focus + .btn-custom2, .btn-custom2:focus {

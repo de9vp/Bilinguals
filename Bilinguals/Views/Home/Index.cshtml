@@ -54,7 +54,7 @@
                         @foreach (var item in Model)
                         {
                             <tr class="row ms-2">
-                                <td class="row col-8">
+                                <td class="row col-9">
                                     <span class="entext">
                                         <i class="bi bi-chat-square-quote-fill me-2"></i>@item.EnText
                                         <span class="btn-group btn-sm" role="group" aria-label="Basic example">
@@ -67,7 +67,7 @@
                                     <span class="dialogname">&emsp;&emsp;<i class="bi bi-card-list me-2"></i>@item.DialogName</span>
                                     <span></span>
                                 </td>
-                                <td class="col-4 d-flex flex-row-reverse">
+                                <td class="col-3 d-flex flex-row-reverse">
                                     <div class="btn-group dropstart btnsave">
                                         <div class="gn @(item.GroupName.IsEmpty() ? null : "my-auto rounded-start bg-custom3 py-1" )"> <span class=" px-@(item.GroupName.IsEmpty() ? "0" : "2" ) ">@item.GroupName</span>  </div>
                                         <button @(User.Identity.GetUserId() == null ? "hidden" : "") type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-custom2" : "custom2") btn-sm my-4 rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

@@ -59,16 +59,16 @@
 @section scripts {
     <script type="text/javascript">
 
-        //$('.btn-remove').on('click', function (e) {
-        //    var _this = $(this);
-        //    var url = ('/Dialogs/RemoveFromMyDialogs?userDialogId=' + _this.data('userdialogid'));
-        //    $.ajax({
-        //        url: url,
-        //        success: function () {
-        //            //remove item model
-        //        }
-        //    });
-        //});
+        $('.btn-remove').on('click', function (e) {
+            var _this = $(this);
+            var url = ('/Dialogs/RemoveFromMyDialogs?userDialogId=' + _this.data('userdialogid'));
+            $.ajax({
+                url: url,
+                success: function () {
+                    //remove item model
+                }
+            });
+        });
 
     </script>    
 }
