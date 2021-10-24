@@ -6,12 +6,12 @@
     var searchText = Request.QueryString["searchText"];
 }
 <link href="~/Content/css/bg-animation-card-dialog.css" rel="stylesheet" />
-<div class="py-2 row row-cols-1 row-cols-lg-2">
+<div class="pb-1 row row-cols-1 row-cols-lg-2">
     <div class="col">
-        <h3>All Dialogs</h3>
+        <h3 class="ms-4">All Dialogs</h3>
     </div>
     <div class="col d-flex flex-row-reverse">
-        <form style="width:325px">
+        <form class="me-4" style="width:280px">
             <div class="input-group">
                 <input autocomplete="off" style="border-radius: 10px 0 0 10px" type="text" class="form-control" id="searchText" name="searchText" value="@searchText" placeholder="Enter dialog">
                 <button id="btnsearch" style="border-radius: 0 10px 10px 0" class="btn btn-custom1"><i class="bi bi-search"></i></button>
@@ -19,7 +19,7 @@
         </form>
     </div>
 </div>
-<hr style="color: #092139;opacity:0.5 !important" />
+<hr class="mx-4" style="color: #092139;opacity:0.5 !important" />
 
 @if (Model.Count > 0)
 {
@@ -29,7 +29,7 @@
             @foreach (var item in Model)
             {
                 <div class="col">
-                    <div class="gradient-background card card-dialog h-100 overflow-hidden text-white bg-black rounded-pill">
+                    <div class="gradient-background card card-dialog h-100 overflow-hidden text-white shadow-custom1 rounded-pill">
                         <div class="d-flex flex-column h-100 p-5 pb-3 text-white">
                             <a class="textdialog" href="~/dialogs/details/@item.Id" style="text-decoration: none">
                                 <h4 class="pt-2 mt-3 mb-4 fw-bold text-white">@item.Name</h4>

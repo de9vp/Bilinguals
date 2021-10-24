@@ -1,0 +1,56 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Nunito:wght@700&display=swap');
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: #092139;
+    background: linear-gradient(62deg, #000000, #092139, #33404d, #2381e0);
+    animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+}
+
+@-webkit-keyframes gradient {
+    0% {
+        background-position: 0 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.tab-content {
+    background-color: #f1f8ff;
+    border: none;
+}
+
+.vitext {
+    font-family: 'Nunito Sans', sans-serif;
+    color: #00356a;
+    font-size: 16px;
+}
+
+.entext {
+    font-size: 18px;
+}
+
+.timeupdated {
+    font-size: 12px;
+    opacity: 0.3;
+}
