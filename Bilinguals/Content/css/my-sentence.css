@@ -40,6 +40,10 @@
     border: none;
 }
 
+.nav-pills .nav-link:hover {
+    background-color: #d4e0ec !important;
+}
+
 .vitext {
     font-family: 'Nunito Sans', sans-serif;
     color: #00356a;
