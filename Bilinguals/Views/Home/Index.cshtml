@@ -49,22 +49,22 @@
 
             @* Tra câu *@
             <div class="tab-pane fade show active" id="pills-sentence" role="tabpanel" aria-labelledby="pills-sentence-tab">
-                <table class="table mt-4">
+                <table class="table mt-4 table-home">
                     <tbody>
                         @foreach (var item in Model)
                         {
                             <tr class="row ms-2">
-                                <td class="row col-9">
+                                <td class="row col-9" data-entext="@item.EnText" data-vitext="@item.ViText">
                                     <span class="entext">
-                                        <i class="bi bi-chat-square-quote-fill me-2"></i>@item.EnText
+                                        <i class="bi bi-chat-square-quote-fill me-2"></i><span class="engtext"></span>
                                         <span class="btn-group btn-sm" role="group" aria-label="Basic example">
                                             <button data-text="@item.EnText" type="button" class="speak btnnopadding btn-outline-custom1"><i class="bi bi-volume-up-fill"></i></button>
                                             @*<button type="button" class="btnnopadding btn-outline-custom1"><i class="bi bi-pause-fill"></i></button>*@
                                         </span>
                                     </span>
-                                    <span class="vitext mb-2">&emsp;<i class="bi bi-arrow-return-right me-2"></i>@item.ViText</span>
+                                    <span class="vitext mb-2">&emsp;<i class="bi bi-arrow-return-right me-2"></i><span class="vietext"></span></span>
                                     <span class="timeupdated">&emsp;&emsp;&ensp;&nbsp;<i class="bi bi-clock me-1"></i>Last updated on @(!item.DateModified.HasValue ? null : item.DateModified?.ToString("dd/MM/yyyy"))</span>
-                                    <span class="dialogname">&emsp;&emsp;<i class="bi bi-card-list me-2"></i>@item.DialogName</span>
+                                    @*<span class="dialogname">&emsp;&emsp;<i class="bi bi-card-list me-2"></i>@item.DialogName</span>*@
                                     <span></span>
                                 </td>
                                 <td class="col-3 d-flex flex-row-reverse">
@@ -99,7 +99,6 @@
                 <table class="table mt-4">
                     <tbody>
                         @{
-
                             foreach (var item in dialogs)
                             {
                                 <tr class="row mx-1">
@@ -134,7 +133,6 @@
     <div class="modal fade" id="bsModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
-
             </div>
         </div>
     </div>
@@ -152,6 +150,38 @@
         <script src="~/Scripts/Components/dropdown-sentence.js"></script>
         <script src="~/Scripts/Components/Text-to-speech.js"></script>
         <script type="text/javascript">
+
+            $(function () {
+                var searchTearms = $('#searchText').val().split(' ');
+                if (searchTearms.length === 0)
+                    return;
+
+                var tbCells = $('.table-home tr > td:first-child');
+                for (let tbcell of tbCells) {
+                    var enTerms = $(tbcell).data('entext').split(' ');
+                    var viTerms = $(tbcell).data('vitext').split(' ');
+                    var viHtml = viTerms.reduce(function (acc, item) {
+                        if (searchTearms.indexOf(item) > -1) {
+                            acc += `<em class="bold">${item}</em> `;
+                        } else {
+                            acc += item + ' ';
+                        }
+                        return acc;
+                    }, '');
+                    var enHtml = enTerms.reduce(function (acc, item) {
+                        if (searchTearms.indexOf(item) > -1) {
+                            acc += `<em class="bold">${item}</em> `;
+                        } else {
+                            acc += item + ' ';
+                        }
+                        return acc;
+                    }, '');
+
+                    $(tbcell).find('.vitext').find('.vietext').html(viHtml);
+                    $(tbcell).find('.entext').find('.engtext').html(enHtml);
+                }
+            });
+
             var Main = (function () {
                 return {
                     init: function () {
