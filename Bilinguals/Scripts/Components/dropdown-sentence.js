@@ -12,7 +12,6 @@ var handleSaveRemove = function () {
     $('.btn-select').on('click', function (e) {
         var _this = $(this);
         sentenceId = _this.data('sentenceid'); //note: lower case
-        console.log(sentenceId);
         userSentenceId = _this.attr('data-usersentenceid');
 
         //save
@@ -27,7 +26,7 @@ var handleSaveRemove = function () {
                     _this.removeClass('btn-outline-custom2').addClass('btn-custom2')
                         .attr('data-usersentenceid', data.userSentenceId)
                         .find('.bi').removeClass('bi-info-lg').addClass('bi-check-lg');
-                    _this.parent('.btnsave').prepend(`<div class="gn my-auto rounded-start bg-custom3 py-1"> <span class="px-2"> ${data.groupName} </span> </div>`);
+                    _this.parent('.btnsave').prepend(`<div class="gn my-auto rounded-start bg-custom3 my-1"> <span class="px-2"> ${data.groupName} </span> </div>`);
                 }
             });
 
@@ -85,7 +84,6 @@ var groupService = (function () {
 var getUserGroups = function () {
     var _group = [];
     groupService.getUserGroups().then((data) => {
-        console.log(data);
         _group = data;
         var rows = _group.reduce((all, group) => {
             var groupRow = `<li class="d-flex"><a data-groupid="${group.id}" class="dropdown-item mx-2 rounded-pill1 btn-outline-custom2 d-flex justify-content-center save" href="#">${group.name}</a></li>`;
@@ -154,7 +152,7 @@ var bsModal = (function () {
                 _this.removeClass('btn-outline-custom2').addClass('btn-custom2')
                     .attr('data-usersentenceid', data.userSentenceId)
                     .find('.bi').removeClass('bi-info-lg').addClass('bi-check-lg');
-                _this.parent('.btnsave').prepend(`<div class="gn my-auto rounded-start bg-custom3 py-1"> <span class="px-2"> ${data.groupName} </span> </div>`);
+                _this.parent('.btnsave').prepend(`<div class="gn my-auto rounded-start bg-custom3 my-1"> <span class="px-2"> ${data.groupName} </span> </div>`);
             },
         });
     } 

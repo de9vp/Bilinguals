@@ -15,17 +15,12 @@ namespace Bilinguals.Domain.Models
         }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int Reviews { get; set; } // hien thi so nguoi dang luu cau nay
+        public int Subcribers { get; set; } // hien thi so nguoi dang luu cau nay
 
         public virtual IList<Sentence> Sentences { get; set; }  //navigation properties
         public virtual IList<UserDialog> UserDialogs { get; set; }
         
         [NotMapped]
         public int? UserDialogId { get; set; }
-        
-        
-        
-    
-    
     }
 }

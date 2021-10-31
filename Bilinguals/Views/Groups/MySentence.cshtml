@@ -8,7 +8,7 @@
 
 <div class="d-flex align-items-start">
     <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        @foreach (var item in Model)
+       @foreach (var item in Model)
         {
             <div class="card nav-link mt-3 bg-light shadow-custom1" id="v-pills-@item.Id-tab" data-bs-toggle="pill" data-bs-target="#v-pills-@item.Id" role="tab" aria-controls="v-pills-@item.Id" aria-selected="true" style="width: 18rem;">
                 <div class="card-body">
@@ -24,10 +24,10 @@
         }
     </div>
     <div class="tab-content w-100" id="v-pills-tabContent">
-        @foreach (var item in Model)
+       @foreach (var item in Model)
         {
             <div class="tab-pane fade" id="v-pills-@item.Id" role="tabpanel" aria-labelledby="v-pills-@item.Id-tab">
-                @foreach (var i in item.UserSentences)
+               @foreach (var i in item.UserSentences)
                 {
                     <div class="mt-3 ms-3 bg-white shadow-sm rounded-pill">
                         <div class="row mx-3">

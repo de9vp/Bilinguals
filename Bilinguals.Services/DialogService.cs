@@ -76,7 +76,7 @@ namespace Bilinguals.Services
                         Id = d.Id,
                         Name = d.Name,
                         Description = d.Description,
-                        Reviews = d.Reviews,
+                        Subcribers = _userDialogRepo.Table.Where(x => x.DialogId == d.Id).Count(), // subcribe
                         DateModified = d.DateModified,
                         UserDialogId = ud == null ? (int?)null : ud.Id, //purpose
                     };

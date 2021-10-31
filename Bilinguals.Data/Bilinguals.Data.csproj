@@ -96,6 +96,10 @@
     <Compile Include="Migrations\202110130850276_fix.Designer.cs">
       <DependentUpon>202110130850276_fix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110310202522_updateDialog.cs" />
+    <Compile Include="Migrations\202110310202522_updateDialog.Designer.cs">
+      <DependentUpon>202110310202522_updateDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -139,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110130850276_fix.resx">
       <DependentUpon>202110130850276_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110310202522_updateDialog.resx">
+      <DependentUpon>202110310202522_updateDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

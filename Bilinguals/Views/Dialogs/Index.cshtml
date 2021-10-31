@@ -42,7 +42,7 @@
                                 </li>
                                 <li class="d-flex align-items-center me-3">
                                     <i class="bi bi-people me-2"></i>
-                                    <small>5</small>
+                                    <small id="subcribe">@item.Subcribers</small>
                                 </li>
                                 <li class="d-flex align-items-center">
                                     <i class="bi bi-calendar3 me-2"></i>
@@ -75,6 +75,7 @@
                 var _this = $(this);
                 var dialogId = _this.data('dialogid'); //note: lower case
                 var userDialogId = _this.data('userdialogid');
+                var subElement = _this.parents('ul.list-unstyled').find('#subcribe');
 
                 //if (!userDialogId) {
                 //    url = (_savingUrl + dialogId);
@@ -92,11 +93,13 @@
                                 .data('userdialogid', null)
                                 .text('SUBSCRIBE')
                                 .prop('title', 'Save to My Dialogs');
+                            subElement.text(`${parseInt(subElement.text()) - 1}`);
                         } else {
                             _this.removeClass('btn-custom1').addClass('btn-secondary')
                                 .data('userdialogid', newUserDialogId)
                                 .text('SUBSCRIBED')
                                 .prop('title', 'Remove from My Dialogs');
+                            subElement.text(`${parseInt(subElement.text()) + 1}`);
                         }
                     }
                 });

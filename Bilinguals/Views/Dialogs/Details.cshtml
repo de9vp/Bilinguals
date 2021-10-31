@@ -1,77 +1,94 @@
 ﻿@model Bilinguals.Domain.Models.Dialog
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Details";
     var returnUrl = Request.QueryString["returnUrl"];
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var i = 2;
 }
+<link href="~/Content/css/home-index.css" rel="stylesheet" />
 
-<h2>Details</h2>
 
-@*<button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#bsModal">
-    <span class="bi bi-pencil-square"></span>
-</button>*@
+<h2 class="text-center pt-3" style="font-family: 'Nunito Sans', sans-serif; font-weight: bold; color: #092139;"> @Html.DisplayFor(model => model.Name) </h2>
+<h6 class="text-center pb-4" style="opacity: 0.5; font-style: italic !important;">Last updated on @(Model.DateModified?.ToString("dd/MM/yyyy"))</h6>
 
-<div>
-    <h4>Dialog</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateModified)
-        </dd>
-
-    </dl>
+<div class="row mx-5">
+    <table class="table table-borderless">
+       @foreach (var item in Model.Sentences)  //if bug display: Object reference not set to an instance of an object => add virtual to navigation properties in Model
+       {
+            if (i % 2 == 0)
+            {
+                i = i + 1;
+                <tr class="row px-5">
+                    <td class="col-9 d-flex flex-column bg-white mb-3 rounded-pill px-4 py-2 shadow-sm">
+                        <span class="entext">
+                            <i class="bi bi-chat-square-quote-fill me-2"></i>@item.EnText
+                            <span class="btn-group btn-sm" role="group" aria-label="Basic example">
+                                <button data-text="@item.EnText" type="button" class="speak btnnopadding btn-outline-custom1"><i class="bi bi-volume-up-fill"></i></button>
+                            </span>
+                        </span>
+                        <span class="vitext ps-3"><i class="bi bi-arrow-return-right me-2"></i>@item.ViText</span>
+                        <div>
+                            <div class="btn-group dropstart btnsave ps-3">
+                                <div class="gn @(item.GroupName.IsEmpty() ? null : "my-auto rounded-start bg-custom3 my-1" )"> <span class=" px-@(item.GroupName.IsEmpty() ? "0" : "2" ) ">@item.GroupName</span>  </div>
+                                <button @(User.Identity.GetUserId() == null ? "hidden" : "") type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-custom2" : "custom2") btn-sm rounded-pill1 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="bi bi-@(!item.UserSentenceId.HasValue ? "info-lg" : "check-lg")"></span>
+                                </button>
+                                <ul class="dropdown-menu savedropdown" aria-labelledby="dropdownMenuSave">
+                                    <shadow class="d-flex">
+                                        <a href="#" class="dropdown-item mx-2 rounded-pill1 w-75 d-flex justify-content-center create" data-bs-toggle="modal" data-bs-target="#bsModal">New List</a>
+                                        <a class="dropdown-item mx-2 rounded-pill1 w-25 d-flex justify-content-center remove" href="#"><i class="bi bi-x-lg"></i></a>
+                                    </shadow>
+                                    <li><hr class="dropdown-divider"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-3"></td>
+                </tr>
+            }
+            else
+            {
+                i = i + 1;
+                <tr class="row px-5">
+                    <td class="col-3"></td>
+                    <td class="col-9 d-flex align-items-end flex-column bg-custom4 mb-3 rounded-pill px-4 py-2 shadow-sm">
+                        <span class="entext">
+                            <span class="btn-group btn-sm" role="group" aria-label="Basic example">
+                                <button data-text="@item.EnText" type="button" class="speak btnnopadding btn-outline-custom1"><i class="bi bi-volume-up-fill"></i></button>
+                                @*<button type="button" class="btnnopadding btn-outline-custom1"><i class="bi bi-pause-fill"></i></button>*@
+                            </span>
+                            @item.EnText
+                            <i class="bi bi-chat-square-quote-fill ms-2"></i>
+                        </span>
+                        <span class="vitext">@item.ViText<i class="bi bi-arrow-return-left ms-2"></i>&emsp;</span>
+                        <div>
+                            <div class="btn-group dropstart btnsave pe-3">
+                                <div class="gn @(item.GroupName.IsEmpty() ? null : "my-auto rounded-start bg-custom3 my-1" )"> <span class=" px-@(item.GroupName.IsEmpty() ? "0" : "2" ) ">@item.GroupName</span>  </div>
+                                <button @(User.Identity.GetUserId() == null ? "hidden" : "") type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-custom2" : "custom2") btn-sm rounded-pill1 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="bi bi-@(!item.UserSentenceId.HasValue ? "info-lg" : "check-lg")"></span>
+                                </button>
+                                <ul class="dropdown-menu savedropdown" aria-labelledby="dropdownMenuSave">
+                                    <shadow class="d-flex">
+                                        <a href="#" class="dropdown-item mx-2 rounded-pill1 w-75 d-flex justify-content-center create" data-bs-toggle="modal" data-bs-target="#bsModal">New List</a>
+                                        <a class="dropdown-item mx-2 rounded-pill1 w-25 d-flex justify-content-center remove" href="#"><i class="bi bi-x-lg"></i></a>
+                                    </shadow>
+                                    <li><hr class="dropdown-divider"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
-<h3> Sentences </h3>
+<div class="row mx-5">
+    <div class="px-5">Phần comment và góp ý sửa lỗi</div>
+</div>
 
-<table class="table table-bordered">
-    @foreach (var item in Model.Sentences)  //Bug: Object reference not set to an instance of an object => add virtual to navigation properties in Model
-    {
-        <tr>
-            <td> @item.EnText </td>
-            <td> @item.ViText </td>
-            <td>
-                <div class="btn-group dropstart btnsave">
-                    <div class="gn @(item.GroupName.IsEmpty() ? null : "my-auto rounded-start bg-custom3 py-1" )"> <span class=" px-@(item.GroupName.IsEmpty() ? "0" : "2" ) ">@item.GroupName</span>  </div>
-                    <button type="button" data-sentenceid="@item.Id" data-usersentenceid="@item.UserSentenceId" class="btn btn-select btn-@(!item.UserSentenceId.HasValue ? "outline-custom2" : "custom2") btn-sm my-4 rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="bi bi-@(!item.UserSentenceId.HasValue ? "info-lg" : "check-lg")"></span>
-                    </button>
-                    <ul class="dropdown-menu savedropdown" aria-labelledby="dropdownMenuSave">
-                        <li><a href="#" class="dropdown-item create" data-bs-toggle="modal" data-bs-target="#bsModal">Add to new list</a></li>
-                        <li><a class="dropdown-item remove" href="#">Remove</a></li>
-                        <li><hr class="dropdown-divider"></li>
-
-                    </ul>
-                </div>
-            </td>
-        </tr>
-    }
-</table>
 
 <!-- Modal -->
 <div class="modal fade" id="bsModal" tabindex="-1">
