@@ -48,6 +48,7 @@ namespace Bilinguals.App_Start
             builder.RegisterType<GroupService>().As<IGroupService>().InstancePerRequest();
             builder.RegisterType<ImageService>().As<IImageService>().InstancePerRequest();
             builder.RegisterType<UserService>().As<IUserService>().InstancePerRequest();
+            builder.RegisterType<CommentService>().As<ICommentService>().InstancePerRequest();
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

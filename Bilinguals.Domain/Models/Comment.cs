@@ -13,7 +13,6 @@ namespace Bilinguals.Domain.Models
         public string UserId { get; set; }
         public DateTime TimeStamp { get; set; }
         public int DialogId { get; set; }
-        public string FavoriteUser { get; set; }
 
         public ApplicationUser User { get; set; }
     }

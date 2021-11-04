@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentService.cs" />
     <Compile Include="DialogService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="IdentityConfig.cs" />

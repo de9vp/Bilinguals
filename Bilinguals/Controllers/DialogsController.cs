@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Bilinguals.Data;
 using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
+using Bilinguals.Models;
 using Microsoft.AspNet.Identity;
 
 namespace Bilinguals.Controllers
@@ -18,11 +19,13 @@ namespace Bilinguals.Controllers
     {
         private readonly IDialogService _dialogService;
         private readonly IUserDialogService _userDialogService;
+        private readonly ICommentService _commentService;
 
-        public DialogsController(IDialogService dialogService, IUserDialogService userDialogService)
+        public DialogsController(IDialogService dialogService, IUserDialogService userDialogService, ICommentService commentService)
         {
             _dialogService = dialogService;
             _userDialogService = userDialogService;
+            _commentService = commentService;
         }
 
         // GET: Dialogs
@@ -178,6 +181,19 @@ namespace Bilinguals.Controllers
                 return Redirect(returnUrl);
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult DialogComment(CommentViewModel comment)
+        {
+            var commentEntity = new Comment
+            {
+                Text = comment.Text,
+                UserId = User.Identity.GetUserId(),
+                TimeStamp = DateTime.Now,
+                DialogId = comment.DialogId,
+            };
+            _commentService.Add(commentEntity);
+            return View();
         }
         #endregion
     }
