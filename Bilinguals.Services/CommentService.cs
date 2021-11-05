@@ -17,9 +17,16 @@ namespace Bilinguals.Services
             _commentRepo = commentRepo;
         }
 
-        public void Add(Comment comment)
+        public Comment Add(Comment comment)
         {
             _commentRepo.Insert(comment);
+            return _commentRepo.Table.FirstOrDefault(x => x.Text == comment.Text);
+        }
+
+        public List<Comment> GetByDialogId(int dialogId)
+        {
+            var comments = _commentRepo.Table.Where(x => x.DialogId == dialogId).OrderBy(x => x.TimeStamp).ToList();
+            return comments;
         }
     }
 }

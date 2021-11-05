@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Bilinguals.App;
 using Bilinguals.Data;
 using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
@@ -192,9 +193,16 @@ namespace Bilinguals.Controllers
                 TimeStamp = DateTime.Now,
                 DialogId = comment.DialogId,
             };
-            _commentService.Add(commentEntity);
-            return View();
+            var newComment = _commentService.Add(commentEntity);
+            return Json(JsonResultHelper.MapCommentJson(newComment), JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetComment(int dialogId)
+        {
+            var comments = _commentService.GetByDialogId(dialogId);
+            return Json(comments, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
     }
 }

@@ -27,5 +27,16 @@ namespace Bilinguals.App
                 path = image.ImagePath,
             };
         }
+
+        public static object MapCommentJson(Comment comment)
+        {
+            return new
+            {
+                id = comment.Id,
+                text = comment.Text,
+                userId = comment.Text,
+                timeStamp = comment.TimeStamp
+            };
+        }
     }
 }

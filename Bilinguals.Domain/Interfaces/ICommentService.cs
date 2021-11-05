@@ -9,6 +9,7 @@ namespace Bilinguals.Domain.Interfaces
 {
     public interface ICommentService
     {
-        void Add(Comment comment);
+        Comment Add(Comment comment);
+        List<Comment> GetByDialogId(int dialogId);
     }
 }

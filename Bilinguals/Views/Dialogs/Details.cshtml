@@ -90,17 +90,18 @@
         <div class="row bg-white rounded-pill1 shadow-sm">
             <div class="p-4">
                 <h4>Comment & Feedback</h4>
-
-                @* Cac comment khac o day *@
-
-
+                <hr />
+                <div class="other-comments ms-2">
+                    
+                </div>
+                
                 <label class="form-label">Write your comment</label>
                 <form id="commentForm" method="post" class="d-flex">
-                    <input type="hidden" name="DialogId" value="@Model.Id" />
+                    <input id="dialogid" type="hidden" name="DialogId" value="@Model.Id" />
                     <input type="hidden" name="UserId" />
                     <input type="hidden" name="TimeStamp" />
                     <textarea class="form-control flex-fill me-3" type="text" name="Text" style=" max-width: 850px;"></textarea>
-                    <button type="submit" class="btn btn-custom1 mt-4 flex-fill">Comment</button>
+                    <button type="submit" id="btn-post" class="btn btn-custom1 mt-4 flex-fill">Post</button>
                 </form>
             </div>
         </div>
@@ -119,6 +120,39 @@
     <script src="~/Scripts/jquery.form.js"></script>
     <script src="~/Scripts/Components/dropdown-sentence.js"></script>
     <script type="text/javascript">
+        var dialogId = $('#dialogid').val();
+        var comments = [];
+        var getComment = function () {
+            $.ajax({
+                url: `/dialogs/getcomment?dialogid=${dialogId}`,
+                success: function (data) {
+                    comments = data;
+                    var allComments = comments.reduce((all, comment) => {
+                        var rowComment = `
+                            <span><i class="bi bi-cursor-fill me-2"></i>${comment.Text}</span>
+                            <h6 class="mt-2" style="opacity: 0.5; font-style: italic !important; font-size: 12px;">Posted by ${comment.UserId} on ${comment.TimeStamp}</h6>
+                            <hr />
+                        `;
+                        return all += rowComment;
+                    });
+                    $('.other-comments').append(allComments);
+                }
+            });
+        };
+
+        var handlePostComment = function () {
+            $('#btn-post').on('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "@Url.Action("DialogComment", "Dialogs")",
+                    data: $('#commentForm').serialize(),
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+        };
+
         var Main = (function () {
             return {
                 init: function () {
@@ -128,6 +162,8 @@
                     });
                     getUserGroups();
                     handleSaveRemove();
+                    getComment();
+                    handlePostComment();
                 },
             }
         })();
