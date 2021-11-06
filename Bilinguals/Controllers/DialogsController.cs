@@ -21,12 +21,14 @@ namespace Bilinguals.Controllers
         private readonly IDialogService _dialogService;
         private readonly IUserDialogService _userDialogService;
         private readonly ICommentService _commentService;
+        private readonly IUserService _userService;
 
-        public DialogsController(IDialogService dialogService, IUserDialogService userDialogService, ICommentService commentService)
+        public DialogsController(IDialogService dialogService, IUserDialogService userDialogService, ICommentService commentService, IUserService userService)
         {
             _dialogService = dialogService;
             _userDialogService = userDialogService;
             _commentService = commentService;
+            _userService = userService;
         }
 
         // GET: Dialogs
@@ -186,6 +188,7 @@ namespace Bilinguals.Controllers
 
         public ActionResult DialogComment(CommentViewModel comment)
         {
+            var user = _userService.GetById(User.Identity.GetUserId());
             var commentEntity = new Comment
             {
                 Text = comment.Text,
@@ -194,13 +197,38 @@ namespace Bilinguals.Controllers
                 DialogId = comment.DialogId,
             };
             var newComment = _commentService.Add(commentEntity);
+            newComment.UserFullname = user.FullName;
             return Json(JsonResultHelper.MapCommentJson(newComment), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetComment(int dialogId)
+        public ActionResult GetComment(int? dialogId)
         {
-            var comments = _commentService.GetByDialogId(dialogId);
+            var comments = _commentService.GetByDialogId(dialogId.Value);
+            
+            foreach (var comment in comments)
+            {
+                var user = _userService.GetById(comment.UserId);
+                comment.UserFullname = user.FullName;
+                comment.TimeConvert = comment.TimeStamp.ToString("dd/MM/yy a't' HH:mm");
+            }
             return Json(comments, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult DeleteComment(int? commentId)
+        {
+            if (commentId != null)
+            {
+                _commentService.Delete(commentId.Value);
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult EditComment(int? commentId, string text)
+        {
+            var commentEntity = _commentService.GetById(commentId.Value);
+            commentEntity.Text = text;
+            var newComment = _commentService.Edit(commentEntity);
+            return Json(JsonResultHelper.MapCommentJson(newComment), JsonRequestBehavior.AllowGet);
         }
 
         #endregion

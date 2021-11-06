@@ -28,5 +28,22 @@ namespace Bilinguals.Services
             var comments = _commentRepo.Table.Where(x => x.DialogId == dialogId).OrderBy(x => x.TimeStamp).ToList();
             return comments;
         }
+
+        public void Delete(int commentId)
+        {
+            var comment = _commentRepo.GetById(commentId);
+            _commentRepo.Delete(comment);
+        }
+
+        public Comment Edit(Comment comment)
+        {
+            _commentRepo.Update(comment);
+            return _commentRepo.GetById(comment.Id);
+        }
+
+        public Comment GetById(int id)
+        {
+            return _commentRepo.GetById(id);
+        }
     }
 }

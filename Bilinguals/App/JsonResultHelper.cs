@@ -34,8 +34,8 @@ namespace Bilinguals.App
             {
                 id = comment.Id,
                 text = comment.Text,
-                userId = comment.Text,
-                timeStamp = comment.TimeStamp
+                user = comment.UserFullname,
+                timeStamp = comment.TimeStamp.ToString("dd/MM/yy a't' HH:mm")
             };
         }
     }

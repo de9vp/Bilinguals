@@ -12,6 +12,7 @@
 
 <h2 class="text-center pt-3" style="font-family: 'Nunito Sans', sans-serif; font-weight: bold; color: #092139;"> @Html.DisplayFor(model => model.Name) </h2>
 <h6 class="text-center pb-4" style="opacity: 0.5; font-style: italic !important;">Last updated on @(Model.DateModified?.ToString("dd/MM/yyyy"))</h6>
+<span hidden id="userId">@User.Identity.GetUserId()</span>
 
 <div class="row mx-5">
     <table class="table table-borderless">
@@ -89,10 +90,17 @@
     <div class="px-5 w-100">
         <div class="row bg-white rounded-pill1 shadow-sm">
             <div class="p-4">
-                <h4>Comment & Feedback</h4>
+                <h4 style="
+                    text-align: center;
+                    background-color: #42586f;
+                    color: white;
+                    " 
+                    class="rounded-pill1 py-2">
+                    Comment & Feedback
+                </h4>
                 <hr />
                 <div class="other-comments ms-2">
-                    
+                    @* Load data here *@
                 </div>
                 
                 <label class="form-label">Write your comment</label>
@@ -121,33 +129,176 @@
     <script src="~/Scripts/Components/dropdown-sentence.js"></script>
     <script type="text/javascript">
         var dialogId = $('#dialogid').val();
+        var userId = $('#userId').text();
         var comments = [];
-        var getComment = function () {
+
+        var getComment = () => {
             $.ajax({
                 url: `/dialogs/getcomment?dialogid=${dialogId}`,
                 success: function (data) {
                     comments = data;
                     var allComments = comments.reduce((all, comment) => {
-                        var rowComment = `
-                            <span><i class="bi bi-cursor-fill me-2"></i>${comment.Text}</span>
-                            <h6 class="mt-2" style="opacity: 0.5; font-style: italic !important; font-size: 12px;">Posted by ${comment.UserId} on ${comment.TimeStamp}</h6>
-                            <hr />
-                        `;
+                        let rowComment;
+                        if (comment.UserId == userId) {
+                            rowComment = `
+                            <div class="cm">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <div class="edit-form" data-comment="${comment.Text}" data-id="${comment.Id}">
+                                            <i class="bi bi-cursor-fill me-2"></i>
+                                            <span> ${comment.Text} </span>
+                                        </div>
+                                        <h6 class="mt-2" style="opacity: 0.5; font-style: italic !important; font-size: 12px;">Posted by <span style="color: #0080ff;"> ${comment.UserFullname} </span> - ${comment.TimeConvert}</h6>
+                                    </div>
+                                    <div>
+                                        <div class="btn-group dropstart">
+                                            <span class="comment-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </span>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><span data-commentid="${comment.Id}" class="dropdown-item text-center text-info edit-comment" style="cursor: pointer;">Edit</span></li>
+                                                <li><span data-commentid="${comment.Id}" class="dropdown-item text-center text-danger delete-comment" style="cursor: pointer;">Delete</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt-0" />
+                            </div>
+                            `;
+                        } else {
+                            rowComment = `
+                                <div data-commentid="${comment.Id}">
+                                    <span><i class="bi bi-cursor-fill me-2"></i>${comment.Text}</span>
+                                    <h6 class="mt-2" style="opacity: 0.5; font-style: italic !important; font-size: 12px;">Posted by <span style="color: #0080ff;"> ${comment.UserFullname} </span> - ${comment.TimeConvert}</h6>
+                                    <hr class="mt-0" />
+                                </div>
+                            `;
+                        }
                         return all += rowComment;
-                    });
+                    }, '');
                     $('.other-comments').append(allComments);
                 }
             });
         };
 
-        var handlePostComment = function () {
+        var handlePostComment = () => {
             $('#btn-post').on('click', function (e) {
                 e.preventDefault();
                 $.ajax({
                     url: "@Url.Action("DialogComment", "Dialogs")",
                     data: $('#commentForm').serialize(),
                     success: function (data) {
-                        console.log(data);
+                        $('.other-comments').append(`
+                        <div class="cm">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <div class="edit-form" data-comment="${data.text}" data-id="${comment.id}">
+                                        <i class="bi bi-cursor-fill me-2"></i>
+                                        <span> ${data.text} </span>
+                                    </div>
+                                    <h6 class="mt-2" style="opacity: 0.5; font-style: italic !important; font-size: 12px;">Posted by <span style="color: #0080ff;"> ${data.user} </span> - ${data.timeStamp}</h6>
+                                </div>
+                                <div>
+                                    <div class="btn-group dropstart">
+                                        <span class="comment-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </span>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><span data-commentid="${data.id}" class="dropdown-item text-center text-info edit-comment" style="cursor: pointer;">Edit</span></li>
+                                            <li><span data-commentid="${data.id}" class="dropdown-item text-center text-danger delete-comment" style="cursor: pointer;">Delete</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mt-0" />
+                        </div>
+                        `);
+                        $('#commentForm textarea').clearFields();
+                    }
+                });
+            });
+        };
+
+        var handleDeleteComment = () => {
+            $(document).on('click', '.comment-select', function () {   //https://stackoverflow.com/questions/19194177/jquery-select-change-not-firing/41457428
+                $('.delete-comment').off('click').on('click', function (e) {
+                    e.preventDefault();
+                    var _this = $(this);
+                    var commentId = $(this).data('commentid');
+                    $.ajax({
+                        url: `/dialogs/deletecomment?commentid=${commentId}`,
+                        success: function () {
+                            _this.parents('.cm').remove();
+                        }
+                    });
+                });
+            });
+        };
+
+        var handleEditComment = () => {
+            var editElement, commentElement;
+            $(document).on('click', '.comment-select', function () {
+                $('.edit-comment').off('click').on('click', function (e) {
+                    editElement = $(this).parents('.cm').find('.edit-form');
+                    commentElement = $(this).parents('.cm');
+                    var check = $('.showform').attr('class');
+                    if (!check) {
+                        var editForm = `
+                        <form method="post" class="row showform">
+                            <div class="col-auto">
+                                <input type="text" class="form-control" name="text" value="${editElement.attr('data-comment')}" style="max-width: 100%;width: 600px;">
+                                <input type="hidden" name="commentid" value="${editElement.attr('data-id')}" />
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-custom2 mb-2 edit-save">Save</button>
+                                <a class="btn btn-danger mb-2 edit-cancel">Cancel</a>
+                            </div>
+                        </form>
+                        `;
+                        e.preventDefault();
+                        editElement.children().hide();
+                        editElement.append(editForm);
+                    }
+                });
+            });
+
+            $(document).on('click', '.edit-cancel', function () {
+                $('.showform').remove();
+                editElement.children().removeAttr('style');
+            });
+
+            $(document).on('click', '.edit-save', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "@Url.Action("EditComment", "Dialogs")",
+                    data: $(document).find('.showform').serialize(),
+                    success: function (data) {
+                        commentElement.remove();
+                        $('.other-comments').append(`
+                        <div class="cm">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <div class="edit-form" data-comment="${data.text}" data-id="${comment.id}">
+                                        <i class="bi bi-cursor-fill me-2"></i>
+                                        <span> ${data.text} </span>
+                                    </div>
+                                    <h6 class="mt-2" style="opacity: 0.5; font-style: italic !important; font-size: 12px;">Posted by <span style="color: #0080ff;"> ${data.user} </span> - ${data.timeStamp}</h6>
+                                </div>
+                                <div>
+                                    <div class="btn-group dropstart">
+                                        <span class="comment-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </span>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><span data-commentid="${data.id}" class="dropdown-item text-center text-info edit-comment" style="cursor: pointer;">Edit</span></li>
+                                            <li><span data-commentid="${data.id}" class="dropdown-item text-center text-danger delete-comment" style="cursor: pointer;">Delete</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mt-0" />
+                        </div>
+                        `);
                     }
                 });
             });
@@ -164,6 +315,8 @@
                     handleSaveRemove();
                     getComment();
                     handlePostComment();
+                    handleDeleteComment();
+                    handleEditComment();
                 },
             }
         })();

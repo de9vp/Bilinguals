@@ -11,5 +11,8 @@ namespace Bilinguals.Domain.Interfaces
     {
         Comment Add(Comment comment);
         List<Comment> GetByDialogId(int dialogId);
+        void Delete(int commentId);
+        Comment Edit(Comment comment);
+        Comment GetById(int id);
     }
 }
