@@ -16,8 +16,8 @@
 
 <div class="row mx-5">
     <table class="table table-borderless">
-       @foreach (var item in Model.Sentences)  //if bug display: Object reference not set to an instance of an object => add virtual to navigation properties in Model
-       {
+        @foreach (var item in Model.Sentences)  //if bug display: Object reference not set to an instance of an object => add virtual to navigation properties in Model
+        {
             if (i % 2 == 0)
             {
                 i = i + 1;
@@ -94,7 +94,7 @@
                     text-align: center;
                     background-color: #42586f;
                     color: white;
-                    " 
+                    "
                     class="rounded-pill1 py-2">
                     Comment & Feedback
                 </h4>
@@ -102,13 +102,13 @@
                 <div class="other-comments ms-2">
                     @* Load data here *@
                 </div>
-                
-                <label class="form-label">Write your comment</label>
-                <form id="commentForm" method="post" class="d-flex">
+
+                <h5 class="mt-4">Write your comment</h5>
+                <form id="commentForm" method="post" class="d-flex" novalidate>
                     <input id="dialogid" type="hidden" name="DialogId" value="@Model.Id" />
                     <input type="hidden" name="UserId" />
                     <input type="hidden" name="TimeStamp" />
-                    <textarea class="form-control flex-fill me-3" type="text" name="Text" style=" max-width: 850px;"></textarea>
+                    <input placeholder="Enter comment or feedback" class="form-control flex-fill me-3" type="text" name="Text" style=" max-width: 850px;" autocomplete="off" />
                     <button type="submit" id="btn-post" class="btn btn-custom1 mt-4 flex-fill">Post</button>
                 </form>
             </div>
@@ -125,6 +125,7 @@
 </div>
 
 @section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/jquery.form.js"></script>
     <script src="~/Scripts/Components/dropdown-sentence.js"></script>
     <script type="text/javascript">
@@ -182,9 +183,17 @@
         };
 
         var handlePostComment = () => {
+            var alertList = document.querySelectorAll('.alert')
+            alertList.forEach(function (alert) {
+                new bootstrap.Alert(alert)
+            })
             $('#btn-post').on('click', function (e) {
                 e.preventDefault();
-                $.ajax({
+                var checkText = $('#commentForm').find('input.form-control').val().trim();
+                if (checkText == '') {
+                    alert('Ban chua nhap comment');
+                } else {
+                    $.ajax({
                     url: "@Url.Action("DialogComment", "Dialogs")",
                     data: $('#commentForm').serialize(),
                     success: function (data) {
@@ -192,7 +201,7 @@
                         <div class="cm">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <div class="edit-form" data-comment="${data.text}" data-id="${comment.id}">
+                                    <div class="edit-form" data-comment="${data.text}" data-id="${data.id}">
                                         <i class="bi bi-cursor-fill me-2"></i>
                                         <span> ${data.text} </span>
                                     </div>
@@ -213,9 +222,10 @@
                             <hr class="mt-0" />
                         </div>
                         `);
-                        $('#commentForm textarea').clearFields();
+                        $('#commentForm input.form-control').clearFields();
                     }
                 });
+                }
             });
         };
 
@@ -239,6 +249,7 @@
             var editElement, commentElement;
             $(document).on('click', '.comment-select', function () {
                 $('.edit-comment').off('click').on('click', function (e) {
+                    e.preventDefault();
                     editElement = $(this).parents('.cm').find('.edit-form');
                     commentElement = $(this).parents('.cm');
                     var check = $('.showform').attr('class');
@@ -255,7 +266,6 @@
                             </div>
                         </form>
                         `;
-                        e.preventDefault();
                         editElement.children().hide();
                         editElement.append(editForm);
                     }
@@ -269,7 +279,12 @@
 
             $(document).on('click', '.edit-save', function (e) {
                 e.preventDefault();
-                $.ajax({
+
+                var checkText = $('.showform').find('input.form-control').val().trim();
+                if (checkText == '') {
+                    alert('Khong duoc de trong!');
+                } else {
+                    $.ajax({
                     url: "@Url.Action("EditComment", "Dialogs")",
                     data: $(document).find('.showform').serialize(),
                     success: function (data) {
@@ -278,7 +293,7 @@
                         <div class="cm">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <div class="edit-form" data-comment="${data.text}" data-id="${comment.id}">
+                                    <div class="edit-form" data-comment="${data.text}" data-id="${data.id}">
                                         <i class="bi bi-cursor-fill me-2"></i>
                                         <span> ${data.text} </span>
                                     </div>
@@ -301,6 +316,7 @@
                         `);
                     }
                 });
+                };
             });
         };
 
