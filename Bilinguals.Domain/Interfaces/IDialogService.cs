@@ -25,5 +25,10 @@ namespace Bilinguals.Domain.Interfaces
         void FromTextFile(string allTexts);
 
         Dialog GetDialogDetailAndSentences(int dialogId, string userId);
+
+        IPagedList<Dialog> GetDialogs(int pageIndex, int pageSize, string searchText);
+
+        IList<Dialog> GetAllDialogs(string additionalUserId = null);
     }
+
 }

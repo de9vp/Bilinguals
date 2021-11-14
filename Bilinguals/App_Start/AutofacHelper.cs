@@ -3,6 +3,7 @@ using Autofac.Integration.Mvc;
 using Bilinguals.Data;
 using Bilinguals.Domain;
 using Bilinguals.Domain.Interfaces;
+using Bilinguals.Domain.Models;
 using Bilinguals.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security.DataProtection;
@@ -28,11 +29,11 @@ namespace Bilinguals.App_Start
 
             builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerRequest();
 
-            //builder.RegisterType<ApplicationRoleStore>().As<IRoleStore<ApplicationRole>>().InstancePerRequest();
+            builder.RegisterType<ApplicationRoleStore>().As<IRoleStore<ApplicationRole>>().InstancePerRequest();
 
             builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
 
-            //builder.RegisterType<ApplicationRoleManager>().AsSelf().InstancePerRequest();
+            builder.RegisterType<ApplicationRoleManager>().AsSelf().InstancePerRequest();
 
             builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerRequest();
 

@@ -163,5 +163,51 @@ namespace Bilinguals.Services
 
             return dialog;
         }
+
+        public IPagedList<Dialog> GetDialogs(int pageIndex, int pageSize, string searchText)
+        {
+            // Lower case
+            var search = searchText?.ToLower() ?? "";
+            // Firstly strip non alpha numeric charactors out
+            search = Regex.Replace(search, @"[^\w\.@\- ]", "");
+
+            // Now split the words
+            var splitSearch = search.Split(' ').ToList();
+
+            var query = _dialogRepo.Table
+                .Where(x => true); // get all dialogs
+
+            foreach (var term in splitSearch)
+            {
+                query = query.Where(x => x.Name.ToLower().Contains(term));
+            }
+
+            query = query.OrderBy(o => o.Id);
+
+            return query.ToPagedList(pageIndex, pageSize);
+        }
+
+        public IList<Dialog> GetAllDialogs(string additionalUserId = null)
+        {
+            if (string.IsNullOrEmpty(additionalUserId))
+                return _dialogRepo.Table.ToList();
+
+            var dialogs = (from dialog in _dialogRepo.Table
+                           let userDialog = _userDialogRepo.Table.FirstOrDefault(x => x.UserId == additionalUserId && x.DialogId == dialog.Id)
+                           select new { dialog, userDialog = userDialog })
+                          .AsEnumerable()
+                          .Select(row => new Dialog
+                          {
+                              Id = row.dialog.Id,
+                              Name = row.dialog.Name,
+                              Description = row.dialog.Description,
+                              DateCreated = row.dialog.DateCreated,
+                              DateModified = row.dialog.DateModified,
+                              UserDialogId = row.userDialog?.Id,
+                          })
+                          .ToList();
+
+            return dialogs;
+        }
     }
 }

@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row bg-white text-center">
+    <h4 class="page-title pt-4 pb-2">Statistics</h4>
+    <br />
+    <div class="row w-75 mx-auto">
+        <div class="col-lg-6 col-xl-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-6 text-center">
+                            <h6 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Sentences</h6>
+                            <h3 class="my-2 py-1">@ViewBag.allSentences</h3>
+                            <p class="mb-0 text-muted">
+                                <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 3.27%</span>
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <i style="font-size: 80px" class="bi bi-chat-right-quote link-success"></i>
+                        </div>
+                    </div> <!-- end row-->
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+
+        <div class="col-lg-6 col-xl-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-6">
+                            <h6 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">Dialogs</h6>
+                            <h3 class="my-2 py-1">@ViewBag.allDialogs</h3>
+                            <p class="mb-0 text-muted">
+                                <span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> 5.38%</span>
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <i style="font-size: 80px" class="bi bi-text-right link-success"></i>
+                        </div>
+                    </div> <!-- end row-->
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+
+    </div>
+    <div class="row w-75 mx-auto my-4">
+        <div class="col-lg-6 col-xl-6 mx-auto">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-6">
+                            <h6 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">Users</h6>
+                            <h3 class="my-2 py-1">@ViewBag.allUsers</h3>
+                            <p class="mb-0 text-muted">
+                                <span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> 5.38%</span>
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <i style="font-size: 80px" class="bi bi-text-right link-success"></i>
+                        </div>
+                    </div> <!-- end row-->
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+    </div>
+</div>
+

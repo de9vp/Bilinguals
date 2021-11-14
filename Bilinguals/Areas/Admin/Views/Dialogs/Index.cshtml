@@ -1,0 +1,69 @@
+﻿@model PagedList.IPagedList<Bilinguals.Domain.Models.Dialog>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var searchText = Request.QueryString["searchText"];
+}
+
+<div class="container bg-light">
+    <br />
+    <h2>All Dialogs <span class="badge bg-success">@ViewBag.count</span></h2>
+    <form>
+        <div class="input-group" style="width: 350px; float: right">
+            <input style="border-radius: 10px 0 0 10px" type="text" class="form-control" id="searchText" name="searchText" value="@searchText" placeholder="Nhập đoạn hội thoại">
+            <button id="btnsearch" style="border-radius: 0 10px 10px 0" class="btn btn-outline-success"><i class="bi bi-search"></i></button>
+        </div>
+    </form>
+    <a href="/Admin/Dialogs/Create" class="btn btn-outline-success"><i class="bi bi-file-plus"></i> Thêm hội thoại</a>
+    <hr />
+    <table class="table table-layout-fixed table-result">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td style="width: 180px">
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td style="width: 180px">
+                    @Html.DisplayFor(modelItem => item.DateModified)
+                </td>
+                <td class="width-xs-48" style="text-align: center; width: 130px; vertical-align: middle">
+                    <div class="md-btn-group d-none d-md-block">
+                        <a href="/Admin/Dialogs/Edit/@item.Id" class="btn btn-warning btn-sm"><span class="bi bi-pencil-square"></span></a>
+                        <a href="/Admin/Dialogs/Details/@item.Id" class="btn btn-info btn-sm"><span class="bi bi-journal-text"></span></a>
+                        <a href="/Admin/Dialogs/Delete/@item.Id" class="btn btn-danger btn-sm"><span class="bi bi-trash"></span></a>
+                    </div>
+                    <div class="btn-group d-md-none">
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" style="border: 1px solid #ddd"></button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/Admin/Dialogs/Edit/@item.Id" class="btn btn-warning btn-sm w-100"><span class="bi bi-pencil-square"></span> edit</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/Admin/Dialogs/Details/@item.Id" class="btn btn-info btn-sm w-100"><span class="bi bi-journal-text"></span> open</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/Dialogs/Delete/@item.Id" class="btn btn-danger btn-sm w-100"><span class="bi bi-trash"></span> delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+
+    @if (Model.TotalItemCount > Model.PageSize)
+    {
+        <div id="paging" style="text-align: center">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchText = searchText }))
+        </div>
+    }
+</div>
+
+

@@ -1,0 +1,131 @@
+﻿@using Microsoft.AspNet.Identity
+@using Bilinguals.App
+
+@{
+    var ImagePath = ViewBag.ImagePath;
+}
+
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="~/Content/css/custom-navbar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+</head>
+
+<body class="d-flex flex-row">
+    <!-- Navigation-->
+    <div class="p-3 bg-custom3" style="width: 250px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <img width="30" class="me-2" src="~/favicon.ico" />
+            <span class="fs-4">Administrator</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li>
+                <a href="#" class="nav-link link-dark active">
+                    <i style="font-size: 20px;" class="bi bi-speedometer2 me-2"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link link-dark">
+                    <i style="font-size: 20px;" class="bi bi-chat-square-quote-fill me-2"></i>
+                    Sentences
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link link-dark">
+                    <i style="font-size: 20px;" class="bi bi-chat-square-text-fill me-2"></i>
+                    Dialogs
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link link-dark">
+                    <i style="font-size: 20px;" class="bi bi-translate me-2"></i>
+                    Irregular verbs
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li>
+                <a href="#" class="nav-link link-dark">
+                    <i style="font-size: 20px;" class="bi bi-person-lines-fill me-2"></i>
+                    Accounts
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link link-dark">
+                    <i style="font-size: 20px;" class="bi bi-sliders me-2"></i>
+                    Roles
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i style="font-size: 20px;" class="bi bi-box-arrow-left me-3"></i>
+                <strong>@User.Identity.GetFullName()</strong>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                <li><a class="dropdown-item" href="#">Home page</a></li>
+                <li><hr class="dropdown-divider"></li>
+               @using (Html.BeginForm("LogOff", "UserManager", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) //bug
+                {
+                    <li><a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
+                }
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- Body-->
+    <main class="masthead w-100 pt-5">
+        <div class="container px-5">
+            @RenderBody()
+        </div>
+    </main>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Scripts/jquery.blockUI.js"></script>
+    <script type="text/javascript">
+
+        //https://jquery.malsup.com/block/#demos
+        $(function () {
+            var defaults = $.blockUI.defaults;
+            $.blockUI.defaults = {
+                ...defaults,
+                message: 'Please wait ...',
+                baseZ: 1055,
+                overlayCss: {
+                    ...defaults.overlayCSS,
+                    opacity: '.3'
+                },
+                css: {
+                    ...defaults.css,
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '6px',
+                    '-moz-border-radius': '6px',
+                    opacity: .4,
+                    color: '#fff'
+                },
+            };
+
+            $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+        });
+    </script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

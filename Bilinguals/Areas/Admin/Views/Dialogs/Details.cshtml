@@ -1,0 +1,68 @@
+﻿@model Bilinguals.Domain.Models.Dialog
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Details";
+    var returnUrl = Request.QueryString["returnUrl"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var i = 2;
+}
+<link href="~/Content/css/home-index.css" rel="stylesheet" />
+
+
+<h2 class="text-center pt-3" style="font-family: 'Nunito Sans', sans-serif; font-weight: bold; color: #092139;"> @Html.DisplayFor(model => model.Name) </h2>
+<h6 class="text-center pb-4" style="opacity: 0.5; font-style: italic !important;">Last updated on @(Model.DateModified?.ToString("dd/MM/yyyy"))</h6>
+<span hidden id="userId">@User.Identity.GetUserId()</span>
+
+<div class="row mx-5">
+    <table class="table table-borderless">
+        @foreach (var item in Model.Sentences)  //if bug display: Object reference not set to an instance of an object => add virtual to navigation properties in Model
+        {
+            if (i % 2 == 0)
+            {
+                i = i + 1;
+                <tr class="row px-5">
+                    <td class="col-9 d-flex flex-column bg-white mb-3 rounded-pill px-4 py-2 shadow-sm">
+                        <span class="entext">
+                            <i class="bi bi-chat-square-quote-fill me-2"></i>@item.EnText
+                            <span class="btn-group btn-sm" role="group" aria-label="Basic example">
+                                <button data-text="@item.EnText" type="button" class="speak btnnopadding btn-outline-custom1"><i class="bi bi-volume-up-fill"></i></button>
+                            </span>
+                        </span>
+                        <span class="vitext ps-3"><i class="bi bi-arrow-return-right me-2"></i>@item.ViText</span>
+                    </td>
+                    <td class="col-3"></td>
+                </tr>
+            }
+            else
+            {
+                i = i + 1;
+                <tr class="row px-5">
+                    <td class="col-3"></td>
+                    <td class="col-9 d-flex align-items-end flex-column bg-white mb-3 rounded-pill px-4 py-2 shadow-sm">
+                        <span class="entext">
+                            <span class="btn-group btn-sm" role="group" aria-label="Basic example">
+                                <button data-text="@item.EnText" type="button" class="speak btnnopadding btn-outline-custom1"><i class="bi bi-volume-up-fill"></i></button>
+                                @*<button type="button" class="btnnopadding btn-outline-custom1"><i class="bi bi-pause-fill"></i></button>*@
+                            </span>
+                            @item.EnText
+                            <i class="bi bi-chat-square-quote-fill ms-2"></i>
+                        </span>
+                        <span class="vitext">@item.ViText<i class="bi bi-arrow-return-left ms-2"></i>&emsp;</span>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="bsModal" tabindex="-1">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

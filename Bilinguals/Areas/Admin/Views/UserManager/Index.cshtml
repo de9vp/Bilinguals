@@ -1,0 +1,58 @@
+﻿@model List<Bilinguals.Domain.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container bg-light">
+    <br />
+    <h4>Account Management</h4>
+    <a href="/Admin/UserManager/Create" class="btn btn-outline-success"><i class="bi bi-file-plus"></i> Tạo tài khoản</a>
+    <br />
+    <table class="table table-layout-fixed table-result">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FullName
+                </td>
+                <td>
+                    @foreach (var role in item.Roles)
+                    {
+                        <span class="badge rounded-pill bg-success">@role.Role.Name</span>
+                    }
+                </td>
+                <td class="width-xs-48" style="text-align: center; width: 300px; vertical-align: middle">
+                    <div class="md-btn-group d-none d-md-block">
+                        <a href="/Admin/UserManager/ChangePassword/@item.Id" class="btn btn-secondary btn-sm">Change Password</a>
+                        <a href="/Admin/UserManager/Edit/@item.Id" class="btn btn-warning btn-sm"><span class="bi bi-pencil-square"></span></a>
+                        <a href="/Admin/UserManager/Details/@item.Id" class="btn btn-info btn-sm"><span class="bi bi-journal-text"></span></a>
+                        <a href="/Admin/UserManager/Delete/@item.Id" class="btn btn-danger btn-sm"><span class="bi bi-trash"></span></a>
+                    </div>
+                    <div class="btn-group d-md-none">
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" style="border: 1px solid #ddd"></button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/Admin/UserManager/ChangePassword/@item.Id" class="btn btn-secondary btn-sm">Change Password</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/UserManager/Edit/@item.Id" class="btn btn-warning btn-sm w-100"><span class="bi bi-pencil-square"></span> edit</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/Admin/UserManager/Details/@item.Id" class="btn btn-info btn-sm w-100"><span class="bi bi-journal-text"></span> open</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/UserManager/Delete/@item.Id" class="btn btn-danger btn-sm w-100"><span class="bi bi-trash"></span> delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+
+</div>
+
+

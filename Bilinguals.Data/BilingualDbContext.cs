@@ -11,10 +11,10 @@ using System.Web;
 
 namespace Bilinguals.Data
 {
-    public class BilingualDbContext : IdentityDbContext<ApplicationUser>, IBilingualDbContext
+    public class BilingualDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserLogin, ApplicationUserRole, IdentityUserClaim>, IBilingualDbContext
     {
         public BilingualDbContext()
-            : base("Bilinguals", throwIfV1Schema: false)
+            : base("Bilinguals")
         {
         }
 
@@ -76,7 +76,11 @@ namespace Bilinguals.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            modelBuilder.Entity<ApplicationUserRole>()
+                .HasRequired(t => t.Role)
+                .WithMany(t => t.Users)
+                .HasForeignKey(t => t.RoleId);
         }
+
     }
 }
