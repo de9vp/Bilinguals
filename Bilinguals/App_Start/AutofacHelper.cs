@@ -29,7 +29,7 @@ namespace Bilinguals.App_Start
 
             builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerRequest();
 
-            builder.RegisterType<ApplicationRoleStore>().As<IRoleStore<ApplicationRole>>().InstancePerRequest();
+            builder.RegisterType<ApplicationRoleStore>().As<IRoleStore<ApplicationRole, string>>().InstancePerRequest();
 
             builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
 

@@ -20,7 +20,13 @@
 
 <body class="d-flex flex-row">
     <!-- Navigation-->
-    <div class="p-3 bg-custom3" style="width: 250px;">
+    <div class="p-3 bg-custom3" style="width: 250px;min-height: 700px;">
+        <style>
+            .link-dark:hover, .link-dark:focus {
+                background-color: #092139;
+                color: white;
+            }
+        </style>
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <img width="30" class="me-2" src="~/favicon.ico" />
             <span class="fs-4">Administrator</span>
@@ -28,19 +34,19 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="#" class="nav-link link-dark active">
+                <a href="~/admin/dashboard" class="nav-link link-dark mb-2">
                     <i style="font-size: 20px;" class="bi bi-speedometer2 me-2"></i>
                     Dashboard
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link link-dark">
+                <a href="#" class="nav-link link-dark mb-2">
                     <i style="font-size: 20px;" class="bi bi-chat-square-quote-fill me-2"></i>
                     Sentences
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link link-dark">
+                <a href="~/admin/dialogs" class="nav-link link-dark mb-2">
                     <i style="font-size: 20px;" class="bi bi-chat-square-text-fill me-2"></i>
                     Dialogs
                 </a>
@@ -55,13 +61,13 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="#" class="nav-link link-dark">
+                <a href="~/admin/usermanager" class="nav-link link-dark mb-2">
                     <i style="font-size: 20px;" class="bi bi-person-lines-fill me-2"></i>
                     Accounts
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link link-dark">
+                <a href="~/admin/roles" class="nav-link link-dark">
                     <i style="font-size: 20px;" class="bi bi-sliders me-2"></i>
                     Roles
                 </a>
@@ -74,10 +80,11 @@
                 <strong>@User.Identity.GetFullName()</strong>
             </a>
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                <li><a class="dropdown-item" href="#">Home page</a></li>
+                <li><a class="dropdown-item" href="/">Home page</a></li>
                 <li><hr class="dropdown-divider"></li>
-               @using (Html.BeginForm("LogOff", "UserManager", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) //bug
+                @using (Html.BeginForm("LogOff", "UserManager", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                 {
+                    @Html.AntiForgeryToken()
                     <li><a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
                 }
 

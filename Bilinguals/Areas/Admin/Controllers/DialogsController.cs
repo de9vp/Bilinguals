@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Bilinguals.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class DialogsController : Controller
     {
         private readonly IDialogService _dialogService;

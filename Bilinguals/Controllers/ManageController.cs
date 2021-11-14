@@ -10,7 +10,7 @@ using Bilinguals.Models;
 using Bilinguals.Services;
 using Bilinguals.App;
 using System.Net;
-using Bilinguals.Domain;
+using Bilinguals.Domain.Models;
 
 namespace Bilinguals.Controllers
 {

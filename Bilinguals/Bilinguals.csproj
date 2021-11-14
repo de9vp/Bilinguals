@@ -301,6 +301,10 @@
     <Content Include="Areas\Admin\Views\UserManager\Create.cshtml" />
     <Content Include="Areas\Admin\Views\UserManager\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\UserManager\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Delete.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Components\bootstrap5-validation.js" />
     <Content Include="Scripts\Components\dropdown-sentence.js" />
@@ -386,7 +390,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Roles\" />
     <Folder Include="Areas\Admin\Views\Sentences\" />
     <Folder Include="Avatars\" />
   </ItemGroup>

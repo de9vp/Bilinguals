@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Bilinguals.Models;
-using Bilinguals.Domain;
+using Bilinguals.Domain.Models;
 using Bilinguals.Services;
 
 namespace Bilinguals.Controllers

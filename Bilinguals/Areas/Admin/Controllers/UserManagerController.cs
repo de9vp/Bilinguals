@@ -1,5 +1,5 @@
 ﻿using Bilinguals.Areas.Admin.Models;
-using Bilinguals.Domain;
+using Bilinguals.Domain.Models;
 using Bilinguals.Services;
 using Microsoft.AspNet.Identity;
 using System;

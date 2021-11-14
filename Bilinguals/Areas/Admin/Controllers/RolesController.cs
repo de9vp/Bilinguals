@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Bilinguals.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class RolesController : Controller
     {
         private readonly ApplicationRoleManager _roleManager;

@@ -1,4 +1,4 @@
-﻿using Bilinguals.Domain;
+﻿using Bilinguals.Domain.Models;
 using Bilinguals.Domain.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
