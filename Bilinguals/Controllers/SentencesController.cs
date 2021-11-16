@@ -37,20 +37,6 @@ namespace Bilinguals.Controllers
             return View(sentences);
         }
 
-        // GET: Sentences/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var sentence = _sentenceService.GetById(id.Value);
-            if (sentence == null)
-            {
-                return HttpNotFound();
-            }
-            return View(sentence);
-        }
 
         // GET: Sentences/Create
         public ActionResult Create()

@@ -212,9 +212,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Admin\Controllers\DialogsController.cs" />
     <Compile Include="Areas\Admin\Controllers\RolesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\SentencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManagerController.cs" />
     <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -291,10 +289,6 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Areas\Admin\Views\Dialogs\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Dialogs\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Dialogs\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Dialogs\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\UserManager\Index.cshtml" />
     <Content Include="Areas\Admin\Views\UserManager\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\UserManager\ChangePassword.cshtml" />
@@ -362,7 +356,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Sentences\Create.cshtml" />
     <Content Include="Views\Sentences\Delete.cshtml" />
-    <Content Include="Views\Sentences\Details.cshtml" />
     <Content Include="Views\Sentences\Edit.cshtml" />
     <Content Include="Views\Sentences\Index.cshtml" />
     <Content Include="Views\Dialogs\Create.cshtml" />
@@ -390,7 +383,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Sentences\" />
     <Folder Include="Avatars\" />
   </ItemGroup>
   <ItemGroup>
