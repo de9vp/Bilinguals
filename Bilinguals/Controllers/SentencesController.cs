@@ -96,12 +96,12 @@ namespace Bilinguals.Controllers
                 if (!string.IsNullOrEmpty(returnUrl))
                     return Redirect(returnUrl);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Dialogs");
             }
 
             var dialogs = _dialogService.GetAll();
             ViewBag.DialogId = new SelectList(dialogs, "Id", "Name", sentence.DialogId);
-            return View(sentence);
+            return RedirectToAction("Index","Dialogs");
         }
 
         // GET: Sentences/Delete/5
@@ -125,7 +125,7 @@ namespace Bilinguals.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _sentenceService.Delete(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Dialogs");
         }
 
         // GET:

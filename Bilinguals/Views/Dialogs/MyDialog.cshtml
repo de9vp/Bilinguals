@@ -5,51 +5,38 @@
     ViewBag.Title = "MyDialog";
 }
 
-<h2>MyDialog</h2>
+<h2 class="text-center rounded-pill2 text-white shadow-sm py-2 mb-3" style="background-color: #42586f;">My Dialogs</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            DateCreated
-        </th>
-        <th>
-            DateModified
-        </th>
-        <th></th>
-    </tr>
+<link href="~/Content/css/bg-animation-card-dialog.css" rel="stylesheet" />
+<div id="custom-cards">
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-2">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateModified)
-        </td>
-        <td>
-            <a href="/Dialogs/RemoveFromMyDialogs?userDialogId=@(item.UserDialogId)&returnUrl=@Request.Url.AbsolutePath" class="btn btn-sm btn-danger" title="Remove from my dialogs">
-                <i class="bi bi-trash"></i>
-            </a>
-            @*<button data-userdialogid="@item.UserDialogId" class="btn-remove btn btn-warning" title="Remove from My Dialogs">
-                <span class="bi bi-trash"></span>
-            </button>*@
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="gradient-background card card-dialog h-100 overflow-hidden text-white shadow-custom1 rounded-pill">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white">
+                        <a class="textdialog" href="~/dialogs/details/@item.Id" style="text-decoration: none">
+                            <h4 class="pt-2 mt-3 mb-4 fw-bold text-white">@item.Name</h4>
+                        </a>
+                        <ul class="d-flex list-unstyled mt-auto">
+                            <li class="me-auto">
+                                <a href="/Dialogs/RemoveFromMyDialogs?userDialogId=@(item.UserDialogId)&returnUrl=@Request.Url.AbsolutePath" class="btn btn-sm btn-danger" title="Remove from my dialogs">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <i class="bi bi-calendar3 me-2"></i>
+                                <small>@(!item.DateModified.HasValue ? null : item.DateModified?.ToString("dd/MM/yyyy"))</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
 
-</table>
+    </div>
+</div>
 
 <div id="paging" style="text-align: center">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount

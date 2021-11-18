@@ -6,7 +6,7 @@
     var returnUrl = Request.QueryString["returnUrl"];
 }
 
-<h2>Edit</h2>
+<h2 class="text-center">Edit Sentence</h2>
 
 
 @using (Html.BeginForm())
@@ -14,7 +14,6 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Sentence</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
@@ -22,35 +21,28 @@
     @Html.HiddenFor(model => model.SortOrder)
     @Html.HiddenFor(model => model.DialogId)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.EnText, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.EnText, new { htmlAttributes = new { @class = "form-control" } })
+    <div class="form-group text-center">
+        English Text
+        <div class="d-flex justify-content-center">
+            @Html.EditorFor(model => model.EnText, new { htmlAttributes = new { @class = "form-control rounded-pill1", style = "max-width: 600px;" } })
             @Html.ValidationMessageFor(model => model.EnText, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.ViText, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ViText, new { htmlAttributes = new { @class = "form-control" } })
+    <div class="form-group text-center mt-4">
+        Vietnamese Text
+        <div class="d-flex justify-content-center">
+            @Html.EditorFor(model => model.ViText, new { htmlAttributes = new { @class = "form-control rounded-pill1", style = "max-width: 600px;" } })
             @Html.ValidationMessageFor(model => model.ViText, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-
-            @if (returnUrl == null)
-            {
-                @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
-            }
-            else
-            {
-                <a href="@returnUrl" class="btn btn-default">Back</a>
-            }
-
+        <div class="">
+            <div class="form-actions no-color text-center mt-4">
+                <input type="submit" value="Save" class="btn btn-custom1 rounded-pill2 me-2" />
+                <span class="btn btn-secondary rounded-pill2">@Html.ActionLink("Cancel", "Index", "", htmlAttributes: new { @class = "", style = "color:inherit;text-decoration: none;" })</span>
+            </div>
         </div>
     </div>
 </div>

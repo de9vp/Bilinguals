@@ -6,12 +6,12 @@
     var searchText = Request.QueryString["searchText"];
 }
 <link href="~/Content/css/bg-animation-card-dialog.css" rel="stylesheet" />
-<div class="pb-1 row row-cols-1 row-cols-lg-2">
-    <div class="col">
+<div class="pb-1 mx-3 row row-cols-1 row-cols-lg-2">
+    <div class="col rounded-pill2 pt-2 text-white" style="background-color: #42586f;">
         <h3 class="ms-4">All Dialogs</h3>
     </div>
     <div class="col d-flex flex-row-reverse">
-        <form class="me-4" style="width:280px">
+        <form style="width:280px">
             <div class="input-group">
                 <input autocomplete="off" style="border-radius: 10px 0 0 10px" type="text" class="form-control" id="searchText" name="searchText" value="@searchText" placeholder="Enter dialog">
                 <button id="btnsearch" style="border-radius: 0 10px 10px 0" class="btn btn-custom1"><i class="bi bi-search"></i></button>
