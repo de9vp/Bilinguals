@@ -1,30 +1,158 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Contribute";
 }
 
-<h2>@ViewBag.Title</h2>
 
-<div class="form-horizontal">
-    @if (ViewBag.Result != null)
-    {
-        if (ViewBag.Result != "success")
+<div class="gx-5 mx-4">
+    <h4 class="text-center bg-custom3 mx-5 py-2 rounded-pill1">Add New Dialogue</h4>
+    <form id="form-add" method="post" class="bg-white rounded-pill2 shadow-sm p-4">
+        <div class="row justify-content-center mb-4">
+            <textarea name="DialogName" style="max-width: 500px;" type="text" class="form-control text-center rounded-pill2 mx-5" placeholder="Enter dialog name" aria-label="First name"></textarea>
+        </div>
+        <div id="load-sentences">
+            <div class="row justify-content-center px-3 pb-3 pt-0 rounded-pill1 bg-light mb-4" style="border: 1px solid #d1d7dc; margin: 0;">
+                <div class="d-flex justify-content-between">
+                    <span class="my-2 pt-1">Nhap cau hoi thoai (EN/VI)</span>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 6px 0px;"><i class="bi bi-x"></i></button>
+                </div>
+                <div class="row px-0">
+                    <div class="col">
+                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="English Text" aria-label="First name"></textarea>
+                    </div>
+                    <div class="col">
+                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="Vietnamese Text" aria-label="Last name"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center px-3 pb-3 pt-0 rounded-pill1 bg-light mb-4" style="border: 1px solid #d1d7dc; margin: 0;">
+                <div class="d-flex justify-content-between">
+                    <span class="my-2 pt-1">Nhap cau hoi thoai (EN/VI)</span>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 6px 0px;"><i class="bi bi-x"></i></button>
+                </div>
+                <div class="row px-0">
+                    <div class="col">
+                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="English Text" aria-label="First name"></textarea>
+                    </div>
+                    <div class="col">
+                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="Vietnamese Text" aria-label="Last name"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center px-3 pb-3 pt-0 rounded-pill1 bg-light mb-4" style="border: 1px solid #d1d7dc; margin: 0;">
+                <div class="d-flex justify-content-between">
+                    <span class="my-2 pt-1">Nhap cau hoi thoai (EN/VI)</span>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 6px 0px;"><i class="bi bi-x"></i></button>
+                </div>
+                <div class="row px-0">
+                    <div class="col">
+                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="English Text" aria-label="First name"></textarea>
+                    </div>
+                    <div class="col">
+                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="Vietnamese Text" aria-label="Last name"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row-reverse mb-4">
+            <button id="btn-addsentence" class="btn btn-outline-custom1 rounded-pill1">+ Them cau</button>
+        </div>
+        <hr />
+        <div class="row justify-content-center">
+            <button type="submit" id="btn-send" class="btn btn-custom2 rounded-pill2 w-25">Submit</button>
+        </div>
+    </form>
+
+
+
+
+
+
+    @*@if (ViewBag.Result != null)
         {
-            <div class="alert alert-danger">@ViewBag.Result</div>
+            if (ViewBag.Result != "success")
+            {
+                <div class="alert alert-danger">@ViewBag.Result</div>
+            }
+            else
+            {
+                <div class="alert alert-info">Imported successfully</div>
+            }
         }
-        else
+
+
+        @using (Html.BeginForm("Index", "ImportExport", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <div class="alert alert-info">Imported successfully</div>
-        }
-    }
-
-
-    @using (Html.BeginForm("Index", "ImportExport", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <label>Select file (*.xlsx)</label>
-        <input class="form-control" type="file" name="file" value="" style="width: 300px" />
-        <br />
-        <input type="submit" value="Upload" class="btn btn-primary" />
-    }
+            <label>Select file (*.xlsx)</label>
+            <input class="form-control" type="file" name="file" value="" style="width: 300px" />
+            <br />
+            <input type="submit" value="Upload" class="btn btn-primary" />
+        }*@
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+        var elementSentence =
+            `
+            <div class="row justify-content-center px-3 pb-3 pt-0 rounded-pill1 bg-light mb-4" style="border: 1px solid #d1d7dc; margin: 0;">
+                <div class="d-flex justify-content-between">
+                    <span class="my-2 pt-1">Nhap cau hoi thoai (EN/VI)</span>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 6px 0px;"><i class="bi bi-x"></i></button>
+                </div>
+                <div class="row px-0">
+                    <div class="col">
+                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="English Text" aria-label="First name"></textarea>
+                    </div>
+                    <div class="col">
+                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="Vietnamese Text" aria-label="Last name"></textarea>
+                    </div>
+                </div>
+            </div>
+            `;
+        
+        var elementLoad = $('#load-sentences');
+        var addSentence = () => {
+            $('#btn-addsentence').on('click', function (e) {
+                e.preventDefault();
+                elementLoad.append(elementSentence);
+            })
+        }
+
+        var cancelSentence = () => {
+            $(document).on('click', '.btn-cancel', function (e) {
+                e.preventDefault();
+                var _this = $(this);
+                _this.parents('.bg-light').remove();
+            })
+        }
+
+        var handleSend = () => {
+            $('form').on('submit', function (e) {
+                e.preventDefault();
+                var inputs = $('form').find('textarea');
+                var isRequired = true;
+                for (let input of inputs) {
+                    if (input.value.trim() == '') {
+                        isRequired = false;
+                    }
+                }
+                if (!isRequired) {
+                    console.log('Dang trong');
+                } else {
+                    //$.ajax({
+                    //    url: ,
+                    //    d
+                    //})
+                }
+            })
+        }
+
+        $(function () {
+            addSentence();
+            cancelSentence();
+            handleSend();
+        })
+    </script>    
+}
 

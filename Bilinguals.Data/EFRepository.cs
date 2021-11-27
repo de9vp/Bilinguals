@@ -17,8 +17,10 @@ namespace Bilinguals.Data
         {
             _context = context as BilingualDbContext;
             _entities = _context.Set<T>();
-        }
 
+            _context.Configuration.ProxyCreationEnabled = false;
+
+        }
 
         public T GetById(object id)
         {
