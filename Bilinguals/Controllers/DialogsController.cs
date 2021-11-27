@@ -22,6 +22,7 @@ namespace Bilinguals.Controllers
         private readonly IUserDialogService _userDialogService;
         private readonly ICommentService _commentService;
         private readonly IUserService _userService;
+        
 
         public DialogsController(IDialogService dialogService, IUserDialogService userDialogService, ICommentService commentService, IUserService userService)
         {

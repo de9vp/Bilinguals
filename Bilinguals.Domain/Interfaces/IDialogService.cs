@@ -18,6 +18,8 @@ namespace Bilinguals.Domain.Interfaces
 
         Dialog GetById(int id);
 
+        Dialog GetByName(string name);
+
         List<Dialog> GetAll();
 
         IPagedList<Dialog> GetDialogList(int pageIndex, int pageSize, string searchText, string sortOrder, string userId);

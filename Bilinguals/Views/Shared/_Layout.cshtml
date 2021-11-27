@@ -24,7 +24,10 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
                     <li class="nav-item"><span>@Html.ActionLink("All Dialogs", "Index", "Dialogs", null, new { @class = "customitem nav-link" })</span></li>
-                    <li class="nav-item"><span>@Html.ActionLink("Contribute", "Index", "ImportExport", null, new { @class = "nav-link" })</span></li>
+                    @if (User.IsInRole("Creater"))
+                    {
+                        <li class="nav-item"><span>@Html.ActionLink("Contribute", "Index", "ImportExport", null, new { @class = "nav-link" })</span></li>
+                    }
                     <li class="nav-item">
                         <div class="dropdown">
                             <a style="cursor: pointer;" class="nav-link dropdown-toggle" id="dropdownMenuRepo" data-bs-toggle="dropdown" aria-expanded="false">

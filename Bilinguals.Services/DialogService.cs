@@ -46,6 +46,12 @@ namespace Bilinguals.Services
             return dialog;
         }
 
+        public Dialog GetByName(string name)
+        {
+            var dialog = _dialogRepo.Table.FirstOrDefault(x => x.Name == name);
+            return dialog;
+        }
+
         public List<Dialog> GetAll()
         {
             return _dialogRepo.Table.ToList();

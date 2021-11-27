@@ -8,67 +8,50 @@
     <h4 class="text-center bg-custom3 mx-5 py-2 rounded-pill1">Add New Dialogue</h4>
     <form id="form-add" method="post" class="bg-white rounded-pill2 shadow-sm p-4">
         <div class="row justify-content-center mb-4">
-            <textarea name="DialogName" style="max-width: 500px;" type="text" class="form-control text-center rounded-pill2 mx-5" placeholder="Enter dialog name" aria-label="First name"></textarea>
+            <textarea name="sx" style="max-width: 500px; height:20px;" type="text" class="form-control text-center rounded-pill2 mx-5" placeholder="Ex: Lesson 1: Where are you from? ( Bạn đến từ đâu? )" aria-label="First name"></textarea>
+        </div>
+        <div class="row justify-content-center mb-4">
+            <textarea name="sx" style="max-width: 600px; height:80px;" type="text" class="form-control text-center rounded-pill2 mx-5" placeholder="Enter description or none" aria-label="First name"></textarea>
         </div>
         <div id="load-sentences">
             <div class="row justify-content-center px-3 pb-3 pt-0 rounded-pill1 bg-light mb-4" style="border: 1px solid #d1d7dc; margin: 0;">
                 <div class="d-flex justify-content-between">
-                    <span class="my-2 pt-1">Nhap cau hoi thoai (EN/VI)</span>
-                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 6px 0px;"><i class="bi bi-x"></i></button>
+                    <span class="my-2 pt-1">Enter sentences (EN/VI) :</span>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 16px 0px;">Cancel</button>
                 </div>
                 <div class="row px-0">
                     <div class="col">
-                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="English Text" aria-label="First name"></textarea>
+                        <textarea name="sx" style="max-width: none;" type="text" class="form-control" placeholder="Enter english text: A: Good. Do you speak English?" aria-label="First name"></textarea>
                     </div>
                     <div class="col">
-                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="Vietnamese Text" aria-label="Last name"></textarea>
+                        <textarea name="sx" style="max-width: none;" type="text" class="form-control" placeholder="Enter translation: Tôi khỏe. Bạn biết nói Tiếng Anh chứ?" aria-label="Last name"></textarea>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center px-3 pb-3 pt-0 rounded-pill1 bg-light mb-4" style="border: 1px solid #d1d7dc; margin: 0;">
                 <div class="d-flex justify-content-between">
-                    <span class="my-2 pt-1">Nhap cau hoi thoai (EN/VI)</span>
-                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 6px 0px;"><i class="bi bi-x"></i></button>
+                    <span class="my-2 pt-1">Enter sentences (EN/VI) :</span>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 16px 0px;">Cancel</button>
                 </div>
                 <div class="row px-0">
                     <div class="col">
-                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="English Text" aria-label="First name"></textarea>
+                        <textarea name="sx" style="max-width: none;" type="text" class="form-control" placeholder="Enter english text: B: A little. Are you American?" aria-label="First name"></textarea>
                     </div>
                     <div class="col">
-                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="Vietnamese Text" aria-label="Last name"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center px-3 pb-3 pt-0 rounded-pill1 bg-light mb-4" style="border: 1px solid #d1d7dc; margin: 0;">
-                <div class="d-flex justify-content-between">
-                    <span class="my-2 pt-1">Nhap cau hoi thoai (EN/VI)</span>
-                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 6px 0px;"><i class="bi bi-x"></i></button>
-                </div>
-                <div class="row px-0">
-                    <div class="col">
-                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="English Text" aria-label="First name"></textarea>
-                    </div>
-                    <div class="col">
-                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="Vietnamese Text" aria-label="Last name"></textarea>
+                        <textarea name="sx" style="max-width: none;" type="text" class="form-control" placeholder="Enter translation: Một ít. Bạn là người Mỹ à?" aria-label="Last name"></textarea>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="d-flex flex-row-reverse mb-4">
-            <button id="btn-addsentence" class="btn btn-outline-custom1 rounded-pill1">+ Them cau</button>
+        <div class="d-flex justify-content-center mb-4">
+            <button id="btn-addsentence" class="btn btn-outline-custom1 rounded-pill1">+ Add input box</button>
         </div>
         <hr />
         <div class="row justify-content-center">
-            <button type="submit" id="btn-send" class="btn btn-custom2 rounded-pill2 w-25">Submit</button>
+            <button type="submit" id="btn-send" class="btn btn-custom2 rounded-pill2 w-25">Upload</button>
         </div>
     </form>
-
-
-
-
-
-
     @*@if (ViewBag.Result != null)
         {
             if (ViewBag.Result != "success")
@@ -97,15 +80,15 @@
             `
             <div class="row justify-content-center px-3 pb-3 pt-0 rounded-pill1 bg-light mb-4" style="border: 1px solid #d1d7dc; margin: 0;">
                 <div class="d-flex justify-content-between">
-                    <span class="my-2 pt-1">Nhap cau hoi thoai (EN/VI)</span>
-                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 6px 0px;"><i class="bi bi-x"></i></button>
+                    <span class="my-2 pt-1">Enter sentences (EN/VI) :</span>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 16px 0px;">Cancel</button>
                 </div>
                 <div class="row px-0">
                     <div class="col">
-                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="English Text" aria-label="First name"></textarea>
+                        <textarea name="sx" style="max-width: none;" type="text" class="form-control" placeholder="Enter english text: A: Good. Do you speak English?" aria-label="First name"></textarea>
                     </div>
                     <div class="col">
-                        <textarea style="max-width: none;" type="text" class="form-control" placeholder="Vietnamese Text" aria-label="Last name"></textarea>
+                        <textarea name="sx" style="max-width: none;" type="text" class="form-control" placeholder="Enter translation: Tôi khỏe. Bạn biết nói Tiếng Anh chứ?" aria-label="Last name"></textarea>
                     </div>
                 </div>
             </div>
@@ -138,12 +121,28 @@
                     }
                 }
                 if (!isRequired) {
-                    console.log('Dang trong');
+                    console.log('Không được để trống bất kì trường nào');
+                    alert('Không được để trống bất kì trường nào');
                 } else {
-                    //$.ajax({
-                    //    url: ,
-                    //    d
-                    //})
+                    var inputArr = $('#form-add').serialize().split('&sx=');
+                    var i = 0;
+                    var inputStr = inputArr.reduce((output, e) => {
+                        if (i == 0) {
+                            i++;
+                            return output + '%7C' + e.slice(3);
+                        }
+                        return output + '%7C' + e;
+                    }, '');
+                    $.ajax({
+                        url: `/importexport/dialogsend?inputStr=${inputStr}`,
+                        success: data => {
+                            console.log('da them');
+                            alert('Đã thêm thành công!');
+                            for (let input of inputs) {
+                                input.value = '';
+                            }
+                        }
+                    });
                 }
             })
         }

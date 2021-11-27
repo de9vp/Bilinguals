@@ -1,4 +1,5 @@
-﻿using Bilinguals.Domain.Interfaces;
+﻿using Bilinguals.Data;
+using Bilinguals.Domain.Interfaces;
 using Bilinguals.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Bilinguals.Services
     public class CommentService : ICommentService
     {
         private readonly IRepository<Comment> _commentRepo;
+        private BilingualDbContext db = new BilingualDbContext();
 
         public CommentService(IRepository<Comment> commentRepo)
         {
@@ -25,7 +27,9 @@ namespace Bilinguals.Services
 
         public List<Comment> GetByDialogId(int dialogId)
         {
-            var comments = _commentRepo.Table.Where(x => x.DialogId == dialogId).OrderBy(x => x.TimeStamp).ToList();
+            //var comments = _commentRepo.Table.Where(x => x.DialogId == dialogId).OrderBy(x => x.TimeStamp).ToList();
+            var comments = db.Comments.Where(x => x.DialogId == dialogId).OrderBy(x => x.TimeStamp).ToList();
+            db.Configuration.ProxyCreationEnabled = false;
             return comments;
         }
 

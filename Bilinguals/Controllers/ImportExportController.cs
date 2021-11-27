@@ -1,4 +1,5 @@
 ﻿using Bilinguals.Domain.Interfaces;
+using Bilinguals.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,13 +10,16 @@ using System.Web.Mvc;
 
 namespace Bilinguals.Controllers
 {
+    [Authorize(Roles = "Administrator, Creater")]
     public class ImportExportController : Controller
     {
         private readonly IDialogService _dialogService;
+        private readonly ISentenceService _sentenceService;
 
-        public ImportExportController(IDialogService dialogService)
+        public ImportExportController(IDialogService dialogService, ISentenceService sentenceService)
         {
             _dialogService = dialogService;
+            _sentenceService = sentenceService;
         }
 
         // GET: ImportExport
@@ -71,6 +75,33 @@ namespace Bilinguals.Controllers
 
                 return View();
             }
+        }
+
+        public ActionResult DialogSend(string inputStr)
+        {
+            var inputArr = inputStr.Split('|');
+            var dialog = new Dialog
+            {
+                Name = inputArr[1],
+                Description = inputArr[2]
+            };
+            _dialogService.Add(dialog);
+
+            var newDialog = _dialogService.GetByName(dialog.Name);
+            var sortOrder = 1;
+            for (int i = 3; i < inputArr.Length; i = i + 2)
+            {
+                var sentence = new Sentence
+                {
+                    EnText = inputArr[i],
+                    ViText = inputArr[i+1],
+                    DialogId = newDialog.Id,
+                    SortOrder = sortOrder,
+                };
+                _sentenceService.Add(sentence);
+                sortOrder++;
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
         }
     }
 }
