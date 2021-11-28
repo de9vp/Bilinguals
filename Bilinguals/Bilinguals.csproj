@@ -250,6 +250,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\alert1.css" />
     <Content Include="Content\css\bg-animation-card-dialog.css" />
     <Content Include="Content\css\custom-navbar.css" />
     <Content Include="Content\css\home-index.css" />
@@ -300,6 +301,7 @@
     <Content Include="Areas\Admin\Views\Roles\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Roles\Delete.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Components\alert1.js" />
     <Content Include="Scripts\Components\bootstrap5-validation.js" />
     <Content Include="Scripts\Components\dropdown-sentence.js" />
     <Content Include="Scripts\Components\Text-to-speech.js" />

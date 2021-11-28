@@ -24,15 +24,20 @@ namespace Bilinguals.Controllers
 
         public ActionResult Index(int? sentenceIndex, int? dialogIndex,  string searchText, string sortOrder)
         {
+            
+
             var userId = User.Identity.GetUserId();
 
             // get by sentence
-            var sentences = _sentenceService.GetSentenceHome(sentenceIndex ?? 1, 5, searchText, sortOrder, userId);
-
+            var sentences = _sentenceService.GetSentenceHome(sentenceIndex ?? 1, 7, searchText, sortOrder, userId);
+            if (searchText == "")
+            {
+                return View(sentences);
+            }
             // get by dialog
             if (searchText != null)
             {
-                ViewBag.dialogs = _dialogService.GetDialogList(dialogIndex ?? 1, 5, searchText, sortOrder, userId);
+                ViewBag.dialogs = _dialogService.GetDialogList(dialogIndex ?? 1, 7, searchText, sortOrder, userId);
             }
 
             return View(sentences);

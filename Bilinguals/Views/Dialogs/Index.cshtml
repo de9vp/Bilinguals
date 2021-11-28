@@ -2,7 +2,7 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Dialogs";
+    ViewBag.Title = "All Dialogs";
     var searchText = Request.QueryString["searchText"];
 }
 <link href="~/Content/css/bg-animation-card-dialog.css" rel="stylesheet" />
@@ -110,3 +110,20 @@
 }
 
 
+@*
+    <div id="pageMessages">
+
+    </div>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Let's create some Alerts</h1>
+      </div>
+    </div>
+    <div class="container">
+      <button class="btn btn-danger" onclick="createAlert('Opps!','Something went wrong','Here is a bunch of text about some stuff that happened.','danger',true,false,'pageMessages');">Add Danger Alert</button>
+      <button class="btn btn-success" onclick="createAlert('','Nice Work!','','success',true,true,'pageMessages');">Add Success Alert</button>
+      <button class="btn btn-info" onclick="createAlert('BTDubs','','Here is a bunch of text about some stuff that happened.','info',false,true,'pageMessages');">Add Info Alert</button>
+      <button class="btn btn-warning" onclick="createAlert('','','Here is a bunch of text about some stuff that happened.','warning',false,true,'pageMessages');">Add Warning Alert</button>
+    </div>
+
+*@

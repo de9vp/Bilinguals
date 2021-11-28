@@ -2,8 +2,7 @@
 @{
     ViewBag.Title = "Contribute";
 }
-
-
+<link href="~/Content/css/alert1.css" rel="stylesheet" />
 <div class="gx-5 mx-4">
     <h4 class="text-center bg-custom3 mx-5 py-2 rounded-pill1">Add New Dialogue</h4>
     <form id="form-add" method="post" class="bg-white rounded-pill2 shadow-sm p-4">
@@ -52,6 +51,11 @@
             <button type="submit" id="btn-send" class="btn btn-custom2 rounded-pill2 w-25">Upload</button>
         </div>
     </form>
+
+    <div id="pageMessages">
+
+    </div>
+
     @*@if (ViewBag.Result != null)
         {
             if (ViewBag.Result != "success")
@@ -75,25 +79,26 @@
 </div>
 
 @section scripts {
+    <script src="~/Scripts/Components/alert1.js"></script>
     <script type="text/javascript">
         var elementSentence =
             `
-            <div class="row justify-content-center px-3 pb-3 pt-0 rounded-pill1 bg-light mb-4" style="border: 1px solid #d1d7dc; margin: 0;">
-                <div class="d-flex justify-content-between">
-                    <span class="my-2 pt-1">Enter sentences (EN/VI) :</span>
-                    <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 16px 0px;">Cancel</button>
-                </div>
-                <div class="row px-0">
-                    <div class="col">
-                        <textarea name="sx" style="max-width: none;" type="text" class="form-control" placeholder="Enter english text: A: Good. Do you speak English?" aria-label="First name"></textarea>
+                    <div class="row justify-content-center px-3 pb-3 pt-0 rounded-pill1 bg-light mb-4" style="border: 1px solid #d1d7dc; margin: 0;">
+                        <div class="d-flex justify-content-between">
+                            <span class="my-2 pt-1">Enter sentences (EN/VI) :</span>
+                            <button class="btn btn-sm btn-outline-danger rounded-pill1 my-2 btn-cancel" style="padding: 3px 16px 0px;">Cancel</button>
+                        </div>
+                        <div class="row px-0">
+                            <div class="col">
+                                <textarea name="sx" style="max-width: none;" type="text" class="form-control" placeholder="Enter english text: A: Good. Do you speak English?" aria-label="First name"></textarea>
+                            </div>
+                            <div class="col">
+                                <textarea name="sx" style="max-width: none;" type="text" class="form-control" placeholder="Enter translation: Tôi khỏe. Bạn biết nói Tiếng Anh chứ?" aria-label="Last name"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col">
-                        <textarea name="sx" style="max-width: none;" type="text" class="form-control" placeholder="Enter translation: Tôi khỏe. Bạn biết nói Tiếng Anh chứ?" aria-label="Last name"></textarea>
-                    </div>
-                </div>
-            </div>
-            `;
-        
+                    `;
+
         var elementLoad = $('#load-sentences');
         var addSentence = () => {
             $('#btn-addsentence').on('click', function (e) {
@@ -121,8 +126,7 @@
                     }
                 }
                 if (!isRequired) {
-                    console.log('Không được để trống bất kì trường nào');
-                    alert('Không được để trống bất kì trường nào');
+                    createAlert('', '', 'Mời nhập đầy đủ các thông tin.', 'warning', false, true, 'pageMessages');
                 } else {
                     var inputArr = $('#form-add').serialize().split('&sx=');
                     var i = 0;
@@ -136,11 +140,10 @@
                     $.ajax({
                         url: `/importexport/dialogsend?inputStr=${inputStr}`,
                         success: data => {
-                            console.log('da them');
-                            alert('Đã thêm thành công!');
                             for (let input of inputs) {
                                 input.value = '';
                             }
+                            createAlert('', 'Upload Successful!', 'Đoạn hội thoại đã lưu thành công.', 'success', false, true, 'pageMessages');
                         }
                     });
                 }
@@ -152,6 +155,6 @@
             cancelSentence();
             handleSend();
         })
-    </script>    
+    </script>
 }
 

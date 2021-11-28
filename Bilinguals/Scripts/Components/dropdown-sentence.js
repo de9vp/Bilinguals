@@ -10,12 +10,14 @@ var handleSaveRemove = function () {
     // https://stackoverflow.com/questions/29388002/jquery-ajax-sending-multiple-request-on-1-click
 
     $('.btn-select').on('click', function (e) {
+        e.preventDefault();
         var _this = $(this);
         sentenceId = _this.data('sentenceid'); //note: lower case
         userSentenceId = _this.attr('data-usersentenceid');
 
         //save
         $('.save').off('click').on('click', function (e) {
+            e.preventDefault();
             groupId = $(this).data('groupid');
             var url = _savingUrl + sentenceId + '&groupId=' + groupId;
 
@@ -34,6 +36,7 @@ var handleSaveRemove = function () {
 
         //remove
         $('.remove').off('click').on('click', function (e) {
+            e.preventDefault();
             var URl = _removingUrl + userSentenceId;
 
             $.ajax({
