@@ -75,7 +75,7 @@ namespace Bilinguals.Controllers
             if (ModelState.IsValid)
             {
                 _dialogService.Add(dialog);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Dialogs");
             }
 
             return View(dialog);
@@ -111,7 +111,7 @@ namespace Bilinguals.Controllers
                 if (!string.IsNullOrEmpty(returnUrl))
                     return Redirect(returnUrl);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Dialogs");
             }
             return View(dialog);
         }
@@ -137,7 +137,7 @@ namespace Bilinguals.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _dialogService.Delete(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Dialogs");
         }
 
         public ActionResult MyDialog(int? pageIndex, string sortOrder)

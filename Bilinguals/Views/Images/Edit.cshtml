@@ -7,7 +7,7 @@
    @using (Html.BeginForm("Edit", "Images", FormMethod.Post, new { enctype = "multipart/form-data", id = "img-form", @class = "needs-validation", novalidate = "novalidate" }))
     {
         @Html.AntiForgeryToken()
-        <label>Select file (*.png) @ViewBag.Title </label>
+        <label>Select file (*.png)</label>
         <input required="required" class="form-control" type="file" name="ImageFile" value="" style="width: 300px" />
         <div class="valid-feedback py-2">
             Looks good!

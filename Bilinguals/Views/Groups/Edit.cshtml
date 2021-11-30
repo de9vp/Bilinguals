@@ -5,59 +5,39 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Group</h4>
+        <h4 class="text-center mt-2">Edit Group</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.UserId)
+        @Html.HiddenFor(model => model.DateCreated)
+        @Html.HiddenFor(model => model.DateModified)
+        @Html.HiddenFor(model => model.Description)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+
+        <div class="form-group text-center">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2 text-center mb-1" })
+            <div class="row justify-content-center">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control w-25" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateModified, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateModified, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateModified, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="">
+                <div class="form-actions no-color text-center mt-4">
+                    <input type="submit" value="Save" class="btn btn-custom1 rounded-pill2 me-2" />
+                    <span class="btn btn-secondary rounded-pill2">@Html.ActionLink("Cancel", "mysentence", "groups", htmlAttributes: new { @class = "", style = "color:inherit;text-decoration: none;" })</span>
+                </div>
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

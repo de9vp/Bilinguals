@@ -94,7 +94,7 @@ namespace Bilinguals.Controllers
             if (ModelState.IsValid)
             {
                 _groupService.Edit(group);
-                return RedirectToAction("Index");
+                return RedirectToAction("MySentence", "Groups");
             }
             return View(group);
         }
@@ -120,7 +120,7 @@ namespace Bilinguals.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _groupService.Delete(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("MySentence", "Groups");
         }
 
         #region JSON - AJAX REQUEST

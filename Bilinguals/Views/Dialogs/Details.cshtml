@@ -8,10 +8,11 @@
     var i = 2;
 }
 <link href="~/Content/css/home-index.css" rel="stylesheet" />
-
+<link href="~/Content/css/alert1.css" rel="stylesheet" />
 
 <h2 class="text-center pt-3" style="font-family: 'Nunito Sans', sans-serif; font-weight: bold; color: #092139;"> @Html.DisplayFor(model => model.Name) </h2>
 <h6 class="text-center" style="opacity: 0.5; font-style: italic !important;">Last updated on @(Model.DateModified?.ToString("dd/MM/yyyy"))</h6>
+<h5 class="text-center" style="opacity: 0.5;"> @Model.Description </h5>
 <span hidden id="userId">@User.Identity.GetUserId()</span>
 <span class="d-flex justify-content-center">
     @if (User.IsInRole("Administrator"))
@@ -143,9 +144,15 @@
     </div>
 </div>
 
+<div id="pageMessages">
+
+</div>
+
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Scripts/Components/alert1.js"></script>
+    <script src="~/Scripts/Components/Text-to-speech.js"></script>
     <script src="~/Scripts/Components/dropdown-sentence.js"></script>
     <script type="text/javascript">
         var dialogId = $('#dialogid').val();
@@ -333,6 +340,7 @@
                             <hr class="mt-0" />
                         </div>
                         `);
+                        createAlert('', '','Edit Successfully!','success',false,true,'pageMessages');
                     }
                 });
                 };
@@ -352,6 +360,10 @@
                     handlePostComment();
                     handleDeleteComment();
                     handleEditComment();
+                    $('.speak').on('click', function () {
+                        var sentence = $(this).attr('data-text').substring(2);
+                        textToSpeech.speak(sentence);
+                    });
                 },
             }
         })();
